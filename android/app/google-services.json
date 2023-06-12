@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "299001634527",
+    "project_id": "pawa1122",
+    "storage_bucket": "pawa1122.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:299001634527:android:cf28f47a4705467398536a",
+        "android_client_info": {
+          "package_name": "com.example.pawa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "299001634527-nj0suape2mnh0v8dcst55672ki6siuq4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pawa",
+            "certificate_hash": "aacf83018186acee3ca789007d9bc9d068619163"
+          }
+        },
+        {
+          "client_id": "299001634527-vjfi9c6gjpqt0rftn845an3nkqdeigsg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRfmY2lDQcd2iD3w_jZ-iLIMsokZG0MuU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "299001634527-6qtc6c4jq1a7tfq1sqhdlge71de3fcfp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "299001634527-ea514p1h471kudai3vilr8btevg9155e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pawa"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
