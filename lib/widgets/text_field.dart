@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../Utils/pawa_color.dart';
-
 class TextFieldCustom extends StatelessWidget {
   final String title;
   final String icon;
@@ -23,13 +21,13 @@ class TextFieldCustom extends StatelessWidget {
         label: Text(title),
         prefixIcon: Image.asset(icon),
         filled: true,
-        fillColor: AppColors.textFieldBackGroundColor,
+        // fillColor: AppColors.textFieldBackGroundColor,
         border: InputBorder.none,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
 
-          borderSide: BorderSide(
-              width: 1, color: AppColors.textFieldOutlineColor), //<-- SEE HERE
+          // borderSide: BorderSide(
+          //     width: 1, color: AppColors.textFieldOutlineColor), //
         ),
       ),
     );

@@ -6,7 +6,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:safe/Utils/pawa_color.dart';
 import 'package:safe/Utils/pawa_route.dart';
 import 'package:safe/observers/navigation_observer.dart';
 import 'package:safe/screens/UI/splash/splash.dart';
@@ -110,7 +109,7 @@ class App extends StatelessWidget {
               },
               theme: ThemeData(
                 primaryColor: Colors.blue,
-                scaffoldBackgroundColor: AppColors.pawaBackGroundColors,
+                scaffoldBackgroundColor: Colors.white,
                 canvasColor: Colors.transparent,
               ),
             );
@@ -121,10 +120,9 @@ class App extends StatelessWidget {
 
 Widget getErrorWidget(BuildContext context, FlutterErrorDetails error) {
   return Container(
-    color: AppColors.transparentColor,
-    child: Text(
+    color: Colors.transparent,
+    child: const Text(
       "",
-      style: TextStyle(color: AppColors.pawaBackGroundColor),
     ),
   );
 }

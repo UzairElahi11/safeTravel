@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
 
-import 'package:safe/Utils/pawa_color.dart';
-
 class ContainerWithSocialMediaIcons extends StatelessWidget {
   final String imgPath1;
   final String imgPath2;
@@ -32,8 +30,8 @@ class ContainerWithSocialMediaIcons extends StatelessWidget {
             height: 57,
             width: 71,
             decoration: BoxDecoration(
-              border:
-                  Border.all(width: 1, color: AppColors.textFieldOutlineColor),
+              // border:
+              //     Border.all(width: 1, color: AppColors.textFieldOutlineColor),
               borderRadius: BorderRadius.circular(50),
             ),
             child: Padding(
@@ -50,9 +48,9 @@ class ContainerWithSocialMediaIcons extends StatelessWidget {
             height: 57,
             width: 71,
             decoration: BoxDecoration(
-              border: Border.all(
-                  width: 1,
-                  color: AppColors.textFieldOutlineColor),
+              // border: Border.all(
+              //     width: 1,
+              //     color: AppColors.textFieldOutlineColor),
               borderRadius: BorderRadius.circular(50),
             ),
             child: Center(child: Image.asset(imgPath2)),
@@ -70,10 +68,10 @@ class ContainerWithSocialMediaIcons extends StatelessWidget {
                   height: 57,
                   width: 71,
                   decoration: BoxDecoration(
-                    border: Border.all(
-                        width: 1,
-                        color: AppColors
-                            .textFieldOutlineColor),
+                    // border: Border.all(
+                    //     width: 1,
+                    //     color: AppColors
+                    //         .textFieldOutlineColor),
                     borderRadius: BorderRadius.circular(50),
                   ),
                   child: Center(child: Image.asset(imgPath3)),
