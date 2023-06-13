@@ -44,7 +44,7 @@ class _SplashState extends State<Splash> {
                   ? const Welcome()
                   : (bearerToken == null || bearerToken == "")
                       ? const Welcome()
-                      : Welcome());
+                      : const Welcome());
         });
       } else if (value.permissionsResult == PermissionsResult.denied) {
         AppUtil.checkIfLocationPermissionAlreadyGranted().then((value) {
@@ -57,7 +57,7 @@ class _SplashState extends State<Splash> {
                       ? const Welcome()
                       : (bearerToken == null || bearerToken == "")
                           ? const Welcome()
-                          : Welcome());
+                          : const Welcome());
             });
           } else {
             showDialog(

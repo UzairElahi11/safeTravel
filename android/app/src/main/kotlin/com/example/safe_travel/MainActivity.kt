@@ -1,4 +1,4 @@
-package com.example.safe
+package com.example.safe_travel
 
 import io.flutter.embedding.android.FlutterActivity
 

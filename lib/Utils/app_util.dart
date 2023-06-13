@@ -58,7 +58,9 @@ class AppUtil {
           fromRoot: fromRoot,
           pushReplacement: pushReplacement);
     } catch (e) {
-      print("Error");
+      debugPrint(
+        e.toString(),
+      );
     }
   }
 
@@ -87,7 +89,7 @@ class AppUtil {
           return WillPopScope(
             onWillPop: () async => false,
             child: Center(
-              child: Container(
+              child: SizedBox(
                 height: DynamicSize.width(0.45, context),
                 width: DynamicSize.width(0.45, context),
                 child: Lottie.asset("assets/lottie/loader.json"),

@@ -11,8 +11,7 @@ class TextFieldCustom extends StatelessWidget {
       {super.key,
       required this.title,
       required this.icon,
-      this.isHidden=false,
-     
+      this.isHidden = false,
       required this.controllerText});
 
   @override
@@ -24,15 +23,13 @@ class TextFieldCustom extends StatelessWidget {
         label: Text(title),
         prefixIcon: Image.asset(icon),
         filled: true,
-        fillColor: PawaColor.themeColor(context).textFieldBackGroundColor,
+        fillColor: PawaColor.textFieldBackGroundColor,
         border: InputBorder.none,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
 
           borderSide: BorderSide(
-              width: 1,
-              color: PawaColor.themeColor(context)
-                  .textFieldOutlineColor), //<-- SEE HERE
+              width: 1, color: PawaColor.textFieldOutlineColor), //<-- SEE HERE
         ),
       ),
     );

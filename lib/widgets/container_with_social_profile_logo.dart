@@ -1,9 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
 
 import 'package:safe/Utils/pawa_color.dart';
-
 
 class ContainerWithSocialMediaIcons extends StatelessWidget {
   final String imgPath1;
@@ -34,9 +32,8 @@ class ContainerWithSocialMediaIcons extends StatelessWidget {
             height: 57,
             width: 71,
             decoration: BoxDecoration(
-              border: Border.all(
-                  width: 1,
-                  color: PawaColor.themeColor(context).textFieldOutlineColor),
+              border:
+                  Border.all(width: 1, color: PawaColor.textFieldOutlineColor),
               borderRadius: BorderRadius.circular(50),
             ),
             child: Padding(
@@ -44,7 +41,9 @@ class ContainerWithSocialMediaIcons extends StatelessWidget {
                 child: Image.asset(imgPath1)),
           ),
         ),
-      const  SizedBox(width: 20,),
+        const SizedBox(
+          width: 20,
+        ),
         GestureDetector(
           onTap: googleOnPress,
           child: Container(
@@ -53,28 +52,34 @@ class ContainerWithSocialMediaIcons extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border.all(
                   width: 1,
-                  color: PawaColor.themeColor(context).textFieldOutlineColor),
+                  color: PawaColor.textFieldOutlineColor),
               borderRadius: BorderRadius.circular(50),
             ),
             child: Center(child: Image.asset(imgPath2)),
           ),
         ),
-      Platform.isIOS?  const  SizedBox(width: 20,):const SizedBox(),
-        Platform.isIOS?
-        GestureDetector(
-          onTap: appleOnPress,
-          child: Container(
-            height: 57,
-            width: 71,
-            decoration: BoxDecoration(
-              border: Border.all(
-                  width: 1,
-                  color: PawaColor.themeColor(context).textFieldOutlineColor),
-              borderRadius: BorderRadius.circular(50),
-            ),
-            child: Center(child: Image.asset(imgPath3)),
-          ),
-        ):const SizedBox()
+        Platform.isIOS
+            ? const SizedBox(
+                width: 20,
+              )
+            : const SizedBox(),
+        Platform.isIOS
+            ? GestureDetector(
+                onTap: appleOnPress,
+                child: Container(
+                  height: 57,
+                  width: 71,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        width: 1,
+                        color: PawaColor
+                            .textFieldOutlineColor),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: Center(child: Image.asset(imgPath3)),
+                ),
+              )
+            : const SizedBox()
       ],
     );
   }

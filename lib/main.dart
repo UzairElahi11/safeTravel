@@ -47,12 +47,13 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 );
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
+
 Future main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await LocalStorageHelperFunctions.getloginToken();
   await LocalStorageHelperFunctions.getOnBoardingStatus();
-  // await dotenv.load(fileName: "assets/.env");
+  await Firebase.initializeApp();
   // await Firebase.initializeApp().then((_) async {
   //   FirebaseMessaging.instance.requestPermission().then((value) async {
   //     FirebaseMessaging.onBackgroundMessage(
@@ -67,7 +68,7 @@ Future main() async {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
-  ]).then((value) => runApp(MyApp()));
+  ]).then((value) => runApp(const MyApp()));
 
   // runApp(const MyApp());
 }
@@ -79,18 +80,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     FlutterNativeSplash.remove();
     return MultiProvider(providers: [
-      ChangeNotifierProvider(create: (context) {
-        return IntroViewModel();
-      }),
-      // ChangeNotifierProvider<LoginViewModel>(
-      //     create: (context) => LoginViewModel()),
-      // ChangeNotifierProvider<PawaColor>(
-      //   create: (context) {
-      //     return PawaColor.instance;
-      //   },
-      // ),
-      // ChangeNotifierProvider<ProfileViewMoodel>(
-      //     create: (context) => ProfileViewMoodel())
+      ChangeNotifierProvider<IntroViewModel>(
+          create: (context) => IntroViewModel()),
     ], child: const App());
   }
 }
@@ -123,7 +114,7 @@ class App extends StatelessWidget {
               theme: ThemeData(
                 primaryColor: Colors.blue,
                 scaffoldBackgroundColor:
-                    PawaColor.themeColor(context).pawaBackGroundColors,
+                    PawaColor.pawaBackGroundColors,
                 canvasColor: Colors.transparent,
               ),
             );
@@ -134,11 +125,11 @@ class App extends StatelessWidget {
 
 Widget getErrorWidget(BuildContext context, FlutterErrorDetails error) {
   return Container(
-    color: PawaColor.instance.transparentColor,
+    color: PawaColor.transparentColor,
     child: Text(
       "",
       style:
-          TextStyle(color: PawaColor.themeColor(context).pawaBackGroundColor),
+          TextStyle(color: PawaColor.pawaBackGroundColor),
     ),
   );
 }
