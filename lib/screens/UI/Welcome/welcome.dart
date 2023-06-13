@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safe/screens/controllers/introduction/intro_viewModel.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -23,7 +24,10 @@ class Welcome extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SvgPicture.asset(Assets.logoSvg),
+              Center(
+                child: SvgPicture.asset(Assets.logoSvg),
+              ),
+              SizedBox(height: 80.h,),
             ],
           );
         },
