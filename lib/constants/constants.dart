@@ -1,4 +1,4 @@
 class PawaConstants {
-  static const String HomeRouteName = "HomeRoute";
+  static const String homeRoute = "HomeRoute";
  
 }
