@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:geolocator/geolocator.dart';
-
 import 'package:safe/Utils/app_util.dart';
-import 'package:safe/Utils/permission_handler_helper_model.dart';
 import 'package:safe/screens/UI/Welcome/welcome.dart';
 
 class Splash extends StatefulWidget {
