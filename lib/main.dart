@@ -3,7 +3,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -49,8 +48,6 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
 Future main() async {
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await LocalStorageHelperFunctions.getloginToken();
   await LocalStorageHelperFunctions.getOnBoardingStatus();
   await Firebase.initializeApp();
@@ -78,7 +75,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FlutterNativeSplash.remove();
     return MultiProvider(providers: [
       ChangeNotifierProvider<IntroViewModel>(
           create: (context) => IntroViewModel()),
@@ -113,8 +109,7 @@ class App extends StatelessWidget {
               },
               theme: ThemeData(
                 primaryColor: Colors.blue,
-                scaffoldBackgroundColor:
-                    PawaColor.pawaBackGroundColors,
+                scaffoldBackgroundColor: PawaColor.pawaBackGroundColors,
                 canvasColor: Colors.transparent,
               ),
             );
@@ -128,8 +123,7 @@ Widget getErrorWidget(BuildContext context, FlutterErrorDetails error) {
     color: PawaColor.transparentColor,
     child: Text(
       "",
-      style:
-          TextStyle(color: PawaColor.pawaBackGroundColor),
+      style: TextStyle(color: PawaColor.pawaBackGroundColor),
     ),
   );
 }
