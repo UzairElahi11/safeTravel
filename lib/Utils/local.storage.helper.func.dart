@@ -4,8 +4,6 @@ import 'package:safe/Utils/user_defaults.dart';
 
 import 'app_util.dart';
 
-
-
 class LocalStorageHelperFunctions {
 //FOR LOGIN TOKEN
   static Future<String?> getloginToken() async {
