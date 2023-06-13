@@ -23,13 +23,13 @@ class TextFieldCustom extends StatelessWidget {
         label: Text(title),
         prefixIcon: Image.asset(icon),
         filled: true,
-        fillColor: PawaColor.textFieldBackGroundColor,
+        fillColor: AppColors.textFieldBackGroundColor,
         border: InputBorder.none,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
 
           borderSide: BorderSide(
-              width: 1, color: PawaColor.textFieldOutlineColor), //<-- SEE HERE
+              width: 1, color: AppColors.textFieldOutlineColor), //<-- SEE HERE
         ),
       ),
     );

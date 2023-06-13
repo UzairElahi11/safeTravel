@@ -33,7 +33,7 @@ class ContainerWithSocialMediaIcons extends StatelessWidget {
             width: 71,
             decoration: BoxDecoration(
               border:
-                  Border.all(width: 1, color: PawaColor.textFieldOutlineColor),
+                  Border.all(width: 1, color: AppColors.textFieldOutlineColor),
               borderRadius: BorderRadius.circular(50),
             ),
             child: Padding(
@@ -52,7 +52,7 @@ class ContainerWithSocialMediaIcons extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border.all(
                   width: 1,
-                  color: PawaColor.textFieldOutlineColor),
+                  color: AppColors.textFieldOutlineColor),
               borderRadius: BorderRadius.circular(50),
             ),
             child: Center(child: Image.asset(imgPath2)),
@@ -72,7 +72,7 @@ class ContainerWithSocialMediaIcons extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border.all(
                         width: 1,
-                        color: PawaColor
+                        color: AppColors
                             .textFieldOutlineColor),
                     borderRadius: BorderRadius.circular(50),
                   ),

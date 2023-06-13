@@ -67,6 +67,7 @@ dependencies:
   android_intent_plus: ^3.1.6
   social_share: ^2.3.1
   flutter_credit_card: ^3.0.6
+  flutter_svg: ^2.0.5
 
 dev_dependencies:
   flutter_test:

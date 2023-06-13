@@ -34,40 +34,43 @@ class _SplashState extends State<Splash> {
   }
 
   moveTopNextPage(BuildContext context) {
-    AppUtil.checkIfLocationPermissionAlreadyGranted().then((value) {
-      if (value.permissionsResult == PermissionsResult.granted) {
-        Future.delayed(const Duration(milliseconds: 1000), () {
-          AppUtil.pushRoute(
-              pushReplacement: true,
-              context: context,
-              route: isFirstTime == true
-                  ? const Welcome()
-                  : (bearerToken == null || bearerToken == "")
-                      ? const Welcome()
-                      : const Welcome());
-        });
-      } else if (value.permissionsResult == PermissionsResult.denied) {
-        AppUtil.checkIfLocationPermissionAlreadyGranted().then((value) {
-          if (value.permissionsResult == PermissionsResult.granted) {
-            Future.delayed(const Duration(milliseconds: 3000), () {
-              AppUtil.pushRoute(
-                  pushReplacement: true,
-                  context: context,
-                  route: isFirstTime == true
-                      ? const Welcome()
-                      : (bearerToken == null || bearerToken == "")
-                          ? const Welcome()
-                          : const Welcome());
-            });
-          } else {
-            showDialog(
-              context: context,
-              builder: (context) => settingWidget(),
-            );
-          }
-        });
-      }
-    });
+    AppUtil.pushRoute(
+        pushReplacement: true, context: context, route: const Welcome());
+
+    // AppUtil.checkIfLocationPermissionAlreadyGranted().then((value) {
+    //   if (value.permissionsResult == PermissionsResult.granted) {
+    //     Future.delayed(const Duration(milliseconds: 1000), () {
+    //       AppUtil.pushRoute(
+    //           pushReplacement: true,
+    //           context: context,
+    //           route: isFirstTime == true
+    //               ? const Welcome()
+    //               : (bearerToken == null || bearerToken == "")
+    //                   ? const Welcome()
+    //                   : const Welcome());
+    //     });
+    //   } else if (value.permissionsResult == PermissionsResult.denied) {
+    //     AppUtil.checkIfLocationPermissionAlreadyGranted().then((value) {
+    //       if (value.permissionsResult == PermissionsResult.granted) {
+    //         Future.delayed(const Duration(milliseconds: 3000), () {
+    //           AppUtil.pushRoute(
+    //               pushReplacement: true,
+    //               context: context,
+    //               route: isFirstTime == true
+    //                   ? const Welcome()
+    //                   : (bearerToken == null || bearerToken == "")
+    //                       ? const Welcome()
+    //                       : const Welcome());
+    //         });
+    //       } else {
+    //         showDialog(
+    //           context: context,
+    //           builder: (context) => settingWidget(),
+    //         );
+    //       }
+    //     });
+    //   }
+    // });
   }
 
   Widget settingWidget() {

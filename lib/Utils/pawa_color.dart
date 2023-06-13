@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
-class PawaColor {
+class AppColors {
+//Safe Colors
+  static Color blackColor = const Color(0xFF000000);
+
+// =============
   static Color pawaBackGroundColor = const Color(0xffF4EEE5);
   static Color pawaBackGroundColors = const Color(0xffFFFFFF);
   static Color transparentColor = const Color.fromRGBO(0, 0, 0, 0);

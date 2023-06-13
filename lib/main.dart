@@ -48,6 +48,7 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
 Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await LocalStorageHelperFunctions.getloginToken();
   await LocalStorageHelperFunctions.getOnBoardingStatus();
   await Firebase.initializeApp();
@@ -109,7 +110,7 @@ class App extends StatelessWidget {
               },
               theme: ThemeData(
                 primaryColor: Colors.blue,
-                scaffoldBackgroundColor: PawaColor.pawaBackGroundColors,
+                scaffoldBackgroundColor: AppColors.pawaBackGroundColors,
                 canvasColor: Colors.transparent,
               ),
             );
@@ -120,10 +121,10 @@ class App extends StatelessWidget {
 
 Widget getErrorWidget(BuildContext context, FlutterErrorDetails error) {
   return Container(
-    color: PawaColor.transparentColor,
+    color: AppColors.transparentColor,
     child: Text(
       "",
-      style: TextStyle(color: PawaColor.pawaBackGroundColor),
+      style: TextStyle(color: AppColors.pawaBackGroundColor),
     ),
   );
 }

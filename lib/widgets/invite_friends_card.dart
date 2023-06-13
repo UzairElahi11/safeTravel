@@ -42,13 +42,7 @@ class InviteFriendsCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 15),
-                  SizedBox(
-                    height: 52,
-                    width: 52,
-                    child: Image.asset(
-                      PawaImagesPath.gift,
-                    ),
-                  )
+                 
                 ],
               ),
               SizedBox(

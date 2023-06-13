@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:safe/screens/controllers/introduction/intro_viewModel.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:stacked/stacked.dart';
+
+import '../../../Utils/pawa_images_path.dart';
 
 class Welcome extends StatelessWidget {
   static const id = "/IntroView";
@@ -16,10 +19,12 @@ class Welcome extends StatelessWidget {
           viewModel.init();
         },
         builder: (BuildContext context, IntroViewModel model, Widget? child) {
-          return SafeArea(
-            child: Container(
-              color: Colors.red,
-            ),
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(Assets.logoSvg),
+            ],
           );
         },
       ),
