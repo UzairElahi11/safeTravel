@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "269123603010",
-    "project_id": "safetravel-48b94",
-    "storage_bucket": "safetravel-48b94.appspot.com"
+    "project_number": "1088170553068",
+    "project_id": "staysafema-9dc9f",
+    "storage_bucket": "staysafema-9dc9f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:269123603010:android:d0d070ada9f0a84c403bdb",
+        "mobilesdk_app_id": "1:1088170553068:android:7f7bad270375195bd47fc9",
         "android_client_info": {
-          "package_name": "com.safe_travel"
+          "package_name": "com.example.safe_travel"
         }
       },
       "oauth_client": [
         {
-          "client_id": "269123603010-6mdbg4suggmjis9frf1gm6mmm2fb4i77.apps.googleusercontent.com",
+          "client_cid": "1088170553068-11bis5tloboop1ou76ni97sio01n3a3o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.safe_travel",
+            "certificate_hash": "e437f3ec57e71bac74133c1e4bf6108f22e75d7b"
+          }
+        },
+        {
+          "client_id": "1088170553068-o6uq2evf8fdfgi53b0a2hahod6k8n88k.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBDGvDqiHqqmOjus_QmxEySJqan3Rmunus"
+          "current_key": "AIzaSyAEKzVf4RTXadFUm2A0B6mJbfuMZ9tc5HY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "269123603010-6mdbg4suggmjis9frf1gm6mmm2fb4i77.apps.googleusercontent.com",
+              "client_id": "1088170553068-o6uq2evf8fdfgi53b0a2hahod6k8n88k.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

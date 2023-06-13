@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'package:safe/Utils/app_util.dart';
@@ -34,8 +35,10 @@ class _SplashState extends State<Splash> {
   }
 
   moveTopNextPage(BuildContext context) {
-    AppUtil.pushRoute(
-        pushReplacement: true, context: context, route: const Welcome());
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      AppUtil.pushRoute(
+          pushReplacement: true, context: context, route: const Welcome());
+    });
 
     // AppUtil.checkIfLocationPermissionAlreadyGranted().then((value) {
     //   if (value.permissionsResult == PermissionsResult.granted) {
