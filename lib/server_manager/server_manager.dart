@@ -8,104 +8,72 @@ import 'package:safe/Utils/url_constants.dart';
 
 import '../Utils/app_util.dart';
 
-typedef void ResponseCompletion(String responseBody, bool success);
+typedef ResponseCompletion = void Function(String responseBody, bool success);
 
 class ServerManager {
   static const int timeOutSeconds = 30;
 
   ServerManager._();
-  static void callPostApi(String url, Map<String, String> headers,
-      Map<String, dynamic> body, completion(String responseBody, bool success),
+  static void callPostApi(
+      String url,
+      Map<String, String> headers,
+      Map<String, dynamic> body,
+      Function(String responseBody, bool success) completion,
       {int timeout = timeOutSeconds}) {
     bool onCallDone = false;
     if (!url.startsWith("https")) {
-      HttpClient httpClient = new HttpClient();
+      HttpClient httpClient = HttpClient();
       httpClient.badCertificateCallback =
           ((X509Certificate cert, String host, int port) => true);
 //      httpClient.idleTimeout = Duration(seconds: timeout);
 //      httpClient.connectionTimeout = Duration(seconds: timeout);
 
       debugPrint(
-          "url: " + url + " \nBody:" + (body == null ? "" : body.toString()));
-      //TODO REMOVE THIS LATTER
-      print("url: " + url + " \nBody:" + (body == null ? "" : body.toString()));
+        "url: $url \nBody:${body == null ? "" : body.toString()}",
+      );
+
       try {
         httpClient.postUrl(Uri.parse(url)).then((request) {
-          // if (headers != null) {
-          //   if (TreatsConstants.hashWithSHASalt) {
-          //     String hashWithSHASalt = createSaHA256(
-          //         nonce1: json.encode(body) + TreatsConstants.ASR_Key);
-          //     debugPrint('HeaderWithAuth' +
-          //         hashWithSHASalt +
-          //         "salt key" +
-          //         TreatsConstants.ASR_Key);
-          //     //TODO REMOVE THIS LATTER
-          //     print('HeaderWithAuth' +
-          //         hashWithSHASalt +
-          //         "salt key" +
-          //         TreatsConstants.ASR_Key);
-          //     headers['requestAuth'] = hashWithSHASalt;
-          //   }
-          // List<String> keys = headers.keys.toList();
-          // for (int i = 0; i < keys.length; i++) {
-          //   request.headers.set(keys[i], headers[keys[i]]!);
-          // }
           request.add(utf8.encode(json.encode(body)));
-          print("---------${request.contentLength.toString()}");
           request.close().then((response) {
             response.transform(utf8.decoder).join().then((responseBody) {
               logResponse(url, {}, headers, responseBody, response.statusCode);
 
-              if (response != null &&
-                  response.statusCode == 200 &&
-                  responseBody != null) {
-                debugPrint("responce from server ${responseBody}");
-                //TODO REMOVE THIS LATTER
-                print("responce from server ${responseBody}");
+              if (response.statusCode == 200) {
+                debugPrint("responce from server $responseBody");
+
                 callCompletion(responseBody, true, completion);
-                //   if (isResponseCodeForReLoginFromResponse(responseBody)) {
-                //     if (Keys.mainNavigatorKey.currentContext != null &&
-                //         body.containsKey("context") &&
-                //         body["context"] ==
-                //             UrlConstants.appServerContextAfterLogin) {}
-                //   }
               } else {
                 callCompletion(responseBody, false, completion);
               }
             });
           }).catchError((error) {
             if (error != null && error.runtimeType == String) {
-              debugPrint("response: " + error ?? "");
-              //TODO REMOVE THIS LATTER
-              print("response: " + error ?? "");
+              debugPrint("response: " + error);
             }
-            print('error callback catch');
+
             if (onCallDone == false) {
               onCallDone = true;
               callCompletion(null, false, completion);
             }
           }).whenComplete(() {
-            print("Api complete");
+            debugPrint("Api complete");
             // ignore: unnecessary_statements
           });
         }).catchError((error) {
           if (error != null && error.runtimeType == String) {
-            debugPrint("response: " + error ?? "");
-            //TODO REMOVE THIS LATTER
-            print("response: " + error ?? "");
+            debugPrint("response: " + error);
           }
-          print('error callback catch');
+
           if (onCallDone == false) {
             onCallDone = true;
             callCompletion(null, false, completion);
           }
         });
       } catch (e) {
-        if (e != null) {}
         callCompletion(null, false, completion);
         debugPrint('catch callback');
       } finally {
-//        callCompletion(null, false, completion);
         debugPrint('catch callback finally');
       }
     } else {
@@ -124,10 +92,9 @@ class ServerManager {
             .then((http.Response response) {
           onCallDone = true;
           debugPrint("internal reach");
-          log(
-              'Response Success $url ${body?.toString()} Header: ${headers?.toString() ?? ""}');
-          if (response != null && response.statusCode == 200) {
-            log("-------" + response.body.toString());
+          log('Response Success $url ${body.toString()} Header: ${headers.toString()}');
+          if (response.statusCode == 200) {
+            log("-------${response.body}");
             callCompletion(response.body, true, completion);
           } else {
             debugPrint(
@@ -135,23 +102,20 @@ class ServerManager {
             callCompletion(response.body, false, completion);
           }
         }).catchError((Object error) {
-          if (error != null && error.runtimeType == String) {
-            debugPrint("response: error " + error.toString());
+          if (error.runtimeType == String) {
+            debugPrint("response: error $error");
           }
-          print('error callback catch ' + error.toString());
           if (onCallDone == false) {
             onCallDone = true;
             callCompletion(null, false, completion);
           }
         }).whenComplete(() {
-          print("Api complete");
           // ignore: unnecessary_statements
           client.close;
         });
       } on Function catch (e, _) {
-        if (e != null) {}
         callCompletion(null, false, completion);
-        debugPrint('catch callback' + e.toString());
+        debugPrint('catch callback$e');
       }
     }
   }
@@ -162,103 +126,63 @@ class ServerManager {
     } else {
       debugPrint("Invalid response");
     }
-    if (completion != null) {
-      completion(responseBody!, success);
-    }
+    completion(responseBody!, success);
   }
 
-  static void getApiCalling(String url, Map<String, String> headers,
-      Map<String, dynamic> body, completion(String responseBody, bool success),
+  static void getApiCalling(
+      String url,
+      Map<String, String> headers,
+      Map<String, dynamic> body,
+      Function(String responseBody, bool success) completion,
       {int timeout = timeOutSeconds}) {
     bool onCallDone = false;
     if (!url.startsWith("https")) {
-      HttpClient httpClient = new HttpClient();
+      HttpClient httpClient = HttpClient();
       httpClient.badCertificateCallback =
           ((X509Certificate cert, String host, int port) => true);
 //      httpClient.idleTimeout = Duration(seconds: timeout);
 //      httpClient.connectionTimeout = Duration(seconds: timeout);
 
-      debugPrint(
-          "url: " + url + " \nBody:" + (body == null ? "" : body.toString()));
+      debugPrint("url: $url \nBody:${body == null ? "" : body.toString()}");
       //TODO REMOVE THIS LATTER
-      print("url: " + url + " \nBody:" + (body == null ? "" : body.toString()));
+
       try {
         httpClient.postUrl(Uri.parse(url)).then((request) {
-          // if (headers != null) {
-          //   if (TreatsConstants.hashWithSHASalt) {
-          //     String hashWithSHASalt = createSaHA256(
-          //         nonce1: json.encode(body) + TreatsConstants.ASR_Key);
-          //     debugPrint('HeaderWithAuth' +
-          //         hashWithSHASalt +
-          //         "salt key" +
-          //         TreatsConstants.ASR_Key);
-          //     //TODO REMOVE THIS LATTER
-          //     print('HeaderWithAuth' +
-          //         hashWithSHASalt +
-          //         "salt key" +
-          //         TreatsConstants.ASR_Key);
-          //     headers['requestAuth'] = hashWithSHASalt;
-          //   }
-          // List<String> keys = headers.keys.toList();
-          // for (int i = 0; i < keys.length; i++) {
-          //   request.headers.set(keys[i], headers[keys[i]]!);
-          // }
           request.add(utf8.encode(json.encode(body)));
-          print("---------${request.contentLength.toString()}");
           request.close().then((response) {
             response.transform(utf8.decoder).join().then((responseBody) {
               logResponse(url, {}, headers, responseBody, response.statusCode);
 
-              if (response != null &&
-                  response.statusCode == 200 &&
-                  responseBody != null) {
+              if (response.statusCode == 200) {
                 debugPrint("responce from server ${responseBody}");
-                //TODO REMOVE THIS LATTER
-                print("responce from server ${responseBody}");
+
                 callCompletion(responseBody, true, completion);
-                //   if (isResponseCodeForReLoginFromResponse(responseBody)) {
-                //     if (Keys.mainNavigatorKey.currentContext != null &&
-                //         body.containsKey("context") &&
-                //         body["context"] ==
-                //             UrlConstants.appServerContextAfterLogin) {}
-                //   }
               } else {
                 callCompletion(responseBody, false, completion);
               }
             });
           }).catchError((error) {
             if (error != null && error.runtimeType == String) {
-              debugPrint("response: " + error ?? "");
-              //TODO REMOVE THIS LATTER
-              print("response: " + error ?? "");
+              debugPrint("response: " + error);
             }
-            print('error callback catch');
             if (onCallDone == false) {
               onCallDone = true;
               callCompletion(null, false, completion);
             }
-          }).whenComplete(() {
-            print("Api complete");
-            // ignore: unnecessary_statements
-          });
+          }).whenComplete(() {});
         }).catchError((error) {
           if (error != null && error.runtimeType == String) {
-            debugPrint("response: " + error ?? "");
-            //TODO REMOVE THIS LATTER
-            print("response: " + error ?? "");
+            debugPrint("response: " + error);
           }
-          print('error callback catch');
           if (onCallDone == false) {
             onCallDone = true;
             callCompletion(null, false, completion);
           }
         });
       } catch (e) {
-        if (e != null) {}
         callCompletion(null, false, completion);
         debugPrint('catch callback');
       } finally {
-//        callCompletion(null, false, completion);
         debugPrint('catch callback finally');
       }
     } else {
@@ -273,10 +197,9 @@ class ServerManager {
             .then((http.Response response) {
               onCallDone = true;
               log("internal reach");
-              log(
-                  'Response Success $url ${body?.toString()} Header: ${headers?.toString() ?? ""}');
-              if (response != null && response.statusCode == 200) {
-                log("-------" + response.body.toString());
+              log('Response Success $url ${body.toString()} Header: ${headers.toString()}');
+              if (response.statusCode == 200) {
+                log("-------${response.body}");
                 callCompletion(response.body, true, completion);
               } else {
                 debugPrint(
@@ -285,24 +208,20 @@ class ServerManager {
               }
             })
             .catchError((Object error) {
-              if (error != null && error.runtimeType == String) {
-                debugPrint("response: error " + error.toString());
+              if (error.runtimeType == String) {
+                debugPrint("response: error $error");
               }
-              print('error callback catch ' + error.toString());
               if (onCallDone == false) {
                 onCallDone = true;
                 callCompletion(null, false, completion);
               }
             })
             .whenComplete(() {
-              print("Api complete");
-              // ignore: unnecessary_statements
               client.close;
             });
       } on Function catch (e, _) {
-        if (e != null) {}
         callCompletion(null, false, completion);
-        debugPrint('catch callback' + e.toString());
+        debugPrint('catch callback$e');
       }
     }
   }
@@ -324,7 +243,7 @@ class ServerManager {
             'API Response Code::: ${(responseCodeFromResponse(responseBody!) ?? "")}');
       } catch (e) {}
       debugPrint('Response Code::: ${(responseCode?.toString() ?? "")}');
-      debugPrint('Response::: ' + responseBody!);
+      debugPrint('Response::: ${responseBody!}');
       if (success) {
         debugPrint("\n✅✅✅ ------- Success Response End ------- ✅✅✅ \n");
       } else {
@@ -335,11 +254,9 @@ class ServerManager {
 
   static String? responseCodeFromResponse(String responseBody) {
     try {
-      if (responseBody != null) {
-        dynamic content = AppUtil.decodeString(responseBody);
-        if (content is Map) {
-          return responseCode(content);
-        }
+      dynamic content = AppUtil.decodeString(responseBody);
+      if (content is Map) {
+        return responseCode(content);
       }
     } on Exception catch (e) {
       // TODO
@@ -350,10 +267,10 @@ class ServerManager {
   static String? responseCode(Map<dynamic, dynamic> json) {
     String responseCode = "empty";
     try {
-      if (json != null && json.isNotEmpty) {
+      if (json.isNotEmpty) {
         responseCode = json['responseCode'];
       }
-      debugPrint("Response code :: " + responseCode);
+      debugPrint("Response code :: $responseCode");
     } on Exception catch (e) {
       // TODO
     }
@@ -370,7 +287,7 @@ class ServerManager {
       "facebook": facebook,
       "google": google
     };
-    callPostApi(UrlConstants.register, _defaultHeader(), json, completion);
+    // callPostApi(UrlConstants.register, _defaultHeader(), json, completion);
   }
 
   // social login
@@ -382,29 +299,30 @@ class ServerManager {
       "token": token,
       "provider_name": providerName
     };
-    callPostApi(UrlConstants.socialLogin, _defaultHeader(), json, completion);
+    // callPostApi(UrlConstants.socialLogin, _defaultHeader(), json, completion);
   }
 
   static void login(
       String email, String password, ResponseCompletion completion) {
     Map<String, dynamic> json = {"email": email, "password": password};
-    callPostApi(UrlConstants.login, _defaultHeader(), json, completion);
+    // callPostApi(UrlConstants.login, _defaultHeader(), json, completion);
   }
 
   static void checkuser(String email, ResponseCompletion completion) {
     Map<String, dynamic> json = {"email": email};
-    callPostApi(UrlConstants.checkLogin, _defaultHeader(), json, completion);
+    // callPostApi(UrlConstants.checkLogin, _defaultHeader(), json, completion);
   }
 
   static void logout(ResponseCompletion completion) {
     Map<String, dynamic> json = {};
-    getApiCalling(UrlConstants.logout, _defaultHeader(), json, completion);
+    // getApiCalling(UrlConstants.logout, _defaultHeader(), json, completion);
   }
 
   static void getAllStation(ResponseCompletion completion) {
     Map<String, dynamic> json = {};
-    getApiCalling(
-        UrlConstants.getAllStations, _defaultHeader(), json, completion);
+    // getApiCalling(
+    //     UrlConstants.getAllStations, _defaultHeader(), json, completion
+    //     );
   }
 
   static void getRequestStation(
@@ -412,15 +330,15 @@ class ServerManager {
     ResponseCompletion completion,
   ) {
     Map<String, dynamic> json = {};
-    getApiCalling("${UrlConstants.powerBankRequest}?station_id=$stationId",
-        _defaultHeader(), json, completion);
+    // getApiCalling("${UrlConstants.powerBankRequest}?station_id=$stationId",
+    //     _defaultHeader(), json, completion);
   }
 
   static void getUserInfo(
     ResponseCompletion completion,
   ) {
     Map<String, dynamic> json = {};
-    getApiCalling(UrlConstants.getUserInfo, _defaultHeader(), json, completion);
+    // getApiCalling(UrlConstants.getUserInfo, _defaultHeader(), json, completion);
   }
 
   static void getSearch(
@@ -428,20 +346,20 @@ class ServerManager {
     ResponseCompletion completion,
   ) {
     Map<String, dynamic> json = {};
-    getApiCalling("${UrlConstants.search}?search=$text", _defaultHeader(), json,
-        completion);
+    // getApiCalling("${UrlConstants.search}?search=$text", _defaultHeader(), json,
+    //     completion);
   }
 
   static void updateProfile(
       String email, String name, String phone, ResponseCompletion completion) {
     Map<String, dynamic> json = {"email": email, "phone": phone, "name": name};
-    callPostApi(UrlConstants.updateProfile, _defaultHeader(), json, completion);
+    // callPostApi(UrlConstants.updateProfile, _defaultHeader(), json, completion);
   }
 
   static void reportIssue(
       String deviceId, String message, ResponseCompletion completion) {
     Map<String, dynamic> json = {"device_id": deviceId, "error": message};
-    callPostApi(UrlConstants.reportProblem, _defaultHeader(), json, completion);
+    // callPostApi(UrlConstants.reportProblem, _defaultHeader(), json, completion);
   }
 
   static _defaultHeader() {
@@ -454,46 +372,54 @@ class ServerManager {
     ResponseCompletion completion,
   ) {
     Map<String, dynamic> json = {};
-    getApiCalling(
-        UrlConstants.rentalActivity, _defaultHeader(), json, completion);
+    // getApiCalling(
+    //     UrlConstants.rentalActivity, _defaultHeader(), json, completion);
   }
 
   static void getWalletInfo(
     ResponseCompletion completion,
   ) {
     Map<String, dynamic> json = {};
-    getApiCalling(UrlConstants.getWallet, _defaultHeader(), json, completion);
+    // getApiCalling(UrlConstants.getWallet, _defaultHeader(), json, completion);
   }
 
   static void deleteAccount(
     ResponseCompletion completion,
   ) {
     Map<String, dynamic> json = {};
-    getApiCalling(
-        UrlConstants.deleteAccount, _defaultHeader(), json, completion);
+    // getApiCalling(
+    //     UrlConstants.deleteAccount, _defaultHeader(), json, completion);
   }
-   static void getSubscription(
+
+  static void getSubscription(
     ResponseCompletion completion,
   ) {
     Map<String, dynamic> json = {};
-    getApiCalling(
-        UrlConstants.getSubscription, _defaultHeader(), json, completion);
+    // getApiCalling(
+    //     UrlConstants.getSubscription, _defaultHeader(), json, completion);
   }
-   static void setSubScription(
+
+  static void setSubScription(
       String paymentMethodId, String planId, ResponseCompletion completion) {
-    Map<String, dynamic> json = {"payment_method_id": paymentMethodId, "price_id": planId};
-    callPostApi(UrlConstants.setSubScription, _defaultHeader(), json, completion);
+    Map<String, dynamic> json = {
+      "payment_method_id": paymentMethodId,
+      "price_id": planId
+    };
+    // callPostApi(
+    //     UrlConstants.setSubScription, _defaultHeader(), json, completion);
   }
+
   static void getPromoCode(
     ResponseCompletion completion,
   ) {
     Map<String, dynamic> json = {};
-    getApiCalling(
-        UrlConstants.getReferalCode, _defaultHeader(), json, completion);
+    // getApiCalling(
+    //     UrlConstants.getReferalCode, _defaultHeader(), json, completion);
   }
-   static void activateReferalCode(
-      String code,ResponseCompletion completion) {
+
+  static void activateReferalCode(String code, ResponseCompletion completion) {
     Map<String, dynamic> json = {"code": code};
-    callPostApi(UrlConstants.activateReferalCode, _defaultHeader(), json, completion);
+    // callPostApi(
+    //     UrlConstants.activateReferalCode, _defaultHeader(), json, completion);
   }
 }

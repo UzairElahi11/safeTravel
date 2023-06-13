@@ -9,7 +9,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:safe/Utils/permission_handler_helper_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../Dynamic_size.dart';
+import '../dynamic_size.dart';
 
 class AppUtil {
   AppUtil._();

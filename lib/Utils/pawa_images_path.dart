@@ -58,7 +58,7 @@ class PawaImagesPath {
   static var powerBank = "${basicIconPath}reportProblemIcons/powerBank.png";
   static var giftCard = "${basicImagePath}wallet/giftCard.png";
   static var coinWallet = "${basicImagePath}wallet/coinWallet.png";
-    static var sharePromotions = "${basicIconPath}share.png";
+  static var sharePromotions = "${basicIconPath}share.png";
   static var card = "${basicImagePath}wallet/card.png";
   static var paypal = "${basicImagePath}wallet/paypal.png";
   static var ideal = "${basicImagePath}wallet/ideal.png";
@@ -83,10 +83,9 @@ class PawaImagesPath {
   static var giftIcon = "${basicImagePath}giftIcon.png";
   static var offline = "${basicImagePath}offlineMarker.png";
 
-    static var liveLocation = "${markersPath}liveLocation.png";
+  static var liveLocation = "${markersPath}liveLocation.png";
 
   static var locator = "${basicIconPath}locator.png";
-
 
   static var gift = "assets/images/gift.png";
   static var share = "assets/images/share.png";
