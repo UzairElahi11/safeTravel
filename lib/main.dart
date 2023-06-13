@@ -2,14 +2,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:safe/Utils/pawa_color.dart';
+import 'package:safe/Utils/pawa_route.dart';
 import 'package:safe/observers/navigation_observer.dart';
+import 'package:safe/screens/UI/splash/splash.dart';
+import 'package:safe/screens/controllers/introduction/intro_viewModel.dart';
 import 'package:sizer/sizer.dart';
 
 import 'Utils/local.storage.helper.func.dart';
@@ -46,23 +48,22 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 Future main() async {
-
-  WidgetsBinding widgetsBinding =  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await LocalStorageHelperFunctions.getloginToken();
   await LocalStorageHelperFunctions.getOnBoardingStatus();
-  await dotenv.load(fileName: "assets/.env");
-  await Firebase.initializeApp().then((_) async {
-    FirebaseMessaging.instance.requestPermission().then((value) async {
-      FirebaseMessaging.onBackgroundMessage(
-          _firebaseMessagingBackgroundHandler);
-      await flutterLocalNotificationsPlugin
-          .resolvePlatformSpecificImplementation<
-              AndroidFlutterLocalNotificationsPlugin>()
-          ?.createNotificationChannel(channel);
-    });
-  });
-  
+  // await dotenv.load(fileName: "assets/.env");
+  // await Firebase.initializeApp().then((_) async {
+  //   FirebaseMessaging.instance.requestPermission().then((value) async {
+  //     FirebaseMessaging.onBackgroundMessage(
+  //         _firebaseMessagingBackgroundHandler);
+  //     await flutterLocalNotificationsPlugin
+  //         .resolvePlatformSpecificImplementation<
+  //             AndroidFlutterLocalNotificationsPlugin>()
+  //         ?.createNotificationChannel(channel);
+  //   });
+  // });
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -78,9 +79,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     FlutterNativeSplash.remove();
     return MultiProvider(providers: [
-      // ChangeNotifierProvider(create: (context) {
-      //   return RegisterViewModel();
-      // }),
+      ChangeNotifierProvider(create: (context) {
+        return IntroViewModel();
+      }),
       // ChangeNotifierProvider<LoginViewModel>(
       //     create: (context) => LoginViewModel()),
       // ChangeNotifierProvider<PawaColor>(
@@ -105,10 +106,9 @@ class App extends StatelessWidget {
           designSize: const Size(1920, 1080),
           builder: (context, child) {
             return MaterialApp(
-              
               debugShowCheckedModeBanner: false,
-              // initialRoute: SplashPage.id,
-              // onGenerateRoute: PawaRoutes.onGenerateRoute,
+              initialRoute: Splash.id,
+              onGenerateRoute: PawaRoutes.onGenerateRoute,
               key: Get.key,
               navigatorKey: Keys.mainNavigatorKey,
               navigatorObservers: [PawaNavigationObserver()],
@@ -143,7 +143,7 @@ Widget getErrorWidget(BuildContext context, FlutterErrorDetails error) {
   );
 }
 
-pushNotifications()async {
+pushNotifications() async {
   final fcmToken = await FirebaseMessaging.instance.getToken();
   debugPrint(fcmToken.toString());
   var initializationSettingAndroid =

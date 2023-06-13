@@ -29,9 +29,7 @@ class AppUtil {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
 
     try {
-      if (mediaQueryData != null) {
-        _deviceHeight = mediaQueryData.size.height;
-      }
+      _deviceHeight = mediaQueryData.size.height;
     } catch (e) {}
     return _deviceHeight;
   }
@@ -40,9 +38,7 @@ class AppUtil {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
 
     try {
-      if (mediaQueryData != null) {
-        _deviceWidth = mediaQueryData.size.width;
-      }
+      _deviceWidth = mediaQueryData.size.width;
     } catch (e) {}
     return _deviceWidth;
   }

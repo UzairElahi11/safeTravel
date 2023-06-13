@@ -9,7 +9,6 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
-import '../constants/keys.dart';
 
 
 class Authenticate {
@@ -22,7 +21,6 @@ class Authenticate {
   GoogleSignInAccount? get user => _user;
 
   Future<bool> googleSignInMethod() async {
-    final firebaseAuth = FirebaseAuth.instance.currentUser;
     try {
       GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
