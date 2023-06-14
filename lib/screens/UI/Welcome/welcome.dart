@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:safe/screens/UI/login/login.dart';
+import 'package:safe/screens/UI/introduction/intro.dart';
 import 'package:safe/screens/controllers/introduction/intro_viewModel.dart';
 import 'package:safe/widgets/generic_drop_down.dart';
 import 'package:safe/widgets/generic_svg_image.dart';
@@ -102,10 +102,9 @@ class Welcome extends StatelessWidget {
                       onPressed: () {
                         AppUtil.pushRoute(
                           context: context,
-                          route: const Login(),
+                          route: const IntroView(),
                         );
                       },
-                  
                       child: GenericText(
                         btnNextText,
                         style: AppStyles.medium20,

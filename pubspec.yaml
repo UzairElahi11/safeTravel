@@ -99,5 +99,7 @@ flutter:
     - assets/images/
     - assets/images/svg/
     - assets/icons/
+    - assets/icons/
+    - assets/icons/common/
 
   

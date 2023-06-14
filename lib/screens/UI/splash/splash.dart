@@ -35,7 +35,10 @@ class _SplashState extends State<Splash> {
   moveTopNextPage(BuildContext context) {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       AppUtil.pushRoute(
-          pushReplacement: true, context: context, route: const Welcome());
+        pushReplacement: true,
+        context: context,
+        route: const Welcome(),
+      );
     });
 
     // AppUtil.checkIfLocationPermissionAlreadyGranted().then((value) {

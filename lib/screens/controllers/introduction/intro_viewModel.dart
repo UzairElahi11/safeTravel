@@ -1,5 +1,15 @@
 import 'package:flutter/material.dart';
 
 class IntroViewModel with ChangeNotifier {
-  List<String> languages = ["English", "Spanish"];
+  bool isHidden = false;
+  bool checkBox = false;
+
+  void init() {}
+
+  checkBoxHandler(bool check) {
+    checkBox = check;
+    notifyListeners();
+  }
+
+   List<String> languages = ["English", "Spanish"];
 }
