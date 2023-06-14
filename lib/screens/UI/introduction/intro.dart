@@ -12,17 +12,13 @@ class IntroView extends StatelessWidget {
     return Scaffold(
       body: ViewModelBuilder<IntroViewModel>.reactive(
         viewModelBuilder: () => IntroViewModel(),
-        onViewModelReady: (viewModel) {
-          viewModel.init();
-        },
+        onViewModelReady: (viewModel) {},
         builder: (BuildContext context, IntroViewModel model, Widget? child) {
-          return SafeArea(child: Container(),
-            
+          return SafeArea(
+            child: Container(),
           );
         },
       ),
     );
   }
-  
-  }
-
+}

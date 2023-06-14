@@ -15,6 +15,15 @@ class AppUtil {
   AppUtil._();
   static const String font = "Comfortaa";
   static double _deviceHeight = 0, _deviceWidth = 0;
+
+  static const hintPassword = "*********";
+  static const emailHint = "Email";
+
+  static RegExp emailRegex = RegExp(
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+
+   static    RegExp spaceNotAllowedRegex = RegExp(r'\s');
+
   // _paddingTop = 0,
   // _paddingBottom = 0;
 

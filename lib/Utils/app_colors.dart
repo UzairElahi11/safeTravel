@@ -18,5 +18,6 @@ class AppColors {
   static Color otherChatBubbleColor = const Color(0xFFF2F7FB);
   static Color redColor = const Color(0xFFFF0E0E);
   static Color navigationContainerColor = const Color(0xFF0066FF);
+  static Color dividerColor = const Color(0xFF292929);
 
 }

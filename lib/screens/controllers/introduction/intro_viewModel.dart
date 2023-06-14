@@ -1,10 +1,5 @@
-
 import 'package:flutter/material.dart';
 
 class IntroViewModel with ChangeNotifier {
-  bool isHidden = false;
-
-
-  void init() {}
-  
+  List<String> languages = ["English", "Spanish"];
 }

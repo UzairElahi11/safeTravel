@@ -1,14 +1,23 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:safe/screens/UI/login/login.dart';
 import 'package:safe/screens/controllers/introduction/intro_viewModel.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:safe/widgets/generic_drop_down.dart';
+import 'package:safe/widgets/generic_svg_image.dart';
+import 'package:safe/widgets/generic_text.dart';
 import 'package:stacked/stacked.dart';
 
-import '../../../Utils/pawa_images_path.dart';
+import '../../../Utils/app_colors.dart';
+import '../../../Utils/app_images_path.dart';
+import '../../../Utils/app_text_styles.dart';
+import '../../../Utils/app_util.dart';
+import '../../../constants/all_texts.dart';
+import '../../../widgets/generic_button.dart';
 
 class Welcome extends StatelessWidget {
-  static const id = "/IntroView";
+  static const id = "/Welcome";
   const Welcome({super.key});
 
   @override
@@ -16,19 +25,96 @@ class Welcome extends StatelessWidget {
     return Scaffold(
       body: ViewModelBuilder<IntroViewModel>.reactive(
         viewModelBuilder: () => IntroViewModel(),
-        onViewModelReady: (viewModel) {
-          viewModel.init();
-        },
         builder: (BuildContext context, IntroViewModel model, Widget? child) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(
-                child: SvgPicture.asset(Assets.logoSvg),
-              ),
-              SizedBox(height: 80.h,),
-            ],
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 60.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                    child: GenericSvgImage(
+                  svgPath: AppImages.logoSvgImage,
+                )),
+                SizedBox(
+                  height: 80.h,
+                ),
+                GenericText(
+                  welcomeMessage,
+                  style: AppStyles.bold28,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                GenericText(
+                  welcomeScreenDetailsText,
+                  style: AppStyles.medium18,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 60.h,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 200.w),
+                  child: GenericDropDown(
+                      dropDownColor: AppColors.whiteColor,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 10.w, vertical: 10.h),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(18),
+                          borderSide: BorderSide(
+                            width: 2,
+                            color: AppColors.baseColor,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(18),
+                          borderSide:
+                              BorderSide(width: 2, color: AppColors.baseColor),
+                        ),
+                      ),
+                      useTransparentBorder: false,
+                      borderColor: AppColors.baseColor,
+                      items: model.languages,
+                      hintText: drpLanguageHintText,
+                      hintTextStyle: AppStyles.mediumBase20,
+                      textStyle: AppStyles.mediumBase20,
+                      textColor: AppColors.baseColor,
+                      hintColor: AppColors.baseColor,
+                      iconColor: AppColors.baseColor,
+                      mapDropDownText: (option) => GenericText(option),
+                      onDropDownItemChanged: (option) {
+                        log("option selection is $option");
+                      },
+                      fillColor: AppColors.whiteColor),
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 200.w),
+                    child: GenericButton(
+                      height: 70.h,
+                      width: double.infinity,
+                      onPressed: () {
+                        AppUtil.pushRoute(
+                          context: context,
+                          route: const Login(),
+                        );
+                      },
+                  
+                      child: GenericText(
+                        btnNextText,
+                        style: AppStyles.medium20,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           );
         },
       ),

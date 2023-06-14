@@ -7,16 +7,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:safe/Utils/pawa_route.dart';
+import 'package:safe/app_providers.dart';
+import 'package:safe/locator.dart';
 import 'package:safe/observers/navigation_observer.dart';
 import 'package:safe/screens/UI/splash/splash.dart';
-import 'package:safe/screens/controllers/introduction/intro_viewModel.dart';
 import 'package:sizer/sizer.dart';
 
 import 'Utils/local.storage.helper.func.dart';
 import 'constants/keys.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
   debugPrint('Handling a background message ${message.messageId}');
   debugPrint(message.notification!.title);
   debugPrint(message.notification!.body);
@@ -48,6 +48,7 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initializeDependencies();
   await LocalStorageHelperFunctions.getloginToken();
   await LocalStorageHelperFunctions.getOnBoardingStatus();
   await Firebase.initializeApp();
@@ -65,9 +66,11 @@ Future main() async {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
-  ]).then((value) => runApp(const MyApp()));
-
-  // runApp(const MyApp());
+  ]).then(
+    (value) => runApp(
+      const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -75,10 +78,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(providers: [
-      ChangeNotifierProvider<IntroViewModel>(
-          create: (context) => IntroViewModel()),
-    ], child: const App());
+    return MultiProvider(
+        providers: locator<AppProviders>().appProviders, child: const App());
   }
 }
 
