@@ -8,7 +8,7 @@ import 'package:stacked/stacked.dart';
 import '../../../Utils/pawa_images_path.dart';
 
 class Welcome extends StatelessWidget {
-  static const id = "/IntroView";
+  static const id = "/WelcomeView";
   const Welcome({super.key});
 
   @override
