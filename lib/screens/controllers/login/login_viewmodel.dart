@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/constants/all_texts.dart';
+import 'package:safe/widgets/generic_text.dart';
 
+import '../../../Utils/app_colors.dart';
+import '../../../Utils/app_text_styles.dart';
+import '../../../Utils/extensions/lauchemail_extension.dart';
 import '../../../Utils/validator/textformfield_model.dart';
 import '../../../Utils/validator/textformfield_validator.dart';
 import '../../../locator.dart';
@@ -20,6 +24,9 @@ class LoginViewModel extends ChangeNotifier {
   //DEFINING THE ERROR TEXTS
   String? passwordValidationError;
   String? emailValidationError;
+
+  //
+  List<Widget> textSpans = [];
 
   //VALIDATION
   bool validate() {
@@ -59,5 +66,46 @@ class LoginViewModel extends ChangeNotifier {
   bool visiblePassFunc() {
     showPassword.value = !showPassword.value;
     return showPassword.value;
+  }
+
+  //DETECT THE EMAIL IN THE TEXT
+  String? extractEmail(String text) {
+    Iterable<Match> matches = AppUtil.emailDetectionRegex.allMatches(text);
+    if (matches.isNotEmpty) {
+      return matches.first.group(0);
+    }
+    return null;
+  }
+
+// CHECK AND HIGHTLIGHT THE EMAIL WHERE PRESENT IN THE TEXT
+  checkingEmailText() {
+    final List<String> words = futhureAssistanceText.split(' ');
+    textSpans = words.map((word) {
+      if (word.contains('@') && word.contains('.')) {
+        return GestureDetector(
+          onTap: () {
+            word.launchEmail();
+          },
+          child: GenericText(
+            '$word ',
+            style: AppStyles.medium14.copyWith(
+              fontWeight: FontWeight.w500,
+              color: AppColors.blackColor,
+              decoration: TextDecoration.underline,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        );
+      } else {
+        return GenericText(
+          '$word ',
+          style: AppStyles.medium14.copyWith(
+            fontWeight: FontWeight.w500,
+            color: AppColors.blackColor,
+          ),
+          textAlign: TextAlign.center,
+        );
+      }
+    }).toList();
   }
 }

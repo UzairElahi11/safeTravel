@@ -16,6 +16,7 @@ class GenericButton extends StatelessWidget {
   final double? borderRadius;
   final Color? borderColor;
   final Widget? leading;
+  final double? borderWidth;
 
   const GenericButton(
       {Key? key,
@@ -34,7 +35,8 @@ class GenericButton extends StatelessWidget {
       this.borderRadius,
       this.leading,
       this.child,
-      this.enableMarquee = false})
+      this.enableMarquee = false,
+      this.borderWidth})
       : super(key: key);
 
   @override
@@ -47,7 +49,8 @@ class GenericButton extends StatelessWidget {
         height: height ?? 52.h,
         decoration: BoxDecoration(
             border: Border.all(
-                color: borderColor ?? color ?? AppColors.baseColor, width: 1),
+                color: borderColor ?? color ?? AppColors.baseColor,
+                width: borderWidth ?? 1.0),
             borderRadius: BorderRadius.circular(borderRadius ?? 18),
             color: color ?? AppColors.baseColor),
         child: Center(

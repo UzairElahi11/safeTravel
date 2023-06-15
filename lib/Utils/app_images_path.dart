@@ -10,9 +10,9 @@ class AppImages {
 
   //SVG ICONS PATHS
   static String dropDownSvgIcon = "${baseIconPath}dropdown.svg";
-  static String googleSvgIcon = "${baseIconPath}google.svg";
-  static String facebookSvgIcon = "${baseIconPath}facebook.svg";
-  static String appleSvgIcon = "${baseIconPath}apple.svg";
+  static String googleSvgIcon = "${baseIconPath}google_icon.svg";
+  static String facebookSvgIcon = "${baseIconPath}facebook_icon.svg";
+  static String appleSvgIcon = "${baseIconPath}apple_icon.svg";
   static String passwordSvgIcon = "${baseIconPath}password.svg";
 
   static String backArrow = "${baseCommonPath}backArrow.svg";

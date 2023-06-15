@@ -25,6 +25,8 @@ class AppUtil {
 
    static    RegExp spaceNotAllowedRegex = RegExp(r'\s');
 
+   static RegExp emailDetectionRegex = RegExp(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b');
+
   // _paddingTop = 0,
   // _paddingBottom = 0;
 

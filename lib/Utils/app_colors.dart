@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 
 class AppColors {
 //Safe Colors
@@ -20,6 +18,7 @@ class AppColors {
   static Color otherChatBubbleColor = const Color(0xFFF2F7FB);
   static Color redColor = const Color(0xFFFF0E0E);
   static Color navigationContainerColor = const Color(0xFF0066FF);
-  static Color dividerColor = const Color(0xFF292929);
+  static Color dividerColor = const Color(0xFFE1E1E1);
+  static Color transparentColor = Colors.transparent;
 
 }

@@ -23,10 +23,12 @@ class Login extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: ViewModelBuilder<LoginViewModel>.reactive(
-            viewModelBuilder: () => LoginViewModel(),
-            builder: (context, model, _) {
-              return Padding(
-                padding: EdgeInsets.symmetric(horizontal: 100.w),
+          onViewModelReady: (model) => model.checkingEmailText(),
+          viewModelBuilder: () => LoginViewModel(),
+          builder: (context, model, _) {
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 100.w),
+              child: SingleChildScrollView(
                 child: Column(
                   children: [
                     SizedBox(
@@ -159,11 +161,93 @@ class Login extends StatelessWidget {
                             .copyWith(color: AppColors.whiteColor),
                       ),
                       onPressed: () => model.validate(),
-                    )
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    GenericButton(
+                      borderColor: AppColors.baseColor,
+                      borderWidth: 1.5,
+                      height: 80.h,
+                      width: double.infinity,
+                      color: AppColors.transparentColor,
+                      child: Center(
+                        child: GenericSvgImage(
+                          svgPath: AppImages.googleSvgIcon,
+                        ),
+                      ),
+                      onPressed: () {
+                        //TODO: Have to implement the google sigin on this button
+                      },
+                    ),
+                    SizedBox(
+                      height: 50.h,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Divider(
+                            color: AppColors.dividerColor,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 60.0.w),
+                          child: GenericText(
+                            continueText,
+                            style: AppStyles.small12,
+                          ),
+                        ),
+                        Expanded(
+                          child: Divider(
+                            color: AppColors.dividerColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 50.h,
+                    ),
+                    Row(
+                      children: [
+                        GenericSvgImage(
+                          svgPath: AppImages.facebookSvgIcon,
+                          height: 24.h,
+                          width: 24.w,
+                        ),
+                        GenericSvgImage(
+                          height: 24.h,
+                          width: 24.w,
+                          svgPath: AppImages.appleSvgIcon,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 50.h,
+                    ),
+                    GenericText(
+                      contactInfoText,
+                      style: AppStyles.medium18.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.blackColor,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30.h,
+                    ),
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: model.textSpans,
+                    ),
+                    SizedBox(
+                      height: 30.h,
+                    ),
                   ],
                 ),
-              );
-            }),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

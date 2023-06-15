@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:safe/Utils/app_colors.dart';
 import 'package:safe/Utils/app_util.dart';
-import 'package:safe/screens/UI/login/login.dart';
 import 'package:safe/screens/UI/registration/registration_view.dart';
 import 'package:safe/screens/controllers/introduction/intro_viewModel.dart';
 import 'package:stacked/stacked.dart';
@@ -123,7 +122,6 @@ class IntroView extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
-      // mainAxisAlignment: Mai,
       children: [
         SvgPicture.asset(AppImages.backArrow),
         SizedBox(

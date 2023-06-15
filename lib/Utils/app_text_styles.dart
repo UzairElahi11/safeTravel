@@ -49,4 +49,9 @@ class AppStyles extends GoogleFonts {
     fontWeight: FontWeight.w600,
     fontSize: 16.sp,
   );
+
+  static var small12 = Fonts.fonts(
+      fontWeight: FontWeight.w400,
+      fontSize: 12.sp,
+      color: AppColors.blackColor);
 }
