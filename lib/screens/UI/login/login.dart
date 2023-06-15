@@ -6,6 +6,7 @@ import 'package:safe/Utils/app_text_styles.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/constants/all_texts.dart';
 import 'package:safe/screens/controllers/login/login_viewmodel.dart';
+import 'package:safe/widgets/generic_asset_image.dart';
 import 'package:safe/widgets/generic_button.dart';
 import 'package:safe/widgets/generic_icon.dart';
 import 'package:safe/widgets/generic_svg_image.dart';
@@ -205,19 +206,23 @@ class Login extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: 50.h,
+                      height: 10.h,
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        GenericSvgImage(
-                          svgPath: AppImages.facebookSvgIcon,
-                          height: 24.h,
-                          width: 24.w,
+                        GenericAssetImageWidget(
+                          image: AppImages.facebookPngIcon,
+                          height: 100.h,
+                          width: 100.w,
                         ),
-                        GenericSvgImage(
-                          height: 24.h,
-                          width: 24.w,
-                          svgPath: AppImages.appleSvgIcon,
+                        SizedBox(
+                          width: 100.w,
+                        ),
+                        GenericAssetImageWidget(
+                          image: AppImages.applePngIcon,
+                          height: 90.h,
+                          width: 90.w,
                         ),
                       ],
                     ),

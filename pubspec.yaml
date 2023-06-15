@@ -41,34 +41,24 @@ dependencies:
   sizer: ^2.0.15
   flutter_screenutil: ^5.6.0
   google_maps_flutter: ^2.2.5
-  get: ^4.6.5
   permission_handler: ^10.2.0
   geolocator: ^9.0.2
-  qr_code_scanner: ^1.0.1
-  modal_bottom_sheet:
-  flutter_slider_drawer: ^2.1.1
   http: ^0.13.5
-  lottie: ^2.0.0
   google_sign_in: ^5.4.4
   firebase_core: ^2.8.0
   firebase_auth: ^4.3.0
   flutter_facebook_auth: ^5.0.8
-  flutter_stripe: ^9.2.0
   sign_in_with_apple: ^4.3.0
   crypto: ^3.0.2
   flutter_local_notifications: ^13.0.0
-  rxdart: ^0.27.7
   firebase_messaging_platform_interface: ^4.2.16
   firebase_messaging: ^14.3.0
   google_fonts: ^4.0.3
   crisp: ^0.3.1
   url_launcher: ^6.1.10
-  flutter_inappwebview: ^5.7.2+3
-  android_intent_plus: ^3.1.6
-  social_share: ^2.3.1
-  flutter_credit_card: ^3.0.6
   flutter_svg: ^2.0.5
   get_it: ^7.6.0
+  lottie: ^2.3.2
 
 dev_dependencies:
   flutter_test:

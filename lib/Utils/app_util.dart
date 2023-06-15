@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:lottie/lottie.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:safe/Utils/permission_handler_helper_model.dart';
@@ -171,14 +170,6 @@ class AppUtil {
             ],
           );
         });
-  }
-
-  static bool isIOS() {
-    return GetPlatform.isIOS;
-  }
-
-  static bool isAndroid() {
-    return GetPlatform.isAndroid;
   }
 
   static void showFCMNotificationForIOS(

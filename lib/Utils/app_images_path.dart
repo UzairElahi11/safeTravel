@@ -7,12 +7,13 @@ class AppImages {
 
   //SVG IMAGES PATHS
   static String logoSvgImage = "${baseSvgImagePath}Logo.svg";
+  static String facebookPngIcon = "${baseCommonPath}facebook.png";
+    static String applePngIcon = "${baseCommonPath}apple.png";
+
 
   //SVG ICONS PATHS
   static String dropDownSvgIcon = "${baseIconPath}dropdown.svg";
   static String googleSvgIcon = "${baseIconPath}google_icon.svg";
-  static String facebookSvgIcon = "${baseIconPath}facebook_icon.svg";
-  static String appleSvgIcon = "${baseIconPath}apple_icon.svg";
   static String passwordSvgIcon = "${baseIconPath}password.svg";
 
   static String backArrow = "${baseCommonPath}backArrow.svg";

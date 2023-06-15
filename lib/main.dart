@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:safe/Utils/pawa_route.dart';
 import 'package:safe/app_providers.dart';
@@ -97,7 +96,6 @@ class App extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               initialRoute: Splash.id,
               onGenerateRoute: PawaRoutes.onGenerateRoute,
-              key: Get.key,
               navigatorKey: Keys.mainNavigatorKey,
               navigatorObservers: [PawaNavigationObserver()],
               builder: (BuildContext context, Widget? widget) {

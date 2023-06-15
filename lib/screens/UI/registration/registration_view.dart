@@ -12,7 +12,6 @@ import 'package:safe/widgets/generic_button.dart';
 import 'package:safe/widgets/generic_icon.dart';
 import 'package:safe/widgets/generic_text.dart';
 import 'package:safe/widgets/generic_text_field.dart';
-import 'package:safe/widgets/text_field.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../Utils/app_images_path.dart';

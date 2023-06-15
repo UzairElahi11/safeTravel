@@ -1,11 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/constants/all_texts.dart';
 import 'package:safe/widgets/generic_text.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../Utils/app_colors.dart';
 import '../../../Utils/app_text_styles.dart';
-import '../../../Utils/extensions/lauchemail_extension.dart';
 import '../../../Utils/validator/textformfield_model.dart';
 import '../../../Utils/validator/textformfield_validator.dart';
 import '../../../locator.dart';
@@ -84,7 +86,7 @@ class LoginViewModel extends ChangeNotifier {
       if (word.contains('@') && word.contains('.')) {
         return GestureDetector(
           onTap: () {
-            word.launchEmail();
+            launchEmail(word);
           },
           child: GenericText(
             '$word ',
@@ -107,5 +109,28 @@ class LoginViewModel extends ChangeNotifier {
         );
       }
     }).toList();
+  }
+
+  //LAUCH THE EMAIL IN THE EMAIL APPLICATION
+  void launchEmail(String email) async {
+    final Uri emailLaunchUri = Uri(
+      scheme: 'mailto',
+      queryParameters: {'To': email},
+      path: email,
+    );
+
+    if (await canLaunchUrl(
+      Uri.parse(
+        emailLaunchUri.toString(),
+      ),
+    )) {
+      await launchUrl(
+        Uri.parse(
+          emailLaunchUri.toString(),
+        ),
+      );
+    } else {
+      throw 'Could not launch $email';
+    }
   }
 }
