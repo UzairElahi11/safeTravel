@@ -13,3 +13,8 @@ const String continueText = "Or Continue with";
 const String futhureAssistanceText =
     "For further assistance and inquiries, please reach us at +123456789 or email us at info@staysafemorocco.com.";
 const String contactInfoText = "Contact Info";
+const String signUpButtonText = "Sign up";
+const String emailValidatorErrorText = "Email Required";
+const String emailMissMatchErrorText = "Email not valid";
+const String passwordValidatorErrorText = "Password Required";
+const String nameValidatorErrorText = "Name Required";

@@ -18,6 +18,7 @@ class AppUtil {
 
   static const hintPassword = "*********";
   static const emailHint = "Email";
+  static const fullNameHint = "Full Name";
 
   static RegExp emailRegex = RegExp(
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");

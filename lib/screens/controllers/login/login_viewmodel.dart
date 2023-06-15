@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:safe/Utils/app_util.dart';
+import 'package:safe/constants/all_texts.dart';
 
 import '../../../Utils/validator/textformfield_model.dart';
 import '../../../Utils/validator/textformfield_validator.dart';
@@ -27,11 +28,11 @@ class LoginViewModel extends ChangeNotifier {
       mapErrorMessageUsingConditions: (text) {
         if (emailController.text.isEmpty) {
           return TextFieldValidatorModel(
-              isError: true, errorMessage: "Email Required");
+              isError: true, errorMessage: emailValidationError);
         } else if (!AppUtil.emailRegex.hasMatch(text)) {
           return TextFieldValidatorModel(
             isError: true,
-            errorMessage: "Email not valid",
+            errorMessage: emailMissMatchErrorText,
           );
         }
         return TextFieldValidatorModel(isError: false);
@@ -44,7 +45,7 @@ class LoginViewModel extends ChangeNotifier {
 
     bool passwordValidated = textFieldValidator.validateTextField(
       passwordController,
-      defaultErrorMessage: "Password Required",
+      defaultErrorMessage: passwordValidationError,
       onError: (text) {
         passwordValidationError = text;
         notifyListeners();

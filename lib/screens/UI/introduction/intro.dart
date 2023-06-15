@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:safe/Utils/app_colors.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/screens/UI/login/login.dart';
+import 'package:safe/screens/UI/registration/registration_view.dart';
 import 'package:safe/screens/controllers/introduction/intro_viewModel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -90,7 +91,7 @@ class IntroView extends StatelessWidget {
     return InkWell(
       onTap: () => AppUtil.pushRoute(
         context: context,
-        route: const Login(),
+        route: const RegistationView(),
       ),
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 10.h),
