@@ -5,6 +5,7 @@ import 'package:safe/Utils/app_colors.dart';
 import 'package:safe/Utils/app_text_styles.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/constants/all_texts.dart';
+import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/screens/controllers/login/login_viewmodel.dart';
 import 'package:safe/widgets/generic_asset_image.dart';
 import 'package:safe/widgets/generic_button.dart';
@@ -230,7 +231,7 @@ class Login extends StatelessWidget {
                       height: 50.h,
                     ),
                     GenericText(
-                      contactInfoText,
+                      LocaleKeys.contactInfoText,
                       style: AppStyles.medium18.copyWith(
                         fontWeight: FontWeight.w500,
                         color: AppColors.blackColor,

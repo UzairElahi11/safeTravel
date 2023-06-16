@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ import 'package:sizer/sizer.dart';
 
 import 'Utils/local.storage.helper.func.dart';
 import 'constants/keys.dart';
+import 'l10n/locale.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   debugPrint('Handling a background message ${message.messageId}');
@@ -47,6 +49,8 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
   await initializeDependencies();
   await LocalStorageHelperFunctions.getloginToken();
   await LocalStorageHelperFunctions.getOnBoardingStatus();
@@ -67,7 +71,12 @@ Future main() async {
     DeviceOrientation.portraitDown,
   ]).then(
     (value) => runApp(
-      const MyApp(),
+      EasyLocalization(
+        supportedLocales: L10n.all,
+        path: 'assets/l10n',
+        fallbackLocale: L10n.all[0],
+        child: const MyApp(),
+      ),
     ),
   );
 }

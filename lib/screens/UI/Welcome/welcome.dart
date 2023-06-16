@@ -1,7 +1,9 @@
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/screens/UI/introduction/intro.dart';
 import 'package:safe/screens/controllers/introduction/intro_viewModel.dart';
 import 'package:safe/widgets/generic_drop_down.dart';
@@ -86,6 +88,11 @@ class Welcome extends StatelessWidget {
                       iconColor: AppColors.baseColor,
                       mapDropDownText: (option) => GenericText(option),
                       onDropDownItemChanged: (option) {
+                        // if (option == 'English') {
+                        //   context.setLocale(const Locale('en'));
+                        // } else {
+                        context.setLocale(const Locale('es'));
+                        // }
                         log("option selection is $option");
                       },
                       fillColor: AppColors.whiteColor),
@@ -106,7 +113,7 @@ class Welcome extends StatelessWidget {
                         );
                       },
                       child: GenericText(
-                        btnNextText,
+                        LocaleKeys.btnNextText,
                         style: AppStyles.medium20,
                       ),
                     ),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 
 class GenericText extends StatelessWidget {
@@ -36,7 +37,7 @@ class GenericText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      text,
+      text.tr(),
       style: style,
       overflow: overflow,
       maxLines: maxLines,
