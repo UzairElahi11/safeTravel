@@ -6,7 +6,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:safe/Utils/app_colors.dart';
 import 'package:safe/Utils/app_text_styles.dart';
 import 'package:safe/Utils/app_util.dart';
-import 'package:safe/constants/all_texts.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/screens/UI/login/login.dart';
 import 'package:safe/screens/controllers/registration/registration_viewModel.dart';
@@ -317,7 +316,7 @@ class RegistationView extends StatelessWidget {
       width: double.infinity,
       color: AppColors.baseColor,
       child: GenericText(
-        signUpButtonText,
+        LocaleKeys.signUpButtonText,
         style: AppStyles.mediumBold16.copyWith(color: AppColors.whiteColor),
       ),
       onPressed: () => model.validate(),

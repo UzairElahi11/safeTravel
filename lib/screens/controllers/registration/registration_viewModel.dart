@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:safe/Utils/app_util.dart';
+import 'package:safe/Utils/extensions/string.extension.dart';
 import 'package:safe/Utils/validator/textformfield_model.dart';
 import 'package:safe/Utils/validator/textformfield_validator.dart';
-import 'package:safe/constants/all_texts.dart';
 import 'package:safe/locator.dart';
+
+import '../../../l10n/locale_keys.g.dart';
 
 class RegistrationViewModel with ChangeNotifier {
   bool isHidden = false;
@@ -32,11 +34,11 @@ class RegistrationViewModel with ChangeNotifier {
       mapErrorMessageUsingConditions: (text) {
         if (email.text.isEmpty) {
           return TextFieldValidatorModel(
-              isError: true, errorMessage: emailValidatorErrorText);
+              isError: true, errorMessage: LocaleKeys.emailValidatorErrorText.translatedString());
         } else if (!AppUtil.emailRegex.hasMatch(text)) {
           return TextFieldValidatorModel(
             isError: true,
-            errorMessage: emailMissMatchErrorText,
+            errorMessage: LocaleKeys.emailMissMatchErrorText.translatedString(),
           );
         }
         return TextFieldValidatorModel(isError: false);
@@ -49,7 +51,7 @@ class RegistrationViewModel with ChangeNotifier {
 
     bool passwordValidated = textFieldValidator.validateTextField(
       password,
-      defaultErrorMessage: passwordValidatorErrorText,
+      defaultErrorMessage: LocaleKeys.passwordValidatorErrorText.translatedString(),
       onError: (text) {
         passwordValidationError = text;
         notifyListeners();
@@ -57,7 +59,7 @@ class RegistrationViewModel with ChangeNotifier {
     );
     bool confirmpasswordValidated = textFieldValidator.validateTextField(
       confirmPassword,
-      defaultErrorMessage: passwordValidatorErrorText,
+      defaultErrorMessage: LocaleKeys.passwordValidatorErrorText.translatedString(),
       onError: (text) {
         confirmPasswordErrorValidator = text;
         notifyListeners();
@@ -65,7 +67,7 @@ class RegistrationViewModel with ChangeNotifier {
     );
     bool fullNameValidated = textFieldValidator.validateTextField(
       fullName,
-      defaultErrorMessage: nameValidatorErrorText,
+      defaultErrorMessage: LocaleKeys.nameValidatorErrorText.translatedString(),
       onError: (text) {
         fullNameValidationError = text;
         notifyListeners();

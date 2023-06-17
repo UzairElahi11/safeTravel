@@ -8,8 +8,7 @@ class IntroViewModel with ChangeNotifier {
   bool isHidden = false;
   bool checkBox = false;
 
-  List<String> language = [];
-
+  List<String> language = ["English", "Spanish"];
   List<String> enLanguages = ["English", "Spanish"];
   List<String> esLanguages = ["Inglés", "español"];
 

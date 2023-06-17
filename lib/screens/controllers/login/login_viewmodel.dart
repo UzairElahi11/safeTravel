@@ -1,8 +1,7 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:safe/Utils/app_util.dart';
-import 'package:safe/constants/all_texts.dart';
+import 'package:safe/Utils/extensions/string.extension.dart';
 import 'package:safe/widgets/generic_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -42,7 +41,7 @@ class LoginViewModel extends ChangeNotifier {
         } else if (!AppUtil.emailRegex.hasMatch(text)) {
           return TextFieldValidatorModel(
             isError: true,
-            errorMessage: emailMissMatchErrorText,
+            errorMessage: LocaleKeys.emailMissMatchErrorText.translatedString(),
           );
         }
         return TextFieldValidatorModel(isError: false);
