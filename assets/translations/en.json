@@ -26,7 +26,8 @@
   "confirmPassword" : "Confirm Password",
   "alreadyAccount" : "Already have an account?",
   "english" : "English",
-  "spanish" : "Spanish"
+  "spanish" : "Spanish",
+  "required" : "Required"
 
 
 }

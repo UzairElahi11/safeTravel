@@ -6,13 +6,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:safe/Utils/app_util.dart';
+import 'package:safe/Utils/local_storage.dart';
 import 'package:safe/Utils/pawa_route.dart';
 import 'package:safe/app_providers.dart';
 import 'package:safe/locator.dart';
 import 'package:safe/observers/navigation_observer.dart';
 import 'package:safe/screens/UI/splash/splash.dart';
 import 'package:sizer/sizer.dart';
-import 'Utils/local.storage.helper.func.dart';
 import 'constants/keys.dart';
 import 'locale.dart';
 
@@ -51,8 +52,7 @@ Future main() async {
   await EasyLocalization.ensureInitialized();
 
   await initializeDependencies();
-  await LocalStorageHelperFunctions.getloginToken();
-  await LocalStorageHelperFunctions.getOnBoardingStatus();
+
   await Firebase.initializeApp();
   // await Firebase.initializeApp().then((_) async {
   //   FirebaseMessaging.instance.requestPermission().then((value) async {
@@ -69,14 +69,19 @@ Future main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]).then(
-    (value) => runApp(
-      EasyLocalization(
-        supportedLocales: L10n.all,
-        path: 'assets/translations',
-        fallbackLocale: L10n.all[0],
-        child: const MyApp(),
-      ),
-    ),
+    (value) async {
+      final languageStored = await locator<LocalSecureStorage>()
+          .readSecureStorage(AppUtil.isEnglish);
+      runApp(
+        EasyLocalization(
+          supportedLocales: L10n.all,
+          path: 'assets/translations',
+          fallbackLocale:
+              languageStored == "English" ? L10n.all[0] : L10n.all[1],
+          child: const MyApp(),
+        ),
+      );
+    },
   );
 }
 

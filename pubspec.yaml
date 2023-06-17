@@ -59,7 +59,12 @@ dependencies:
   flutter_svg: ^2.0.5
   get_it: ^7.6.0
   lottie: ^2.3.2
+
+  #Localization of the whole application
   easy_localization: ^3.0.2
+
+  #Storing the data locally encrypted
+  flutter_secure_storage: ^8.0.0
 
 dev_dependencies:
   flutter_test:

@@ -1,8 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:safe/Utils/app_util.dart';
+import 'package:safe/Utils/local_storage.dart';
+import 'package:safe/locator.dart';
 import 'package:safe/screens/UI/Welcome/welcome.dart';
+import 'package:safe/screens/UI/login/login.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -33,13 +38,27 @@ class _SplashState extends State<Splash> {
   }
 
   moveTopNextPage(BuildContext context) {
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      AppUtil.pushRoute(
-        pushReplacement: true,
-        context: context,
-        route: const Welcome(),
-      );
-    });
+    SchedulerBinding.instance.addPostFrameCallback(
+      (_) async {
+        final accepted = await locator<LocalSecureStorage>()
+            .readSecureStorage(AppUtil.isTermsAndConditionsAccepted);
+
+        log("accepeted is $accepted");
+        await locator<LocalSecureStorage>()
+                    .readSecureStorage(AppUtil.isTermsAndConditionsAccepted) ==
+                "1"
+            ? AppUtil.pushRoute(
+                pushReplacement: true,
+                context: context,
+                route: const Login(),
+              )
+            : AppUtil.pushRoute(
+                pushReplacement: true,
+                context: context,
+                route: const Welcome(),
+              );
+      },
+    );
 
     // AppUtil.checkIfLocationPermissionAlreadyGranted().then((value) {
     //   if (value.permissionsResult == PermissionsResult.granted) {

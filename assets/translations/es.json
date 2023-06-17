@@ -26,5 +26,6 @@
   "confirmPassword" : "confirmar Contraseña",
   "alreadyAccount" : "¿Ya tienes una cuenta?",
   "english" : "Inglés",
-  "spanish" : "español"
+  "spanish" : "español",
+  "required" : "Requerida"
 }

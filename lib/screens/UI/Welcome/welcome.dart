@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -85,22 +87,19 @@ class Welcome extends StatelessWidget {
                       hintColor: AppColors.baseColor,
                       iconColor: AppColors.baseColor,
                       mapDropDownText: (option) => GenericText(option),
-                      onDropDownItemChanged: (option) {
+                      onDropDownItemChanged: (option) async {
                         if (model.language[0] == option) {
                           context.setLocale(
                             L10n.all[0],
                           );
+
+                          await model.storeLocaleLanguageCode(option ?? "");
                         } else {
                           context.setLocale(
                             L10n.all[1],
                           );
-                        }
 
-                        if (context.locale.languageCode == "en") {
-                        } else {
-                          context.setLocale(
-                            const Locale('es'),
-                          );
+                          await model.storeLocaleLanguageCode(option ?? "");
                         }
                       },
                       fillColor: AppColors.whiteColor),

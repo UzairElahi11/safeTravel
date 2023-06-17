@@ -29,5 +29,6 @@ abstract class  LocaleKeys {
   static const alreadyAccount = 'alreadyAccount';
   static const english = 'english';
   static const spanish = 'spanish';
+  static const required = 'required';
 
 }
