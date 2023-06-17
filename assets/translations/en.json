@@ -24,7 +24,9 @@
   "email" : "Email",
   "password" : "Password",
   "confirmPassword" : "Confirm Password",
-  "alreadyAccount" : "Already have an account?"
+  "alreadyAccount" : "Already have an account?",
+  "english" : "English",
+  "spanish" : "Spanish"
 
 
 }

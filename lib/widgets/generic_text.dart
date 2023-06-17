@@ -37,7 +37,7 @@ class GenericText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      text.tr(),
+      tr(text),
       style: style,
       overflow: overflow,
       maxLines: maxLines,

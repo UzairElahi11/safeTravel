@@ -24,5 +24,7 @@
   "email" : "Correo electrónico",
   "password" : "Contraseña",
   "confirmPassword" : "confirmar Contraseña",
-  "alreadyAccount" : "¿Ya tienes una cuenta?"
+  "alreadyAccount" : "¿Ya tienes una cuenta?",
+  "english" : "Inglés",
+  "spanish" : "español"
 }
