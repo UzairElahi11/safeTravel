@@ -12,12 +12,11 @@ import 'package:safe/locator.dart';
 import 'package:safe/observers/navigation_observer.dart';
 import 'package:safe/screens/UI/splash/splash.dart';
 import 'package:sizer/sizer.dart';
-
 import 'Utils/local.storage.helper.func.dart';
 import 'constants/keys.dart';
-import 'l10n/locale.dart';
+import 'locale.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   debugPrint('Handling a background message ${message.messageId}');
   debugPrint(message.notification!.title);
   debugPrint(message.notification!.body);
@@ -73,7 +72,7 @@ Future main() async {
     (value) => runApp(
       EasyLocalization(
         supportedLocales: L10n.all,
-        path: 'assets/l10n',
+        path: 'assets/translations',
         fallbackLocale: L10n.all[0],
         child: const MyApp(),
       ),
@@ -87,7 +86,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: locator<AppProviders>().appProviders, child: const App());
+      providers: locator<AppProviders>().appProviders,
+      child: const App(),
+    );
   }
 }
 
@@ -102,6 +103,9 @@ class App extends StatelessWidget {
           designSize: const Size(1920, 1080),
           builder: (context, child) {
             return MaterialApp(
+              localizationsDelegates: context.localizationDelegates,
+              supportedLocales: context.supportedLocales,
+              locale: context.locale,
               debugShowCheckedModeBanner: false,
               initialRoute: Splash.id,
               onGenerateRoute: PawaRoutes.onGenerateRoute,

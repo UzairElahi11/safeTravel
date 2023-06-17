@@ -1,0 +1,30 @@
+{
+  "welcomeMessage": "Welcome to \n Stay safe morocco",
+  "welcomeScreenDetailsText": "Exploring the enchanting landscapes and vibrant culture while prioritizing your well-being with robust safety measures",
+  "drpLanguageHintText": "Select Language",
+  "btnNextText": "Next",
+  "introDetailsMessage": "Exploring the enchanting landscapes and vibrant culture while prioritizing your well-being with robust safety measures. Stay Safe Morocco: Embark on an unforgettable journey through the captivating sights and sounds of Morocco, all while ensuring your safety is our top priority. With stringent health protocols, expert guides, and carefully curated experiences, indulge in the rich history, breathtaking landscapes, and warm hospitality with peace of mind. Immerse yourself in the magic of Morocco while we take care of your well-being every step of the way.",
+  "next": "Next",
+  "acceptTC": "I accept Terms & Conditions",
+  "emailAddress": "info@staysafemorocco.com",
+  "introductions": "'Introduction",
+  "welcomeText": "Welcome to",
+  "staySafeText": "Stay safe morocco",
+  "loginText": "Log In",
+  "continueText": "Or Continue with",
+  "futhureAssistanceText": "For further assistance and inquiries, please reach us at +123456789 or email us at info@staysafemorocco.com.",
+  "contactInfoText": "Contact Info",
+  "signUpButtonText": "Sign up",
+  "emailValidatorErrorText": "Email Required",
+  "emailMissMatchErrorText": "Email not valid",
+  "passwordValidatorErrorText": "Password Required",
+  "nameValidatorErrorText": "Name Required",
+  "register" : "Register",
+  "full_name" : "Full Name",
+  "email" : "Email",
+  "password" : "Password",
+  "confirmPassword" : "Confirm Password",
+  "alreadyAccount" : "Already have an account?"
+
+
+}

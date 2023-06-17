@@ -5,6 +5,11 @@ abstract class  LocaleKeys {
   static const welcomeScreenDetailsText = 'welcomeScreenDetailsText';
   static const drpLanguageHintText = 'drpLanguageHintText';
   static const btnNextText = 'btnNextText';
+  static const introDetailsMessage = 'introDetailsMessage';
+  static const next = 'next';
+  static const acceptTC = 'acceptTC';
+  static const emailAddress = 'emailAddress';
+  static const introductions = 'introductions';
   static const welcomeText = 'welcomeText';
   static const staySafeText = 'staySafeText';
   static const loginText = 'loginText';
@@ -16,5 +21,11 @@ abstract class  LocaleKeys {
   static const emailMissMatchErrorText = 'emailMissMatchErrorText';
   static const passwordValidatorErrorText = 'passwordValidatorErrorText';
   static const nameValidatorErrorText = 'nameValidatorErrorText';
+  static const register = 'register';
+  static const full_name = 'full_name';
+  static const email = 'email';
+  static const password = 'password';
+  static const confirmPassword = 'confirmPassword';
+  static const alreadyAccount = 'alreadyAccount';
 
 }

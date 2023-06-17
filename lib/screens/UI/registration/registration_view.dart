@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +7,7 @@ import 'package:safe/Utils/app_colors.dart';
 import 'package:safe/Utils/app_text_styles.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/constants/all_texts.dart';
+import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/screens/UI/login/login.dart';
 import 'package:safe/screens/controllers/registration/registration_viewModel.dart';
 import 'package:safe/widgets/generic_button.dart';
@@ -47,10 +49,10 @@ class RegistationView extends StatelessWidget {
                       SizedBox(
                         height: 20.h,
                       ),
-                      Text(
-                        "Register",
-                        style:
-                            TextStyle(fontSize: 18, color: AppColors.baseColor),
+                      GenericText(
+                        LocaleKeys.register,
+                        style: AppStyles.medium18
+                            .copyWith(color: AppColors.baseColor),
                       ),
                       Padding(
                         padding:
@@ -61,7 +63,7 @@ class RegistationView extends StatelessWidget {
                             SizedBox(
                               height: 20.h,
                             ),
-                            const Text("Full Name"),
+                            const GenericText(LocaleKeys.full_name),
                             SizedBox(
                               height: 10.h,
                             ),
@@ -108,7 +110,7 @@ class RegistationView extends StatelessWidget {
                             SizedBox(
                               height: 20.h,
                             ),
-                            const Text("Email"),
+                            const GenericText(LocaleKeys.full_name),
                             SizedBox(
                               height: 20.h,
                             ),
@@ -155,7 +157,7 @@ class RegistationView extends StatelessWidget {
                             SizedBox(
                               height: 20.h,
                             ),
-                            const Text("Password"),
+                            const GenericText(LocaleKeys.password),
                             SizedBox(
                               height: 20.h,
                             ),
@@ -202,7 +204,7 @@ class RegistationView extends StatelessWidget {
                             SizedBox(
                               height: 20.h,
                             ),
-                            const Text("Confirm Password"),
+                            const GenericText(LocaleKeys.confirmPassword),
                             SizedBox(
                               height: 20.h,
                             ),
@@ -258,14 +260,14 @@ class RegistationView extends StatelessWidget {
                                 AppUtil.pushRoute(
                                     context: context, route: const Login());
                               },
-                              child: const Center(
+                              child: Center(
                                 child: Text.rich(
                                   TextSpan(
-                                      text: 'Already have an account? ',
+                                      text: LocaleKeys.alreadyAccount.tr(),
                                       children: [
                                         TextSpan(
-                                            text: 'Log in',
-                                            style: TextStyle(
+                                            text: LocaleKeys.loginText.tr(),
+                                            style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               decoration:
                                                   TextDecoration.underline,

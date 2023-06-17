@@ -37,21 +37,21 @@ class Login extends StatelessWidget {
                       height: 70.h,
                     ),
                     GenericText(
-                      welcomeText,
+                      LocaleKeys.welcomeMessage,
                       style: AppStyles.medium24,
                     ),
                     SizedBox(
                       height: 10.h,
                     ),
                     GenericText(
-                      staySafeText,
+                      LocaleKeys.staySafeText,
                       style: AppStyles.bold29,
                     ),
                     SizedBox(
                       height: 28.h,
                     ),
                     GenericText(
-                      loginText,
+                      LocaleKeys.loginText,
                       style: AppStyles.mediumBase20.copyWith(
                         color: AppColors.baseColor,
                       ),
@@ -158,7 +158,7 @@ class Login extends StatelessWidget {
                       width: double.infinity,
                       color: AppColors.baseColor,
                       child: GenericText(
-                        loginText,
+                        LocaleKeys.loginText,
                         style: AppStyles.mediumBold16
                             .copyWith(color: AppColors.whiteColor),
                       ),
@@ -195,7 +195,7 @@ class Login extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 60.0.w),
                           child: GenericText(
-                            continueText,
+                            LocaleKeys.continueText,
                             style: AppStyles.small12,
                           ),
                         ),
