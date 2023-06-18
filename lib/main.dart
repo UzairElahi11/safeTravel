@@ -6,18 +6,18 @@ import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:safe/Utils/app_util.dart';
+import 'package:safe/Utils/local_storage.dart';
 import 'package:safe/Utils/pawa_route.dart';
 import 'package:safe/app_providers.dart';
 import 'package:safe/locator.dart';
 import 'package:safe/observers/navigation_observer.dart';
 import 'package:safe/screens/UI/splash/splash.dart';
 import 'package:sizer/sizer.dart';
-
-import 'Utils/local.storage.helper.func.dart';
 import 'constants/keys.dart';
-import 'l10n/locale.dart';
+import 'locale.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   debugPrint('Handling a background message ${message.messageId}');
   debugPrint(message.notification!.title);
   debugPrint(message.notification!.body);
@@ -52,8 +52,7 @@ Future main() async {
   await EasyLocalization.ensureInitialized();
 
   await initializeDependencies();
-  await LocalStorageHelperFunctions.getloginToken();
-  await LocalStorageHelperFunctions.getOnBoardingStatus();
+
   await Firebase.initializeApp();
   // await Firebase.initializeApp().then((_) async {
   //   FirebaseMessaging.instance.requestPermission().then((value) async {
@@ -70,14 +69,19 @@ Future main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]).then(
-    (value) => runApp(
-      EasyLocalization(
-        supportedLocales: L10n.all,
-        path: 'assets/l10n',
-        fallbackLocale: L10n.all[0],
-        child: const MyApp(),
-      ),
-    ),
+    (value) async {
+      final languageStored = await locator<LocalSecureStorage>()
+          .readSecureStorage(AppUtil.isEnglish);
+      runApp(
+        EasyLocalization(
+          supportedLocales: L10n.all,
+          path: 'assets/translations',
+          fallbackLocale:
+              languageStored == "English" ? L10n.all[0] : L10n.all[1],
+          child: const MyApp(),
+        ),
+      );
+    },
   );
 }
 
@@ -87,7 +91,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: locator<AppProviders>().appProviders, child: const App());
+      providers: locator<AppProviders>().appProviders,
+      child: const App(),
+    );
   }
 }
 
@@ -102,6 +108,9 @@ class App extends StatelessWidget {
           designSize: const Size(1920, 1080),
           builder: (context, child) {
             return MaterialApp(
+              localizationsDelegates: context.localizationDelegates,
+              supportedLocales: context.supportedLocales,
+              locale: context.locale,
               debugShowCheckedModeBanner: false,
               initialRoute: Splash.id,
               onGenerateRoute: PawaRoutes.onGenerateRoute,

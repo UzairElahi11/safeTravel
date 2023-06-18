@@ -19,12 +19,16 @@ class AppUtil {
   static const emailHint = "Email";
   static const fullNameHint = "Full Name";
 
+  static String isTermsAndConditionsAccepted = "isTCAccepted";
+  static String isEnglish = "isEnglish?";
+
   static RegExp emailRegex = RegExp(
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 
-   static    RegExp spaceNotAllowedRegex = RegExp(r'\s');
+  static RegExp spaceNotAllowedRegex = RegExp(r'\s');
 
-   static RegExp emailDetectionRegex = RegExp(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b');
+  static RegExp emailDetectionRegex =
+      RegExp(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b');
 
   // _paddingTop = 0,
   // _paddingBottom = 0;

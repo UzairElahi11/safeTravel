@@ -14,7 +14,7 @@ import '../../../Utils/app_colors.dart';
 import '../../../Utils/app_images_path.dart';
 import '../../../Utils/app_text_styles.dart';
 import '../../../Utils/app_util.dart';
-import '../../../constants/all_texts.dart';
+import '../../../locale.dart';
 import '../../../widgets/generic_button.dart';
 
 class Welcome extends StatelessWidget {
@@ -41,7 +41,7 @@ class Welcome extends StatelessWidget {
                   height: 80.h,
                 ),
                 GenericText(
-                  welcomeMessage,
+                  LocaleKeys.welcomeMessage,
                   style: AppStyles.bold28,
                   textAlign: TextAlign.center,
                 ),
@@ -49,7 +49,7 @@ class Welcome extends StatelessWidget {
                   height: 10.h,
                 ),
                 GenericText(
-                  welcomeScreenDetailsText,
+                  LocaleKeys.welcomeScreenDetailsText,
                   style: AppStyles.medium18,
                   textAlign: TextAlign.center,
                 ),
@@ -78,21 +78,28 @@ class Welcome extends StatelessWidget {
                       ),
                       useTransparentBorder: false,
                       borderColor: AppColors.baseColor,
-                      items: model.languages,
-                      hintText: drpLanguageHintText,
+                      items: model.enLanguages,
+                      hintText: LocaleKeys.drpLanguageHintText.tr(),
                       hintTextStyle: AppStyles.mediumBase20,
                       textStyle: AppStyles.mediumBase20,
                       textColor: AppColors.baseColor,
                       hintColor: AppColors.baseColor,
                       iconColor: AppColors.baseColor,
                       mapDropDownText: (option) => GenericText(option),
-                      onDropDownItemChanged: (option) {
-                        // if (option == 'English') {
-                        //   context.setLocale(const Locale('en'));
-                        // } else {
-                        context.setLocale(const Locale('es'));
-                        // }
-                        log("option selection is $option");
+                      onDropDownItemChanged: (option) async {
+                        if (model.language[0] == option) {
+                          context.setLocale(
+                            L10n.all[0],
+                          );
+
+                          await model.storeLocaleLanguageCode(option ?? "");
+                        } else {
+                          context.setLocale(
+                            L10n.all[1],
+                          );
+
+                          await model.storeLocaleLanguageCode(option ?? "");
+                        }
                       },
                       fillColor: AppColors.whiteColor),
                 ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:safe/Utils/extensions/string.extension.dart';
 import 'package:safe/Utils/validator/textformfield_validator.dart';
+import 'package:safe/l10n/locale_keys.g.dart';
 
 import '../../constants/typedef.dart';
 
@@ -17,7 +19,7 @@ class TextFieldValidatorImpl implements TextFieldValidator {
           onError(
             mapErrorMessageUsingConditions(controller.text).errorMessage ??
                 defaultErrorMessage ??
-                "required",
+                LocaleKeys.required.translatedString(),
           );
         }
         if (formValidityFlag != null) {
@@ -37,7 +39,7 @@ class TextFieldValidatorImpl implements TextFieldValidator {
       if (controller.text.trim().isEmpty) {
         if (onError != null) {
           onError(
-            defaultErrorMessage ?? "required",
+            defaultErrorMessage ?? LocaleKeys.required.translatedString(),
           );
         }
         if (formValidityFlag != null) {

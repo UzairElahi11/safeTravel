@@ -1,8 +1,7 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:safe/Utils/app_util.dart';
-import 'package:safe/constants/all_texts.dart';
+import 'package:safe/Utils/extensions/string.extension.dart';
 import 'package:safe/widgets/generic_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -10,6 +9,7 @@ import '../../../Utils/app_colors.dart';
 import '../../../Utils/app_text_styles.dart';
 import '../../../Utils/validator/textformfield_model.dart';
 import '../../../Utils/validator/textformfield_validator.dart';
+import '../../../l10n/locale_keys.g.dart';
 import '../../../locator.dart';
 
 class LoginViewModel extends ChangeNotifier {
@@ -41,7 +41,7 @@ class LoginViewModel extends ChangeNotifier {
         } else if (!AppUtil.emailRegex.hasMatch(text)) {
           return TextFieldValidatorModel(
             isError: true,
-            errorMessage: emailMissMatchErrorText,
+            errorMessage: LocaleKeys.emailMissMatchErrorText.translatedString(),
           );
         }
         return TextFieldValidatorModel(isError: false);
@@ -81,7 +81,7 @@ class LoginViewModel extends ChangeNotifier {
 
 // CHECK AND HIGHTLIGHT THE EMAIL WHERE PRESENT IN THE TEXT
   checkingEmailText() {
-    final List<String> words = futhureAssistanceText.split(' ');
+    final List<String> words = LocaleKeys.futhureAssistanceText.split(' ');
     textSpans = words.map((word) {
       if (word.contains('@') && word.contains('.')) {
         return GestureDetector(
