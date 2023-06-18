@@ -1,7 +1,12 @@
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/extensions/string.extension.dart';
+import 'package:safe/Utils/user_defaults.dart';
+import 'package:safe/model/login-register/login_model.dart';
+import 'package:safe/server_manager/server_manager.dart';
 import 'package:safe/widgets/generic_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -12,10 +17,11 @@ import '../../../Utils/validator/textformfield_validator.dart';
 import '../../../l10n/locale_keys.g.dart';
 import '../../../locator.dart';
 
-class LoginViewModel extends ChangeNotifier {
+class LoginViewModel with ChangeNotifier, loginApiCallingClass {
   //initializing the text editing controllers
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  LoginModel  ? loginModel;
 
   //TEXT FORM FIELD VALIDATOR
   final textFieldValidator = locator<TextFieldValidator>();
@@ -62,6 +68,67 @@ class LoginViewModel extends ChangeNotifier {
     );
 
     return emailValidated & passwordValidated;
+  }
+  login(
+      {required String email,
+      required BuildContext context,
+      required String password,
+      required void Function(
+        bool success,
+      )
+          completion}) {
+    loginApiCalling(
+        pasword: password,
+        email: email,
+        context: context,
+        onForeground: true,
+        callBack: (success, json) async {
+            debugPrint("Response of login $json");
+
+          if (json != null) {
+            debugPrint("Response of login $json");
+
+            if (json["status"] == 0) {
+              AppUtil.showWarning(
+                context: context,
+                bodyText: json["message"]??"",
+                title: "Retry",
+                barrierDismissible: false,
+                handler: (action) {
+                  completion(
+                    false,
+                  );
+                  Navigator.of(context, rootNavigator: true).pop();
+                },
+              );
+            } else {
+              loginModel = LoginModel.fromJson(json);
+              if (loginModel?.token != null) {
+                await UserDefaults.setToken(loginModel!.token!);
+                await UserDefaults.setEmailAndUserName(loginModel?.data?.name??"",loginModel?.data?.email??"");
+              }
+              completion(
+                success,
+              );
+
+              log("Token coming from the application ${loginModel!.token}");
+
+              log("here is our token =========> $bearerToken");
+            }
+          } else {
+            AppUtil.showWarning(
+              context: context,
+              title: "Retry",
+              barrierDismissible: false,
+              handler: (action) {
+                completion(
+                  false,
+                );
+                Navigator.of(context, rootNavigator: true).pop();
+              },
+            );
+          }
+        });
   }
 
 //Visible password
@@ -134,3 +201,41 @@ class LoginViewModel extends ChangeNotifier {
     }
   }
 }
+  mixin loginApiCallingClass {
+     bool apiCallingProgress = false;
+  loginApiCalling(
+      {required String email,
+      required String pasword,
+      required BuildContext context,
+      bool onForeground = false,
+      required void Function(bool success, Map? json) callBack}) async {
+    if (apiCallingProgress) return;
+    apiCallingProgress = true;
+    if (onForeground) {
+      AppUtil.showLoader(context: context);
+      ServerManager.login(email, pasword, (responseBody, success) {
+        apiCallingProgress = false;
+        if (onForeground) {
+          AppUtil.dismissLoader(context: context);
+        }
+        if (success) {
+          try {
+            dynamic json = AppUtil.decodeString(responseBody);
+            if (json != null && json is Map) {
+              callBack(true, json);
+            } else {
+              callBack(false, json);
+            }
+          } catch (e) {
+            if (onForeground) {
+              AppUtil.showWarning(
+                  context: context, title: "Error", bodyText: "Error");
+            }
+            callBack(false, null);
+          }
+        }
+      });
+    }
+  }
+
+  }
