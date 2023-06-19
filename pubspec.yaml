@@ -37,7 +37,7 @@ dependencies:
   provider: ^6.0.4
   stacked: ^3.3.0
   shared_preferences: ^2.0.15
-  intl: ^0.17.0
+  intl: 
   sizer: ^2.0.15
   flutter_screenutil: ^5.6.0
   google_maps_flutter: ^2.2.5
@@ -61,7 +61,7 @@ dependencies:
   lottie: ^2.3.2
 
   #Localization of the whole application
-  easy_localization: ^3.0.2
+  easy_localization:
 
   #Storing the data locally encrypted
   flutter_secure_storage: ^8.0.0
