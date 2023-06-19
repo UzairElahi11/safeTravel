@@ -14,8 +14,7 @@ import 'package:safe/widgets/generic_svg_image.dart';
 import 'package:safe/widgets/generic_text.dart';
 import 'package:safe/widgets/generic_text_field.dart';
 import 'package:stacked/stacked.dart';
-
-import '../../../Utils/app_images_path.dart';
+import 'package:safe/Utils/app_images_path.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});

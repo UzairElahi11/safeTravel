@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safe/Utils/app_colors.dart';
 
-import 'generic_text.dart';
+import 'package:safe/widgets/generic_text.dart';
 
 class GenericButton extends StatelessWidget {
   final double? width, height, radius, textSize;

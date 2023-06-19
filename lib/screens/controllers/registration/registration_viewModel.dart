@@ -7,8 +7,7 @@ import 'package:safe/Utils/validator/textformfield_validator.dart';
 import 'package:safe/locator.dart';
 import 'package:safe/model/login-register/register_model.dart';
 import 'package:safe/server_manager/server_manager.dart';
-
-import '../../../l10n/locale_keys.g.dart';
+import 'package:safe/l10n/locale_keys.g.dart';
 
 class RegistrationViewModel with ChangeNotifier  , ApiCalling{
   bool isHidden = false;

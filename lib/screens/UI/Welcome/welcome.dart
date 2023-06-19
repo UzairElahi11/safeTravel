@@ -9,12 +9,12 @@ import 'package:safe/widgets/generic_svg_image.dart';
 import 'package:safe/widgets/generic_text.dart';
 import 'package:stacked/stacked.dart';
 
-import '../../../Utils/app_colors.dart';
-import '../../../Utils/app_images_path.dart';
-import '../../../Utils/app_text_styles.dart';
-import '../../../Utils/app_util.dart';
-import '../../../locale.dart';
-import '../../../widgets/generic_button.dart';
+import 'package:safe/Utils/app_colors.dart';
+import 'package:safe/Utils/app_images_path.dart';
+import 'package:safe/Utils/app_text_styles.dart';
+import 'package:safe/Utils/app_util.dart';
+import 'package:safe/locale.dart';
+import 'package:safe/widgets/generic_button.dart';
 
 class Welcome extends StatelessWidget {
   static const id = "/Welcome";

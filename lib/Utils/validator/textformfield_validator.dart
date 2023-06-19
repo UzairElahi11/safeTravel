@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../constants/typedef.dart';
+import 'package:safe/constants/typedef.dart';
 
 abstract class TextFieldValidator {
   bool validateTextField(TextEditingController controller,

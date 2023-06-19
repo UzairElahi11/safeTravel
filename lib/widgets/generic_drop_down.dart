@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safe/Utils/app_images_path.dart';
 import 'package:safe/widgets/generic_svg_image.dart';
 
-import '../constants/typedef.dart';
+import 'package:safe/constants/typedef.dart';
 
 class GenericDropDown<T> extends StatelessWidget {
   final OnDropDownItemChanged<T?> onDropDownItemChanged;

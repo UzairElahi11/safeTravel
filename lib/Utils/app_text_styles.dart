@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:safe/Utils/extensions/fonts.dart';
 import 'package:sizer/sizer.dart';
 
-import 'app_colors.dart';
+import 'package:safe/Utils/app_colors.dart';
 
 class AppStyles extends GoogleFonts {
   static var bold28 = Fonts.fonts(

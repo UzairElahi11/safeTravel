@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:safe/Utils/local_storage.dart';
 import 'package:safe/locator.dart';
 
-import '../../../Utils/app_util.dart';
-import '../../UI/registration/registration_view.dart';
+import 'package:safe/Utils/app_util.dart';
+import 'package:safe/screens/UI/registration/registration_view.dart';
 
 class IntroViewModel with ChangeNotifier {
   bool isHidden = false;

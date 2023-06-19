@@ -3,7 +3,7 @@ import 'package:safe/Utils/extensions/string.extension.dart';
 import 'package:safe/Utils/validator/textformfield_validator.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 
-import '../../constants/typedef.dart';
+import 'package:safe/constants/typedef.dart';
 
 class TextFieldValidatorImpl implements TextFieldValidator {
   @override

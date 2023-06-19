@@ -6,8 +6,7 @@ import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/screens/controllers/introduction/intro_viewModel.dart';
 import 'package:safe/widgets/generic_text.dart';
 import 'package:stacked/stacked.dart';
-
-import '../../../Utils/app_images_path.dart';
+import 'package:safe/Utils/app_images_path.dart';
 
 class IntroView extends StatelessWidget {
   static const id = "/IntroView";

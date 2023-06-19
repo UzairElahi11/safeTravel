@@ -10,12 +10,12 @@ import 'package:safe/server_manager/server_manager.dart';
 import 'package:safe/widgets/generic_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../Utils/app_colors.dart';
-import '../../../Utils/app_text_styles.dart';
-import '../../../Utils/validator/textformfield_model.dart';
-import '../../../Utils/validator/textformfield_validator.dart';
-import '../../../l10n/locale_keys.g.dart';
-import '../../../locator.dart';
+import 'package:safe/Utils/app_colors.dart';
+import 'package:safe/Utils/app_text_styles.dart';
+import 'package:safe/Utils/validator/textformfield_model.dart';
+import 'package:safe/Utils/validator/textformfield_validator.dart';
+import 'package:safe/l10n/locale_keys.g.dart';
+import 'package:safe/locator.dart';
 
 class LoginViewModel with ChangeNotifier, loginApiCallingClass {
   //initializing the text editing controllers

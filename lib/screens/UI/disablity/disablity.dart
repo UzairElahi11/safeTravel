@@ -6,8 +6,7 @@ import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/screens/UI/disablity/disability_viewmodel.dart';
 import 'package:safe/widgets/generic_check_box.dart';
 import 'package:stacked/stacked.dart';
-
-import '../../../widgets/generic_text.dart';
+import 'package:safe/widgets/generic_text.dart';
 
 class Disability extends StatelessWidget {
   const Disability({super.key});

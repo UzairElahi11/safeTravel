@@ -1,9 +1,8 @@
 import 'package:get_it/get_it.dart';
 import 'package:safe/Utils/local_storage.dart';
+import 'package:safe/Utils/validator/textformfield_validation.dart';
+import 'package:safe/Utils/validator/textformfield_validator.dart';
 import 'package:safe/app_providers.dart';
-
-import 'Utils/validator/textformfield_validation.dart';
-import 'Utils/validator/textformfield_validator.dart';
 
 final locator = GetIt.I;
 Future<void> initializeDependencies() async {
@@ -21,6 +20,4 @@ Future<void> initializeDependencies() async {
   locator.registerLazySingleton<LocalSecureStorage>(
     () => LocalSecureStorage(),
   );
-
-
 }

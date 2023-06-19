@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:safe/Utils/permission_handler_helper_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../dynamic_size.dart';
+import 'package:safe/dynamic_size.dart';
 
 class AppUtil {
   AppUtil._();
@@ -45,7 +46,9 @@ class AppUtil {
 
     try {
       _deviceHeight = mediaQueryData.size.height;
-    } catch (e) {}
+    } catch (e) {
+      log(e.toString(),);
+    }
     return _deviceHeight;
   }
 
@@ -54,7 +57,9 @@ class AppUtil {
 
     try {
       _deviceWidth = mediaQueryData.size.width;
-    } catch (e) {}
+    } catch (e) {
+      log(e.toString(),);
+    }
     return _deviceWidth;
   }
 

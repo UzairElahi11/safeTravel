@@ -3,7 +3,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../app_text_styles.dart';
+import 'package:safe/Utils/app_text_styles.dart';
 
 extension Fonts on AppStyles {
   static TextStyle fonts(

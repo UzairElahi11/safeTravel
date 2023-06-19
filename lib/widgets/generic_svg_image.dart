@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../Utils/app_colors.dart';
+import 'package:safe/Utils/app_colors.dart';
 
 class GenericSvgImage extends StatelessWidget {
   final String svgPath;

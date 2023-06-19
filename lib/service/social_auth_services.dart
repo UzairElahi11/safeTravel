@@ -155,7 +155,11 @@ class Authenticate {
       await firebaseUser!.updateEmail(userEmail);
 
       return firebaseUser!;
-    } catch (e) {}
+    } catch (e) {
+      log.log(
+        e.toString(),
+      );
+    }
 
     return firebaseUser!;
   }

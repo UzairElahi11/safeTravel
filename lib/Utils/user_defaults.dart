@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'app_util.dart';
+import 'package:safe/Utils/app_util.dart';
 
 class UserDefaults {
   //SAVE THE TOKEN IN THE LOCAL STORAGE

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../Utils/validator/textformfield_model.dart';
+import 'package:safe/Utils/validator/textformfield_model.dart';
 
 //DROPDOWN DEFINATIONS
 typedef OnDropDownItemChanged<T> = Function(T);
