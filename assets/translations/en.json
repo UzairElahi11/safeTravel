@@ -27,7 +27,8 @@
   "alreadyAccount" : "Already have an account?",
   "english" : "English",
   "spanish" : "Spanish",
-  "required" : "Required"
+  "required" : "Required",
+  "shouldNotEmpty" : "Form field should not be empty"
 
 
 }

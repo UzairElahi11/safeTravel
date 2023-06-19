@@ -41,7 +41,7 @@ class GenericTextField extends StatelessWidget {
   final Function(dynamic value)? onChange;
 
   const GenericTextField({
-    Key? key,
+    super.key,
     required this.controller,
     this.hintText,
     this.borderColor,
@@ -82,7 +82,7 @@ class GenericTextField extends StatelessWidget {
     this.inputFormatters = const [],
     this.textAlign = TextAlign.start,
     this.trailingPadding,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

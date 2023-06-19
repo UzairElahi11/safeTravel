@@ -6,20 +6,20 @@ class RegisterModel {
 RegisterModel({this.data, this.token, this.status, this.message});
 
   RegisterModel.fromJson(Map<dynamic, dynamic> json) {
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
     token = json['token'];
     status = json['status'];
     message = json['message'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['token'] = this.token;
-    data['status'] = this.status;
-    data['message'] = this.message;
+    data['token'] = token;
+    data['status'] = status;
+    data['message'] = message;
     return data;
   }
 }
@@ -28,7 +28,7 @@ class Data {
   int? id;
   String? name;
   String? email;
-  Null emailVerifiedAt;
+  dynamic emailVerifiedAt;
   String? avatar;
   int? apple;
   int? facebook;
@@ -62,17 +62,17 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['email_verified_at'] = this.emailVerifiedAt;
-    data['avatar'] = this.avatar;
-    data['apple'] = this.apple;
-    data['facebook'] = this.facebook;
-    data['google'] = this.google;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['email'] = email;
+    data['email_verified_at'] = emailVerifiedAt;
+    data['avatar'] = avatar;
+    data['apple'] = apple;
+    data['facebook'] = facebook;
+    data['google'] = google;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }

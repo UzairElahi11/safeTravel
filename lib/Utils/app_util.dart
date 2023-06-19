@@ -146,7 +146,7 @@ class AppUtil {
     if (loaderCount < 0) {
       loaderCount = 0;
     }
-    debugPrint("dismissloader : " + loaderCount.toString());
+    debugPrint("dismissloader : $loaderCount");
     showingLoader = false;
     Navigator.of(context, rootNavigator: true).pop();
   }
@@ -170,7 +170,7 @@ class AppUtil {
                   onPressed: () {
                     AppUtil.pop(context: context);
                   },
-                  child: Text('Close')),
+                  child: const Text('Close')),
             ],
           );
         });
@@ -276,6 +276,6 @@ Map<String, dynamic>? facebookUserData;
 String publicKeyStripe =
     "pk_test_51M2D1ECcTUIOQ9MlHx82jO3oGqleOMKvBub1sYxHYTODiKzxwwAWb3hUiqgvHXCf92WXbklGIYgjLtpvh5DiQ9ll00eCtUxgsy";
 
-typedef void PawaHandler(PawaAlertHandler action);
+typedef PawaHandler = void Function(PawaAlertHandler action);
 
 String mapMarkerKey = "currentLocation";

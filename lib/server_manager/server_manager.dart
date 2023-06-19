@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:safe/Utils/url_constants.dart';
 
 import '../Utils/app_util.dart';
 
@@ -154,7 +153,7 @@ class ServerManager {
               logResponse(url, {}, headers, responseBody, response.statusCode);
 
               if (response.statusCode == 200) {
-                debugPrint("responce from server ${responseBody}");
+                debugPrint("responce from server $responseBody");
 
                 callCompletion(responseBody, true, completion);
               } else {
@@ -258,7 +257,7 @@ class ServerManager {
       if (content is Map) {
         return responseCode(content);
       }
-    } on Exception catch (e) {
+    } on Exception {
       // TODO
     }
     return null;
@@ -271,7 +270,7 @@ class ServerManager {
         responseCode = json['responseCode'];
       }
       debugPrint("Response code :: $responseCode");
-    } on Exception catch (e) {
+    } on Exception {
       // TODO
     }
     return null;

@@ -27,5 +27,6 @@
   "alreadyAccount" : "¿Ya tienes una cuenta?",
   "english" : "Inglés",
   "spanish" : "español",
-  "required" : "Requerida"
+  "required" : "Requerida",
+  "shouldNotEmpty" : "El campo del formulario no debe estar vacío"
 }

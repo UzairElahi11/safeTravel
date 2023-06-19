@@ -22,7 +22,7 @@ abstract class  LocaleKeys {
   static const passwordValidatorErrorText = 'passwordValidatorErrorText';
   static const nameValidatorErrorText = 'nameValidatorErrorText';
   static const register = 'register';
-  static const full_name = 'full_name';
+  static const fullName = 'full_name';
   static const email = 'email';
   static const password = 'password';
   static const confirmPassword = 'confirmPassword';
@@ -30,5 +30,6 @@ abstract class  LocaleKeys {
   static const english = 'english';
   static const spanish = 'spanish';
   static const required = 'required';
+  static const notEmpty = "shouldNotEmpty";
 
 }

@@ -19,7 +19,7 @@ class GenericButton extends StatelessWidget {
   final double? borderWidth;
 
   const GenericButton(
-      {Key? key,
+      {super.key,
       this.text,
       required this.onPressed,
       this.height,
@@ -36,8 +36,7 @@ class GenericButton extends StatelessWidget {
       this.leading,
       this.child,
       this.enableMarquee = false,
-      this.borderWidth})
-      : super(key: key);
+      this.borderWidth});
 
   @override
   Widget build(BuildContext context) {

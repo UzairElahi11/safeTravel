@@ -4,7 +4,6 @@ import 'package:safe/Utils/app_images_path.dart';
 import 'package:safe/widgets/generic_svg_image.dart';
 
 import '../constants/typedef.dart';
-import 'generic_asset_image.dart';
 
 class GenericDropDown<T> extends StatelessWidget {
   final OnDropDownItemChanged<T?> onDropDownItemChanged;
@@ -32,7 +31,7 @@ class GenericDropDown<T> extends StatelessWidget {
   final Color? borderColor;
 
   const GenericDropDown({
-    Key? key,
+    super.key,
     this.borderColor,
     required this.items,
     required this.mapDropDownText,
@@ -56,7 +55,7 @@ class GenericDropDown<T> extends StatelessWidget {
     this.icon,
     this.iconColor,
     this.decoration,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

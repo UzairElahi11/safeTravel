@@ -62,7 +62,7 @@ class RegistationView extends StatelessWidget {
                             SizedBox(
                               height: 20.h,
                             ),
-                            const GenericText(LocaleKeys.full_name),
+                            const GenericText(LocaleKeys.fullName),
                             SizedBox(
                               height: 10.h,
                             ),
@@ -109,7 +109,7 @@ class RegistationView extends StatelessWidget {
                             SizedBox(
                               height: 20.h,
                             ),
-                            const GenericText(LocaleKeys.full_name),
+                            const GenericText(LocaleKeys.fullName),
                             SizedBox(
                               height: 20.h,
                             ),

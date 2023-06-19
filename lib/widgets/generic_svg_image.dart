@@ -10,12 +10,12 @@ class GenericSvgImage extends StatelessWidget {
   final Color? color;
 
   const GenericSvgImage({
-    Key? key,
+    super.key,
     required this.svgPath,
     this.height,
     this.width,
     this.color,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
