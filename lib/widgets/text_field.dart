@@ -27,7 +27,7 @@ class TextFieldCustom extends StatelessWidget {
           alignment: Alignment.centerLeft,
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 10),
+              padding: const EdgeInsets.only(left: 10),
               child: Image.asset(
                 icon,
                 color: AppColors.baseColor,

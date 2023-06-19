@@ -18,7 +18,7 @@ class GenericText extends StatelessWidget {
   final TextWidthBasis? textWidthBasis;
 
   const GenericText(this.text,
-      {Key? key,
+      {super.key,
       this.overflow,
       this.maxLines,
       this.style,
@@ -31,8 +31,7 @@ class GenericText extends StatelessWidget {
       this.locale,
       this.height = 1,
       this.selectionColor,
-      this.softWrap})
-      : super(key: key);
+      this.softWrap});
 
   @override
   Widget build(BuildContext context) {
