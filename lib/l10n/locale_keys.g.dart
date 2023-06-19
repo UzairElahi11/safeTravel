@@ -1,5 +1,7 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
+
+
 abstract class  LocaleKeys {
   static const welcomeMessage = 'welcomeMessage';
   static const welcomeScreenDetailsText = 'welcomeScreenDetailsText';
@@ -31,5 +33,6 @@ abstract class  LocaleKeys {
   static const spanish = 'spanish';
   static const required = 'required';
   static const notEmpty = "shouldNotEmpty";
+  static const disability = "disability";
 
 }

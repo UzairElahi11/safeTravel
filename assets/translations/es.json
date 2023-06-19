@@ -28,5 +28,7 @@
   "english" : "Inglés",
   "spanish" : "español",
   "required" : "Requerida",
-  "shouldNotEmpty" : "El campo del formulario no debe estar vacío"
+  "shouldNotEmpty" : "El campo del formulario no debe estar vacío",
+  "disability" : "discapacidad"
+
 }

@@ -28,7 +28,8 @@
   "english" : "English",
   "spanish" : "Spanish",
   "required" : "Required",
-  "shouldNotEmpty" : "Form field should not be empty"
+  "shouldNotEmpty" : "Form field should not be empty",
+  "disability" : "Disability's"
 
 
 }
