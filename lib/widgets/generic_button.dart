@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safe/Utils/app_colors.dart';
+import 'package:safe/Utils/nil/nil_impl.dart';
 
 import 'package:safe/widgets/generic_text.dart';
 
@@ -59,10 +60,8 @@ class GenericButton extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    leading ?? Container(),
-                    SizedBox(
-                      width: leading != null ? 10.w : 0,
-                    ),
+                    leading ?? const SizedBox.shrink(),
+                  SizedBox(width: 20.w,),
                     Expanded(
                       child: GenericText(
                         text ?? "",

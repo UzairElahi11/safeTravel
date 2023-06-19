@@ -20,7 +20,7 @@
   "passwordValidatorErrorText": "Se requiere contraseña",
   "nameValidatorErrorText": "Nombre (requerido",
   "register" : "Registro",
-  "full_name" : "Nombre completo",
+  "fullName" : "Nombre completo",
   "email" : "Correo electrónico",
   "password" : "Contraseña",
   "confirmPassword" : "confirmar Contraseña",
@@ -29,6 +29,13 @@
   "spanish" : "español",
   "required" : "Requerida",
   "shouldNotEmpty" : "El campo del formulario no debe estar vacío",
-  "disability" : "discapacidad"
+  "disability" : "discapacidad",
+  "add" : "agregar",
+  "emergencyContact" : "Contacto de emergencia",
+  "addName" : "Agregar nombre",
+  "addNumber" : "Añade un número",
+  "addNotes" : "Agregar notas",
+  "phoneNumber" : "Número de teléfono",
+  "name" : "nombre"
 
 }

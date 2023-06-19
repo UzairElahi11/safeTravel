@@ -6,7 +6,15 @@ import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/locator.dart';
 
 class DisabilityViewModel extends ChangeNotifier {
-  Map<String, bool> disabilityTypes = {};
+  List<Map<String, dynamic>> disabilityTypes = [
+    {"name": "Awais", "isChecked": false},
+    {"name": "Sarwar", "isChecked": true},
+    {"name": "Khan", "isChecked": true},
+    {"name": "first", "isChecked": true},
+    {"name": "first", "isChecked": true},
+    {"name": "first", "isChecked": true},
+    {"name": "first", "isChecked": true},
+  ];
 
   //Textediting controllers
   TextEditingController nameController = TextEditingController();
@@ -60,5 +68,11 @@ class DisabilityViewModel extends ChangeNotifier {
 
     notifyListeners();
     return nameValidated & phoneValidated & notesValidated;
+  }
+
+  //Change the checkbox value
+  changeCheckBoxvalue(int index) {
+    disabilityTypes[index]['isChecked'] = !disabilityTypes[index]['isChecked'];
+    notifyListeners();
   }
 }

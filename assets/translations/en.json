@@ -20,7 +20,7 @@
   "passwordValidatorErrorText": "Password Required",
   "nameValidatorErrorText": "Name Required",
   "register" : "Register",
-  "full_name" : "Full Name",
+  "fullName" : "Full Name",
   "email" : "Email",
   "password" : "Password",
   "confirmPassword" : "Confirm Password",
@@ -29,7 +29,13 @@
   "spanish" : "Spanish",
   "required" : "Required",
   "shouldNotEmpty" : "Form field should not be empty",
-  "disability" : "Disability's"
-
+  "disability" : "Disability's",
+  "add" : "Add",
+  "emergencyContact":"Emergency Contact",
+  "addName" : "Add name",
+  "addNumber" : "Add number",
+  "addNotes" : "Add notes",
+  "phoneNumber" : "Phone number",
+  "name" : "Name"
 
 }

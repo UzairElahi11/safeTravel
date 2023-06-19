@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safe/Utils/app_colors.dart';
 import 'package:safe/Utils/app_text_styles.dart';
+import 'package:safe/Utils/extensions/string.extension.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/screens/UI/disablity/disability_viewmodel.dart';
-import 'package:safe/widgets/generic_check_box.dart';
-import 'package:stacked/stacked.dart';
+import 'package:safe/widgets/generic_button.dart';
 import 'package:safe/widgets/generic_text.dart';
+import 'package:stacked/stacked.dart';
+
+import '../../../widgets/disability_widgets/disability_types_card.dart';
+import '../../../widgets/disability_widgets/emergency_card.dart';
 
 class Disability extends StatelessWidget {
+  static const id = "DISABILITY_SCREEN";
   const Disability({super.key});
 
   @override
@@ -16,46 +21,49 @@ class Disability extends StatelessWidget {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => DisabilityViewModel(),
       builder: (context, model, _) {
-        return ListView(
-          children: [
-            GenericText(
-              LocaleKeys.disability,
-              style: AppStyles.medium24.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: 16.h,
-                horizontal: 16.w,
-              ),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+        return Scaffold(
+          body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 50.w),
+            child: ListView(
+              children: [
+                SizedBox(
+                  height: 30.h,
                 ),
-                color: AppColors.containerBgColor,
-                child: GridView.builder(
-                  itemCount: model.disabilityTypes.length,
-                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 2,
-                  ),
-                  itemBuilder: (context, index) => Row(
-                    children: [
-                      GenericCheckBox(
-                        value: false,
-                        onChanged: (value) {},
-                      ),
-                      SizedBox(width: 10.w),
-                      const GenericText("text"),
-                    ],
+                GenericText(
+                  LocaleKeys.disability,
+                  style: AppStyles.medium24.copyWith(
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-              ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                DisabilityTypesCard(
+                  model: model,
+                ),
+                SizedBox(
+                  height: 30.h,
+                ),
+                EmergencyContactCard(model: model),
+                SizedBox(
+                  height: 30.h,
+                ),
+                GenericButton(
+                  height: 70.h,
+                  width: double.infinity,
+                  text: LocaleKeys.next.translatedString(),
+                  textStyle: AppStyles.mediumBold16.copyWith(
+                    color: AppColors.whiteColor,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  onPressed: () => model.validate(),
+                ),
+                SizedBox(
+                  height: 30.h,
+                ),
+              ],
             ),
-          ],
+          ),
         );
       },
     );

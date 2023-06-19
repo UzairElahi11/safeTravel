@@ -53,7 +53,7 @@ class GenericCheckBox extends StatelessWidget {
       checkColor: checkColor ?? AppColors.whiteColor,
       focusColor: focusColor,
       shape: shape,
-      fillColor: fillColor ?? MaterialStateProperty.all(AppColors.whiteColor),
+      fillColor: fillColor ?? MaterialStateProperty.all(AppColors.baseColor),
       focusNode: focusnode,
       hoverColor: hoverColor,
       isError: isError,
@@ -61,7 +61,7 @@ class GenericCheckBox extends StatelessWidget {
       overlayColor: overlayColor,
       side: borderSide ??
           BorderSide(
-            color: AppColors.transparentColor,
+            color: AppColors.whiteColor,
           ),
       splashRadius: splashRadius,
       tristate: tristate ?? false,

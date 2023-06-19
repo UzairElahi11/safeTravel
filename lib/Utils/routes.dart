@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:safe/screens/UI/disablity/disablity.dart';
 import 'package:safe/screens/UI/splash/splash.dart';
 
 class PawaRoutes {
@@ -6,7 +7,15 @@ class PawaRoutes {
     switch (settings.name) {
       case Splash.id:
         return MaterialPageRoute(
-            settings: settings, builder: (_) =>const  Splash());
+          settings: settings,
+          builder: (_) => const Splash(),
+        );
+
+      case Disability.id:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const Disability(),
+        );
 
       // case LoginView.id:
       //   return MaterialPageRoute(

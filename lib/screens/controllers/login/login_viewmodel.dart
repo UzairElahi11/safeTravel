@@ -1,27 +1,26 @@
-
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:safe/Utils/app_colors.dart';
+import 'package:safe/Utils/app_text_styles.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/extensions/string.extension.dart';
 import 'package:safe/Utils/user_defaults.dart';
-import 'package:safe/model/login-register/login_model.dart';
-import 'package:safe/server_manager/server_manager.dart';
-import 'package:safe/widgets/generic_text.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-import 'package:safe/Utils/app_colors.dart';
-import 'package:safe/Utils/app_text_styles.dart';
 import 'package:safe/Utils/validator/textformfield_model.dart';
 import 'package:safe/Utils/validator/textformfield_validator.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/locator.dart';
+import 'package:safe/model/login-register/login_model.dart';
+import 'package:safe/screens/UI/disablity/disablity.dart';
+import 'package:safe/server_manager/server_manager.dart';
+import 'package:safe/widgets/generic_text.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginViewModel with ChangeNotifier, loginApiCallingClass {
   //initializing the text editing controllers
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  LoginModel  ? loginModel;
+  LoginModel? loginModel;
 
   //TEXT FORM FIELD VALIDATOR
   final textFieldValidator = locator<TextFieldValidator>();
@@ -69,6 +68,17 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
 
     return emailValidated & passwordValidated;
   }
+
+  /// if validated then we will move to the next screeb
+  loginUser(BuildContext context) {
+    if (validate()) {
+      AppUtil.pushRoute(
+        context: context,
+        route: const Disability(),
+      );
+    }
+  }
+
   login(
       {required String email,
       required BuildContext context,
@@ -83,7 +93,7 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
         context: context,
         onForeground: true,
         callBack: (success, json) async {
-            debugPrint("Response of login $json");
+          debugPrint("Response of login $json");
 
           if (json != null) {
             debugPrint("Response of login $json");
@@ -91,7 +101,7 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
             if (json["status"] == 0) {
               AppUtil.showWarning(
                 context: context,
-                bodyText: json["message"]??"",
+                bodyText: json["message"] ?? "",
                 title: "Retry",
                 barrierDismissible: false,
                 handler: (action) {
@@ -105,7 +115,9 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
               loginModel = LoginModel.fromJson(json);
               if (loginModel?.token != null) {
                 await UserDefaults.setToken(loginModel!.token!);
-                await UserDefaults.setEmailAndUserName(loginModel?.data?.name??"",loginModel?.data?.email??"");
+                await UserDefaults.setEmailAndUserName(
+                    loginModel?.data?.name ?? "",
+                    loginModel?.data?.email ?? "");
               }
               completion(
                 success,
@@ -201,8 +213,9 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
     }
   }
 }
-  mixin loginApiCallingClass {
-     bool apiCallingProgress = false;
+
+mixin loginApiCallingClass {
+  bool apiCallingProgress = false;
   loginApiCalling(
       {required String email,
       required String pasword,
@@ -237,5 +250,4 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
       });
     }
   }
-
-  }
+}

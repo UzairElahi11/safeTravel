@@ -39,6 +39,7 @@ class GenericTextField extends StatelessWidget {
   final TextAlign textAlign;
   final double? spaceBetweenLabelAndField;
   final Function(dynamic value)? onChange;
+  final bool? expanded;
 
   const GenericTextField({
     super.key,
@@ -82,11 +83,13 @@ class GenericTextField extends StatelessWidget {
     this.inputFormatters = const [],
     this.textAlign = TextAlign.start,
     this.trailingPadding,
+    this.expanded,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      expands: expanded ?? false,
       controller: controller,
       obscureText: isObscure ?? false,
       maxLines: maxLines ?? 1,

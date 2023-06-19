@@ -161,7 +161,7 @@ class Login extends StatelessWidget {
                         style: AppStyles.mediumBold16
                             .copyWith(color: AppColors.whiteColor),
                       ),
-                      onPressed: () => model.validate(),
+                      onPressed: () => model.loginUser(context),
                     ),
                     SizedBox(
                       height: 20.h,

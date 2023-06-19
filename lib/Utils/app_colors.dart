@@ -20,5 +20,6 @@ class AppColors {
   static Color navigationContainerColor = const Color(0xFF0066FF);
   static Color dividerColor = const Color(0xFFE1E1E1);
   static Color transparentColor = Colors.transparent;
+  static Color mediumBlackColor =const  Color(0xFF222222);
 
 }
