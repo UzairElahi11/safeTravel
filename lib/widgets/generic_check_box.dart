@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:safe/Utils/app_colors.dart';
 
 class GenericCheckBox extends StatelessWidget {
   final bool value;
@@ -45,20 +46,23 @@ class GenericCheckBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Checkbox(
       key: checkBoxKey,
-      activeColor: activeColor,
+      activeColor: activeColor ?? AppColors.redColor,
       autofocus: autoFocus ?? false,
       value: value,
       onChanged: onChanged,
-      checkColor: checkColor,
+      checkColor: checkColor ?? AppColors.whiteColor,
       focusColor: focusColor,
       shape: shape,
-      fillColor: fillColor,
+      fillColor: fillColor ?? MaterialStateProperty.all(AppColors.whiteColor),
       focusNode: focusnode,
       hoverColor: hoverColor,
       isError: isError,
       materialTapTargetSize: materialTapTargetSize,
       overlayColor: overlayColor,
-      side: borderSide,
+      side: borderSide ??
+          BorderSide(
+            color: AppColors.transparentColor,
+          ),
       splashRadius: splashRadius,
       tristate: tristate ?? false,
       visualDensity: visualDensity,
