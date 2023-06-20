@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/screens/UI/introduction/intro.dart';
-import 'package:safe/screens/controllers/introduction/intro_viewModel.dart';
+import 'package:safe/screens/controllers/introduction/into_viewmodel.dart';
 import 'package:safe/Utils/generics/generic_drop_down.dart';
 import 'package:safe/Utils/generics/generic_svg_image.dart';
 import 'package:safe/Utils/generics/generic_text.dart';

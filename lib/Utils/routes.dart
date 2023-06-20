@@ -3,7 +3,7 @@ import 'package:safe/screens/UI/calendar/calendar.dart';
 import 'package:safe/screens/UI/disablity/disablity.dart';
 import 'package:safe/screens/UI/splash/splash.dart';
 
-class PawaRoutes {
+class AppRoutes {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case Splash.id:

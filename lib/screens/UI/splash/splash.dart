@@ -40,23 +40,24 @@ class _SplashState extends State<Splash> {
   moveTopNextPage(BuildContext context) {
     SchedulerBinding.instance.addPostFrameCallback(
       (_) async {
-        final accepted = await locator<LocalSecureStorage>()
+        await locator<LocalSecureStorage>()
             .readSecureStorage(AppUtil.isTermsAndConditionsAccepted);
 
-        log("accepeted is $accepted");
-        await locator<LocalSecureStorage>()
-                    .readSecureStorage(AppUtil.isTermsAndConditionsAccepted) ==
-                "1"
-            ? AppUtil.pushRoute(
-                pushReplacement: true,
-                context: context,
-                route: const Login(),
-              )
-            : AppUtil.pushRoute(
-                pushReplacement: true,
-                context: context,
-                route: const Welcome(),
-              );
+        if (mounted) {
+          await locator<LocalSecureStorage>().readSecureStorage(
+                      AppUtil.isTermsAndConditionsAccepted) ==
+                  "1"
+              ? AppUtil.pushRoute(
+                  pushReplacement: true,
+                  context: context,
+                  route: const Login(),
+                )
+              : AppUtil.pushRoute(
+                  pushReplacement: true,
+                  context: context,
+                  route: const Welcome(),
+                );
+        }
       },
     );
 

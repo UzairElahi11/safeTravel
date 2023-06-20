@@ -8,7 +8,7 @@ import 'package:safe/Utils/app_text_styles.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/screens/UI/login/login.dart';
-import 'package:safe/screens/controllers/registration/registration_viewModel.dart';
+import 'package:safe/screens/controllers/registration/registeration_viewmodel.dart';
 import 'package:safe/Utils/generics/generic_button.dart';
 import 'package:safe/Utils/generics/generic_icon.dart';
 import 'package:safe/Utils/generics/generic_text.dart';

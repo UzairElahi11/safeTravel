@@ -28,7 +28,7 @@ class ServerManager {
 //      httpClient.connectionTimeout = Duration(seconds: timeout);
 
       debugPrint(
-        "url: $url \nBody:${body == null ? "" : body.toString()}",
+        "url: $url \nBody:$body  : body.toString()",
       );
 
       try {
@@ -48,6 +48,7 @@ class ServerManager {
             });
           }).catchError((error) {
             if (error != null && error.runtimeType == String) {
+              // ignore: prefer_interpolation_to_compose_strings
               debugPrint("response: " + error);
             }
 
@@ -61,7 +62,7 @@ class ServerManager {
           });
         }).catchError((error) {
           if (error != null && error.runtimeType == String) {
-            debugPrint("response: " + error);
+            debugPrint("response:  $error");
           }
 
           if (onCallDone == false) {
@@ -142,8 +143,7 @@ class ServerManager {
 //      httpClient.idleTimeout = Duration(seconds: timeout);
 //      httpClient.connectionTimeout = Duration(seconds: timeout);
 
-      debugPrint("url: $url \nBody:${body == null ? "" : body.toString()}");
-      //TODO REMOVE THIS LATTER
+      debugPrint("url: $url \nBody:$body : body.toString()");
 
       try {
         httpClient.postUrl(Uri.parse(url)).then((request) {
@@ -162,7 +162,7 @@ class ServerManager {
             });
           }).catchError((error) {
             if (error != null && error.runtimeType == String) {
-              debugPrint("response: " + error);
+              debugPrint('response:   $error');
             }
             if (onCallDone == false) {
               onCallDone = true;
@@ -171,7 +171,7 @@ class ServerManager {
           }).whenComplete(() {});
         }).catchError((error) {
           if (error != null && error.runtimeType == String) {
-            debugPrint("response: " + error);
+            debugPrint("response:  $error");
           }
           if (onCallDone == false) {
             onCallDone = true;
@@ -240,7 +240,11 @@ class ServerManager {
       try {
         debugPrint(
             'API Response Code::: ${(responseCodeFromResponse(responseBody!) ?? "")}');
-      } catch (e) {}
+      } catch (e) {
+        log(
+          e.toString(),
+        );
+      }
       debugPrint('Response Code::: ${(responseCode?.toString() ?? "")}');
       debugPrint('Response::: ${responseBody!}');
       if (success) {
@@ -248,7 +252,11 @@ class ServerManager {
       } else {
         debugPrint("\n❌❌❌❌ ------- Failure Response End ------- ❌❌❌❌\n\n");
       }
-    } catch (e) {}
+    } catch (e) {
+      log(
+        e.toString(),
+      );
+    }
   }
 
   static String? responseCodeFromResponse(String responseBody) {
