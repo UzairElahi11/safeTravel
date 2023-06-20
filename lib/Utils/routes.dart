@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:safe/screens/UI/add_family_members/add_family_members.dart';
 import 'package:safe/screens/UI/calendar/calendar.dart';
 import 'package:safe/screens/UI/disablity/disablity.dart';
 import 'package:safe/screens/UI/splash/splash.dart';
@@ -21,6 +22,12 @@ class AppRoutes {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => const Calendar(),
+        );
+
+      case AddFamilyMembers.id:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const AddFamilyMembers(),
         );
 
       // case LoginView.id:

@@ -18,12 +18,12 @@ class AppStyles extends GoogleFonts {
 
   static var medium20 = Fonts.fonts(
       fontWeight: FontWeight.w400,
-      fontSize: 18.sp,
+      fontSize: 20.sp,
       color: AppColors.whiteColor);
 
   static var mediumBase20 = Fonts.fonts(
     fontWeight: FontWeight.w500,
-    fontSize: 18.sp,
+    fontSize: 20.sp,
     color: AppColors.baseColor,
   );
 

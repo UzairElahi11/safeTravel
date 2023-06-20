@@ -37,6 +37,8 @@
   "addNotes" : "Add notes",
   "phoneNumber" : "Phone number",
   "name" : "Name",
-  "dateOfArivalAndDeparture" : "Date of\nArrival & Departure"
+  "dateOfArivalAndDeparture" : "Date of\nArrival & Departure",
+  "addFamilyMembers" : "Add Family Members"
+
 
 }
