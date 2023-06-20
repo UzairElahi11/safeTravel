@@ -6,10 +6,10 @@ import 'package:safe/screens/UI/disablity/disability_viewmodel.dart';
 
 import '../../Utils/app_colors.dart';
 import '../../Utils/app_text_styles.dart';
-import '../generic_button.dart';
-import '../generic_check_box.dart';
-import '../generic_icon.dart';
-import '../generic_text.dart';
+import '../../Utils/generics/generic_button.dart';
+import '../../Utils/generics/generic_check_box.dart';
+import '../../Utils/generics/generic_icon.dart';
+import '../../Utils/generics/generic_text.dart';
 
 class DisabilityTypesCard extends StatelessWidget {
   final DisabilityViewModel model;

@@ -3,13 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safe/Utils/app_text_styles.dart';
 import 'package:safe/Utils/extensions/string.extension.dart';
 import 'package:safe/screens/UI/disablity/disability_viewmodel.dart';
-import 'package:safe/widgets/generic_text.dart';
+import 'package:safe/Utils/generics/generic_text.dart';
 
 import '../../Utils/app_colors.dart';
 import '../../l10n/locale_keys.g.dart';
-import '../generic_button.dart';
-import '../generic_icon.dart';
-import '../generic_text_field.dart';
+import '../../Utils/generics/generic_button.dart';
+import '../../Utils/generics/generic_icon.dart';
+import '../../Utils/generics/generic_text_field.dart';
 
 class EmergencyContactCard extends StatelessWidget {
   final DisabilityViewModel model;
