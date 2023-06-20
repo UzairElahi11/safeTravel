@@ -61,6 +61,7 @@ class GenericCheckBox extends StatelessWidget {
       overlayColor: overlayColor,
       side: borderSide ??
           BorderSide(
+            width: 5,
             color: AppColors.whiteColor,
           ),
       splashRadius: splashRadius,
