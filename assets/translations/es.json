@@ -38,7 +38,14 @@
   "phoneNumber" : "Número de teléfono",
   "name" : "nombre",
   "dateOfArivalAndDeparture" : "Fecha de\nllegada y salida",
-  "addFamilyMembers" : "Agregar miembros de la familia"
+  "addFamilyMembers" : "Agregar miembros de la familia",
+  "firstName": " Nombre de pila",
+  "lastName": "Apellido",
+  "hintFirstName" : "Ingrese el nombre",
+  "hintLastName":"Introduzca el apellido",
+  "dateOfBirth": "Fecha de nacimiento",
+  "dateOfBirthHint":"DD/MM/YYYY"
+
 
 
 }

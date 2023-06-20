@@ -11,7 +11,8 @@ import 'package:safe/Utils/validator/textformfield_validator.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/locator.dart';
 import 'package:safe/model/login-register/login_model.dart';
-import 'package:safe/screens/UI/disablity/disablity.dart';
+// import 'package:safe/screens/UI/disablity/disablity.dart';
+import 'package:safe/screens/UI/user_details/userDetails.dart';
 import 'package:safe/server_manager/server_manager.dart';
 import 'package:safe/Utils/generics/generic_text.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -74,7 +75,7 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
     if (validate()) {
       AppUtil.pushRoute(
         context: context,
-        route: const Disability(),
+        route: const UserDetailsView(),
       );
     }
   }
@@ -85,8 +86,7 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
       required String password,
       required void Function(
         bool success,
-      )
-          completion}) {
+      ) completion}) {
     loginApiCalling(
         pasword: password,
         email: email,

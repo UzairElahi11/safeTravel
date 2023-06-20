@@ -3,6 +3,7 @@ import 'package:safe/screens/UI/add_family_members/add_family_members.dart';
 import 'package:safe/screens/UI/calendar/calendar.dart';
 import 'package:safe/screens/UI/disablity/disablity.dart';
 import 'package:safe/screens/UI/splash/splash.dart';
+import 'package:safe/screens/UI/user_details/userDetails.dart';
 
 class AppRoutes {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -23,7 +24,11 @@ class AppRoutes {
           settings: settings,
           builder: (_) => const Calendar(),
         );
-
+         case UserDetailsView.id:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const UserDetailsView(),
+        );
       case AddFamilyMembers.id:
         return MaterialPageRoute(
           settings: settings,

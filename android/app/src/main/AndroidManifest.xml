@@ -17,6 +17,7 @@
     </intent>
 </queries>
    <application
+        android:requestLegacyExternalStorage="true"
         android:label="safe_travel"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">

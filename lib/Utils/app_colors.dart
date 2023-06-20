@@ -22,4 +22,5 @@ class AppColors {
   static Color transparentColor = Colors.transparent;
   static Color mediumBlackColor = const Color(0xFF222222);
   static Color lightBlackColor = const Color(0XFF202020);
+  static Color bgDetailColor = const Color(0xffC0C0C0);
 }

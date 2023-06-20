@@ -40,4 +40,10 @@ abstract class LocaleKeys {
   static const phoneNumber = "phoneNumber";
   static const dateOfArivalAndDeparture = "dateOfArivalAndDeparture";
   static const addFamilyMembers = "addFamilyMembers";
+  static const firstName = "firstName";
+  static const lastName = "lastName";
+  static const hintFirstName = "hintFirstName";
+  static const hintLastName = "hintLastName";
+  static const dateOfBirth = "dateOfBirth";
+  static const dateOfBirthHint = "dateOfBirthHint";
 }
