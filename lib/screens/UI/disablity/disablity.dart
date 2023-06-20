@@ -5,8 +5,8 @@ import 'package:safe/Utils/app_text_styles.dart';
 import 'package:safe/Utils/extensions/string.extension.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/screens/UI/disablity/disability_viewmodel.dart';
-import 'package:safe/widgets/generic_button.dart';
-import 'package:safe/widgets/generic_text.dart';
+import 'package:safe/Utils/generics/generic_button.dart';
+import 'package:safe/Utils/generics/generic_text.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../widgets/disability_widgets/disability_types_card.dart';

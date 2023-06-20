@@ -36,6 +36,8 @@
   "addNumber" : "Añade un número",
   "addNotes" : "Agregar notas",
   "phoneNumber" : "Número de teléfono",
-  "name" : "nombre"
+  "name" : "nombre",
+  "dateOfArivalAndDeparture" : "Fecha de\nllegada y salida"
+
 
 }

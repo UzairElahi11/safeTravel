@@ -38,4 +38,5 @@ abstract class LocaleKeys {
   static const addNotes = "addNotes";
   static const name = "name";
   static const phoneNumber = "phoneNumber";
+  static const dateOfArivalAndDeparture = "dateOfArivalAndDeparture";
 }

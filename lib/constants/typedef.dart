@@ -17,3 +17,6 @@ typedef TextFormFieldMapErrorUsingConditions = TextFieldValidatorModel Function(
 
 //
 
+typedef ValueUpdater<T> = T Function();
+
+

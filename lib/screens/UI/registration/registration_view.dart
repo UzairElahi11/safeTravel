@@ -9,10 +9,10 @@ import 'package:safe/Utils/app_util.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/screens/UI/login/login.dart';
 import 'package:safe/screens/controllers/registration/registration_viewModel.dart';
-import 'package:safe/widgets/generic_button.dart';
-import 'package:safe/widgets/generic_icon.dart';
-import 'package:safe/widgets/generic_text.dart';
-import 'package:safe/widgets/generic_text_field.dart';
+import 'package:safe/Utils/generics/generic_button.dart';
+import 'package:safe/Utils/generics/generic_icon.dart';
+import 'package:safe/Utils/generics/generic_text.dart';
+import 'package:safe/Utils/generics/generic_text_field.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../Utils/app_images_path.dart';

@@ -13,7 +13,7 @@ import 'package:safe/locator.dart';
 import 'package:safe/model/login-register/login_model.dart';
 import 'package:safe/screens/UI/disablity/disablity.dart';
 import 'package:safe/server_manager/server_manager.dart';
-import 'package:safe/widgets/generic_text.dart';
+import 'package:safe/Utils/generics/generic_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LoginViewModel with ChangeNotifier, loginApiCallingClass {

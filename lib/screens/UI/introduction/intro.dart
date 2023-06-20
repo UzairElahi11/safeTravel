@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:safe/Utils/app_colors.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/screens/controllers/introduction/intro_viewModel.dart';
-import 'package:safe/widgets/generic_text.dart';
+import 'package:safe/Utils/generics/generic_text.dart';
 import 'package:stacked/stacked.dart';
 import 'package:safe/Utils/app_images_path.dart';
 

@@ -36,6 +36,7 @@
   "addNumber" : "Add number",
   "addNotes" : "Add notes",
   "phoneNumber" : "Phone number",
-  "name" : "Name"
+  "name" : "Name",
+  "dateOfArivalAndDeparture" : "Date of\nArrival & Departure"
 
 }

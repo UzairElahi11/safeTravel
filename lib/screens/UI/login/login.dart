@@ -7,12 +7,12 @@ import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/extensions/string.extension.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/screens/controllers/login/login_viewmodel.dart';
-import 'package:safe/widgets/generic_asset_image.dart';
-import 'package:safe/widgets/generic_button.dart';
-import 'package:safe/widgets/generic_icon.dart';
-import 'package:safe/widgets/generic_svg_image.dart';
-import 'package:safe/widgets/generic_text.dart';
-import 'package:safe/widgets/generic_text_field.dart';
+import 'package:safe/Utils/generics/generic_asset_image.dart';
+import 'package:safe/Utils/generics/generic_button.dart';
+import 'package:safe/Utils/generics/generic_icon.dart';
+import 'package:safe/Utils/generics/generic_svg_image.dart';
+import 'package:safe/Utils/generics/generic_text.dart';
+import 'package:safe/Utils/generics/generic_text_field.dart';
 import 'package:stacked/stacked.dart';
 import 'package:safe/Utils/app_images_path.dart';
 
