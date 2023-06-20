@@ -27,11 +27,13 @@ class AddFamilyMembers extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 40.w),
               child: Column(
                 children: [
+                   SizedBox(height: 70.h,),
                   GenericText(
                     LocaleKeys.addFamilyMembers,
                     style: AppStyles.medium24.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
+                    textAlign: TextAlign.center
                   ),
                   SizedBox(
                     height: 20.h,
@@ -40,15 +42,18 @@ class AddFamilyMembers extends StatelessWidget {
                     children: List.generate(
                       model.familyMembersList.length,
                       (index) => ListTile(
+                      
                         minVerticalPadding: 0.0,
                         contentPadding: EdgeInsets.zero,
                         leading: GenericCheckBox(
-                          borderSide: BorderSide(color: AppColors.redColor),
+                          borderSide: BorderSide(
+                            width: 10,
+                            color: AppColors.iconBgColor),
                           onChanged: (value) =>
                               model.changeCheckBoxvalue(index),
                           value: model.familyMembersList[index]['isChecked'],
                         ),
-                        subtitle: GenericText(
+                        title: GenericText(
                           "${model.familyMembersList[index]['member']}",
                           style: AppStyles.medium20.copyWith(
                             color: AppColors.lightBlackColor,
@@ -69,7 +74,7 @@ class AddFamilyMembers extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(
-                                width: 20.w,
+                                width: 40.w,
                               ),
                               GenericText(
                                 "${model.familyMembersList[index]['numberOfMembers']}",
@@ -79,7 +84,7 @@ class AddFamilyMembers extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(
-                                width: 20.w,
+                                width: 40.w,
                               ),
                               GestureDetector(
                                 onTap: () => model.addMembers(index),

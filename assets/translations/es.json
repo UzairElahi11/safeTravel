@@ -46,6 +46,8 @@
   "dateOfBirth": "Fecha de nacimiento",
   "dateOfBirthHint":"DD/MM/YYYY"
 
+  "addFamilyMembers" : "Agregar miembros de la familia",
+  "sendLocationInEmergency" : "Enviar ubicación solo en Emergencia"
 
 
 }

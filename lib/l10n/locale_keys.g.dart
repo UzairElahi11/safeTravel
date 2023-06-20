@@ -46,4 +46,5 @@ abstract class LocaleKeys {
   static const hintLastName = "hintLastName";
   static const dateOfBirth = "dateOfBirth";
   static const dateOfBirthHint = "dateOfBirthHint";
+  static const sendLocationInEmergency = "sendLocationInEmergency";
 }
