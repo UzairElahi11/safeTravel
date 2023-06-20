@@ -1,4 +1,5 @@
 import 'package:provider/provider.dart';
+import 'package:safe/screens/UI/add_family_members/add_family_members_viewmodel.dart';
 import 'package:safe/screens/UI/calendar/calendar_viewmodel.dart';
 import 'package:safe/screens/UI/disablity/disability_viewmodel.dart';
 import 'package:safe/screens/controllers/introduction/into_viewmodel.dart';
@@ -21,6 +22,9 @@ class AppProviders {
 
     ChangeNotifierProvider<CalendarViewModel>(
       create: (context) => CalendarViewModel(),
+    ),
+     ChangeNotifierProvider<AddFamilyMembersViewModel>(
+      create: (context) => AddFamilyMembersViewModel(),
     ),
   ];
 }

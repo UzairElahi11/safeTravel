@@ -5,7 +5,7 @@ import 'package:safe/Utils/validator/textformfield_model.dart';
 import 'package:safe/Utils/validator/textformfield_validator.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/locator.dart';
-import 'package:safe/screens/UI/calendar/calendar.dart';
+import 'package:safe/screens/UI/add_family_members/add_family_members.dart';
 
 class DisabilityViewModel extends ChangeNotifier {
   List<Map<String, dynamic>> disabilityTypes = [
@@ -82,7 +82,7 @@ class DisabilityViewModel extends ChangeNotifier {
     if (validate()) {
       AppUtil.pushRoute(
         context: context,
-        route: const Calendar(),
+        route: const AddFamilyMembers(),
       );
     }
   }
