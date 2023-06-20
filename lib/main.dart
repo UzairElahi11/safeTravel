@@ -113,7 +113,7 @@ class App extends StatelessWidget {
               supportedLocales: context.supportedLocales,
               locale: context.locale,
               debugShowCheckedModeBanner: false,
-              initialRoute: Calendar.id,
+              initialRoute: Splash.id,
               onGenerateRoute: AppRoutes.onGenerateRoute,
               navigatorKey: Keys.mainNavigatorKey,
               navigatorObservers: [PawaNavigationObserver()],
