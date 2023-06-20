@@ -14,6 +14,7 @@ import 'package:safe/constants/keys.dart';
 import 'package:safe/locale.dart';
 import 'package:safe/locator.dart';
 import 'package:safe/observers/navigation_observer.dart';
+import 'package:safe/screens/UI/calendar/calendar.dart';
 import 'package:safe/screens/UI/splash/splash.dart';
 import 'package:sizer/sizer.dart';
 
@@ -112,7 +113,7 @@ class App extends StatelessWidget {
               supportedLocales: context.supportedLocales,
               locale: context.locale,
               debugShowCheckedModeBanner: false,
-              initialRoute: Splash.id,
+              initialRoute: Calendar.id,
               onGenerateRoute: AppRoutes.onGenerateRoute,
               navigatorKey: Keys.mainNavigatorKey,
               navigatorObservers: [PawaNavigationObserver()],

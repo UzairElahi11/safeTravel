@@ -40,4 +40,5 @@ abstract class LocaleKeys {
   static const phoneNumber = "phoneNumber";
   static const dateOfArivalAndDeparture = "dateOfArivalAndDeparture";
   static const addFamilyMembers = "addFamilyMembers";
+  static const sendLocationInEmergency = "sendLocationInEmergency";
 }

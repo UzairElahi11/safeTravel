@@ -12,7 +12,7 @@ class GenericTabBar extends StatelessWidget {
       this.selectedLabelColor,
       this.unselectedLabelColor,
       this.indicatorColor,
-      this.indicatorWidth});
+      this.indicatorWidth, this.height});
 
   final TabController? controller;
   final List<String?> labels;
@@ -22,15 +22,17 @@ class GenericTabBar extends StatelessWidget {
   final Color? unselectedLabelColor;
   final Color? indicatorColor;
   final double? indicatorWidth;
+  final double ? height;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         TabBar(
+
           physics: const BouncingScrollPhysics(),
-          isScrollable: false,
-          padding: EdgeInsets.zero,
+          isScrollable: true,
+          padding: const EdgeInsets.symmetric(horizontal: 100),
           indicatorPadding: EdgeInsets.zero,
           labelPadding: EdgeInsets.zero,
           controller: controller,
@@ -47,15 +49,19 @@ class GenericTabBar extends StatelessWidget {
           tabs: labels
               .map(
                 (e) => Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.w),
-                  child: Tab(
-                    text: e,
+                  padding: EdgeInsets.symmetric(horizontal: 40.w),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Tab(
+                      text: e,
+                    ),
                   ),
                 ),
               )
               .toList(),
         ),
-        Expanded(
+        SizedBox(
+          height: height,
           child: TabBarView(
             controller: controller,
             children: tabChildren,

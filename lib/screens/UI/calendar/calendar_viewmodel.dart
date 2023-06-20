@@ -3,6 +3,7 @@ import 'package:flutter/scheduler.dart';
 
 class CalendarViewModel extends ChangeNotifier implements TickerProvider {
   late TabController _tabController;
+  bool switchValue = false;
   final List<String> tabs = [
     "Arrivals",
     "Departures",
@@ -25,5 +26,12 @@ class CalendarViewModel extends ChangeNotifier implements TickerProvider {
     final ticker = Ticker(onTick, debugLabel: 'TickerProvider');
     tickers.add(ticker);
     return ticker;
+  }
+
+  //Change the switch button value
+  bool changeSwitchValue() {
+    switchValue = !switchValue;
+    notifyListeners();
+    return switchValue;
   }
 }

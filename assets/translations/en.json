@@ -38,7 +38,8 @@
   "phoneNumber" : "Phone number",
   "name" : "Name",
   "dateOfArivalAndDeparture" : "Date of\nArrival & Departure",
-  "addFamilyMembers" : "Add Family Members"
+  "addFamilyMembers" : "Add Family Members",
+  "sendLocationInEmergency" : "Send location only in Emergency"
 
 
 }

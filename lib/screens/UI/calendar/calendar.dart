@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safe/Utils/app_colors.dart';
 import 'package:safe/Utils/app_text_styles.dart';
+import 'package:safe/Utils/generics/generic_button.dart';
 import 'package:safe/Utils/generics/generic_tabar.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/Utils/generics/generic_text.dart';
@@ -19,29 +20,30 @@ class Calendar extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 40.w),
+          padding: EdgeInsets.symmetric(horizontal: 50.w),
           child: ViewModelBuilder<CalendarViewModel>.reactive(
               onViewModelReady: (model) => model.initializeTabController(2),
               viewModelBuilder: () => CalendarViewModel(),
               builder: (context, model, _) {
-                return Column(
-                  children: [
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    GenericText(
-                      LocaleKeys.dateOfArivalAndDeparture,
-                      style: AppStyles.medium24.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.blackColor,
+                return SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 20.h,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Expanded(
-                      child: GenericTabBar(
+                      GenericText(
+                        LocaleKeys.dateOfArivalAndDeparture,
+                        style: AppStyles.medium24.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.blackColor,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      GenericTabBar(
+                        height: MediaQuery.of(context).size.height*0.57,
                         selectedLabelColor: AppColors.blackColor,
                         unselectedLabelColor: AppColors.unSelectedColor,
                         labelStyle: AppStyles.medium20.copyWith(
@@ -78,11 +80,48 @@ class Calendar extends StatelessWidget {
                           ),
                         ],
                       ),
-                    ),
-                    SizedBox(
-                      height: 30.h,
-                    ),
-                  ],
+                      SizedBox(
+                        height: 30.h,
+                      ),
+                      Row(
+                        children: [
+                          Switch.adaptive(
+                            thumbColor:
+                                MaterialStateProperty.all(AppColors.whiteColor),
+                            activeColor: AppColors.baseColor,
+                            value: model.switchValue,
+                            onChanged: (value) {
+                              model.changeSwitchValue();
+                            },
+                          ),
+                          Expanded(
+                            child: GenericText(
+                              LocaleKeys.sendLocationInEmergency,
+                              style: AppStyles.medium14.copyWith(
+                                color: AppColors.blackColor,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 40.h,
+                      ),
+                      GenericButton(
+                        height: 70.h,
+                        onPressed: () {},
+                        text: LocaleKeys.next,
+                        textStyle: AppStyles.mediumBold16.copyWith(
+                          color: AppColors.whiteColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      // SizedBox(
+                      //   height: 60.h,
+                      // ),
+                    ],
+                  ),
                 );
               }),
         ),
