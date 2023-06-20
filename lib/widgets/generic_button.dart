@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safe/Utils/app_colors.dart';
-import 'package:safe/Utils/nil/nil_impl.dart';
-
 import 'package:safe/widgets/generic_text.dart';
 
 class GenericButton extends StatelessWidget {
@@ -45,8 +43,8 @@ class GenericButton extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         margin: margin ?? const EdgeInsets.symmetric(horizontal: 0),
-        width: width ?? 338.w,
-        height: height ?? 52.h,
+        width: width ,
+        height: height ,
         decoration: BoxDecoration(
             border: Border.all(
                 color: borderColor ?? color ?? AppColors.baseColor,

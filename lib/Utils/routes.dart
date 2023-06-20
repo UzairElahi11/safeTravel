@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:safe/screens/UI/calendar/calendar.dart';
 import 'package:safe/screens/UI/disablity/disablity.dart';
 import 'package:safe/screens/UI/splash/splash.dart';
 
@@ -15,6 +16,11 @@ class PawaRoutes {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => const Disability(),
+        );
+      case Calendar.id:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const Calendar(),
         );
 
       // case LoginView.id:

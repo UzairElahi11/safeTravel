@@ -1,9 +1,11 @@
 import 'package:flutter/widgets.dart';
+import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/extensions/string.extension.dart';
 import 'package:safe/Utils/validator/textformfield_model.dart';
 import 'package:safe/Utils/validator/textformfield_validator.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/locator.dart';
+import 'package:safe/screens/UI/calendar/calendar.dart';
 
 class DisabilityViewModel extends ChangeNotifier {
   List<Map<String, dynamic>> disabilityTypes = [
@@ -74,5 +76,14 @@ class DisabilityViewModel extends ChangeNotifier {
   changeCheckBoxvalue(int index) {
     disabilityTypes[index]['isChecked'] = !disabilityTypes[index]['isChecked'];
     notifyListeners();
+  }
+
+  navigate(BuildContext context) {
+    if (validate()) {
+      AppUtil.pushRoute(
+        context: context,
+        route: const Calendar(),
+      );
+    }
   }
 }

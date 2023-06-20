@@ -112,8 +112,8 @@ class EmergencyContactCard extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 20.h),
               child: GenericButton(
-                width: 400.w,
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                width: 500.w,
+                padding: EdgeInsets.zero,
                 onPressed: () {},
                 leading: GenericIcon(
                   icon: Icons.add,

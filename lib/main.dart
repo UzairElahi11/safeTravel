@@ -10,13 +10,12 @@ import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/local_storage.dart';
 import 'package:safe/Utils/routes.dart';
 import 'package:safe/app_providers.dart';
-import 'package:safe/locator.dart';
-import 'package:safe/observers/navigation_observer.dart';
-import 'package:safe/screens/UI/disablity/disablity.dart';
-import 'package:safe/screens/UI/splash/splash.dart';
-import 'package:sizer/sizer.dart';
 import 'package:safe/constants/keys.dart';
 import 'package:safe/locale.dart';
+import 'package:safe/locator.dart';
+import 'package:safe/observers/navigation_observer.dart';
+import 'package:safe/screens/UI/splash/splash.dart';
+import 'package:sizer/sizer.dart';
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   debugPrint('Handling a background message ${message.messageId}');

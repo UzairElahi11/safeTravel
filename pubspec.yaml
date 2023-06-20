@@ -66,6 +66,9 @@ dependencies:
   #Storing the data locally encrypted
   flutter_secure_storage: ^8.0.0
 
+  #create the customize calendar table
+  table_calendar: ^3.0.8
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

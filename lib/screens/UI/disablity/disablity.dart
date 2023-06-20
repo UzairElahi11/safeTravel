@@ -56,7 +56,7 @@ class Disability extends StatelessWidget {
                     color: AppColors.whiteColor,
                     fontWeight: FontWeight.w400,
                   ),
-                  onPressed: () => model.validate(),
+                  onPressed: () => model.navigate(context),
                 ),
                 SizedBox(
                   height: 30.h,
