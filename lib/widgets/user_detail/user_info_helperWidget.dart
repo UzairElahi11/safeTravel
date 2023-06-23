@@ -4,7 +4,6 @@ import 'package:safe/Utils/app_text_styles.dart';
 import 'package:safe/Utils/extensions/string.extension.dart';
 import 'package:safe/Utils/generics/generic_text.dart';
 import 'package:safe/screens/UI/user_details/userDetail_viewModel.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 import '../../Utils/app_colors.dart';
 import '../../l10n/locale_keys.g.dart';
@@ -132,7 +131,7 @@ class UserInformationDtails extends StatelessWidget {
                   Icons.upload_file,
                   color: AppColors.whiteColor,
                 ),
-              ).px12(),
+              ),
             ],
           ),
         ],
