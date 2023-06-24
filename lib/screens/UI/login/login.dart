@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,7 +27,9 @@ class Login extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: ViewModelBuilder<LoginViewModel>.reactive(
-          onViewModelReady: (model) => model.checkingEmailText(),
+          onViewModelReady: (model) {
+            model.checkingEmailText();
+          },
           viewModelBuilder: () => LoginViewModel(),
           builder: (context, model, _) {
             return Padding(
@@ -194,7 +198,7 @@ class Login extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                         model.authenticate.googleSignInMethod();
+                        model.googleLogin();
                       },
                     ),
                     SizedBox(
@@ -227,18 +231,27 @@ class Login extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        GenericAssetImageWidget(
-                          image: AppImages.facebookPngIcon,
-                          height: 100.h,
-                          width: 100.w,
+                        GestureDetector(
+                          onTap: () => model.facebookLoginFunc(),
+                          child: GenericAssetImageWidget(
+                            image: AppImages.facebookPngIcon,
+                            height: 100.h,
+                            width: 100.w,
+                          ),
                         ),
                         SizedBox(
                           width: 100.w,
                         ),
-                        GenericAssetImageWidget(
-                          image: AppImages.applePngIcon,
-                          height: 90.h,
-                          width: 90.w,
+                        Visibility(
+                          visible: Platform.isIOS ? true : false,
+                          child: GestureDetector(
+                            onTap: () => model.appleLogin(),
+                            child: GenericAssetImageWidget(
+                              image: AppImages.applePngIcon,
+                              height: 90.h,
+                              width: 90.w,
+                            ),
+                          ),
                         ),
                       ],
                     ),

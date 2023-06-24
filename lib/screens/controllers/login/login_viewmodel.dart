@@ -5,6 +5,7 @@ import 'package:safe/Utils/app_colors.dart';
 import 'package:safe/Utils/app_text_styles.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/extensions/string.extension.dart';
+import 'package:safe/Utils/generics/generic_text.dart';
 import 'package:safe/Utils/user_defaults.dart';
 import 'package:safe/Utils/validator/textformfield_model.dart';
 import 'package:safe/Utils/validator/textformfield_validator.dart';
@@ -18,6 +19,8 @@ import 'package:safe/Utils/generics/generic_text.dart';
 import 'package:safe/service/social_auth_services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../service/social_auth_services.dart';
+
 class LoginViewModel with ChangeNotifier, loginApiCallingClass {
   //initializing the text editing controllers
   TextEditingController passwordController = TextEditingController();
@@ -25,6 +28,8 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
   LoginModel? loginModel;
   final Authenticate authenticate = Authenticate();
 
+
+  Authenticate socialLogin = Authenticate();
 
   //TEXT FORM FIELD VALIDATOR
   final textFieldValidator = locator<TextFieldValidator>();
@@ -60,7 +65,6 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
         notifyListeners();
       },
     );
-    
 
     bool passwordValidated = textFieldValidator.validateTextField(
       passwordController,
@@ -96,7 +100,8 @@ void showToaster(BuildContext context) {
       required String password,
       required void Function(
         bool success,
-      ) completion}) {
+      )
+          completion}) {
     loginApiCalling(
         pasword: password,
         email: email,
@@ -198,6 +203,22 @@ void showToaster(BuildContext context) {
         );
       }
     }).toList();
+  }
+
+
+  appleLogin ()
+  {
+    socialLogin.signInWithApple();
+  }
+
+  facebookLoginFunc() {
+    socialLogin.facebookLogin();
+  }
+
+
+
+  googleLogin() {
+    socialLogin.googleSignInMethod();
   }
 
   //LAUCH THE EMAIL IN THE EMAIL APPLICATION

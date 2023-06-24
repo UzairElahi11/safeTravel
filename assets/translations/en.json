@@ -40,9 +40,11 @@
   "dateOfArivalAndDeparture" : "Date of\nArrival & Departure",
   "firstName": "First Name",
   "lastName": "Last Name",
-  "hintFirstName" : "Enter first name",
-  "hintLastName":"Enter last name",
+  "hintFirstName": "Enter first name",
+  "hintLastName": "Enter last name",
   "dateOfBirth": "Date of Birth",
+  "dateOfBirthHint": "DD/MM/YYYY",
+  "sendLocationInEmergency": "Send location only in Emergency"
   "dateOfBirthHint":"DD/MM/YYYY",
   "addFamilyMembers" : "Add Family Members",
   "sendLocationInEmergency" : "Send location only in Emergency"

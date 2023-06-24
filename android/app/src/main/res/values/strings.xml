@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">safe travel</string>
+    <string name="fb_login_protocol_scheme">fb650207966615227</string>
+    <string name="facebook_app_id">650207966615227</string>
+    <string name="facebook_client_token">06ec22cd8847f0dbee0cbc6b011a82ad</string>
+</resources>

@@ -89,7 +89,7 @@ class Authenticate {
     return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
   }
 
-  //FACEBOOK LOGIN
+ // FACEBOOK LOGIN
   // Future facebookLogin() async {
   //   final LoginResult result = await FacebookAuth.instance.login(
   //     permissions: [
@@ -99,10 +99,15 @@ class Authenticate {
   //   );
 
   //   if (result.status == LoginStatus.success) {
-  //     facebookToken = result.accessToken;
+  //     // facebookToken = result.accessToken;
 
-  //     final userData = await FacebookAuth.instance.getUserData();
-  //     facebookUserData = userData;
+
+  //     log.log("facebook token is ${result.accessToken}");
+
+  //     log.log("user is ${FacebookAuth.instance.getUserData()}");
+
+  //     // final userData = await FacebookAuth.instance.getUserData();
+  //     // facebookUserData = userData;
   //   } else {
   //     log.log(result.status.toString());
   //     log.log(result.message.toString());
