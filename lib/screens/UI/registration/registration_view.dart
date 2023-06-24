@@ -323,7 +323,7 @@ class RegistationView extends StatelessWidget {
         onPressed: () {
           if (model.validate()) {
             model.register(
-                email: email,
+                email: model.email.text,
                 context: context,
                 password: model.password.text,
                 fullName: model.fullName.text,
