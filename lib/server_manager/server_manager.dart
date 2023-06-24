@@ -18,7 +18,7 @@ class ServerManager {
       Map<String, dynamic> body, completion(String responseBody, bool success),
       {int timeout = timeOutSeconds}) {
     bool onCallDone = false;
-    if (!url.startsWith("https")) {
+    if (!url.startsWith("http")) {
       HttpClient httpClient = new HttpClient();
       httpClient.badCertificateCallback =
           ((X509Certificate cert, String host, int port) => true);

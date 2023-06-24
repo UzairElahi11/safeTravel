@@ -49,6 +49,7 @@ class Authenticate {
               completion: (success) {
                 if (success) {
                   AppUtil.pushRoute(
+                      pushReplacement: true,
                       context: Keys.mainNavigatorKey.currentState!.context,
                       route: const UserDetailsView());
                 }
