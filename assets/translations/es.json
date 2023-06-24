@@ -46,9 +46,7 @@
   "dateOfBirth": "Fecha de nacimiento",
   "dateOfBirthHint": "DD/MM/YYYY",
   "sendLocationInEmergency": "Enviar ubicación solo en Emergencia"
-  "dateOfBirthHint":"DD/MM/YYYY",
 
-  "sendLocationInEmergency" : "Enviar ubicación solo en Emergencia"
 
 
 }

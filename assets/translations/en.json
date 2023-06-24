@@ -44,8 +44,6 @@
   "hintLastName": "Enter last name",
   "dateOfBirth": "Date of Birth",
   "dateOfBirthHint": "DD/MM/YYYY",
-  "sendLocationInEmergency": "Send location only in Emergency"
-  "dateOfBirthHint":"DD/MM/YYYY",
   "addFamilyMembers" : "Add Family Members",
   "sendLocationInEmergency" : "Send location only in Emergency"
 

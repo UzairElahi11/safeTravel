@@ -232,7 +232,7 @@ class Login extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         GestureDetector(
-                          onTap: () => model.facebookLoginFunc(),
+                          onTap: () => model.facebookLoginFunc(context),
                           child: GenericAssetImageWidget(
                             image: AppImages.facebookPngIcon,
                             height: 100.h,
