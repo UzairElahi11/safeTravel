@@ -18,11 +18,8 @@ import 'package:safe/model/login-register/login_model.dart';
 import 'package:safe/screens/UI/user_details/userDetails.dart';
 import 'package:safe/screens/controllers/registration/registeration_viewmodel.dart';
 import 'package:safe/server_manager/server_manager.dart';
-import 'package:safe/Utils/generics/generic_text.dart';
 import 'package:safe/service/social_auth_services.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../../../service/social_auth_services.dart';
 
 class LoginViewModel with ChangeNotifier, loginApiCallingClass {
   //initializing the text editing controllers
@@ -102,7 +99,8 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
       required String password,
       required void Function(
         bool success,
-      ) completion}) {
+      )
+          completion}) {
     loginApiCalling(
         pasword: password,
         email: email,
@@ -212,6 +210,16 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
 
   facebookLoginFunc(BuildContext context) async {
     UserCredential user = await socialLogin.facebookLogin();
+
+    log("display name  is ${user.user!.displayName}");
+    log("login token is ${user.credential!.accessToken}");
+
+    log("username  is ${user.additionalUserInfo!.username}");
+
+    log("email  is ${user.user!.email}");
+
+    log("profile data is ${user.additionalUserInfo!.profile} ");
+
     if (context.mounted) {
       RegistrationViewModel().socialLogin(
           email: user.user?.email ?? "",
