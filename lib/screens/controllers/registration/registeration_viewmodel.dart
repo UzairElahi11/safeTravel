@@ -9,7 +9,7 @@ import 'package:safe/model/login-register/register_model.dart';
 import 'package:safe/server_manager/server_manager.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 
-class RegistrationViewModel with ChangeNotifier  , ApiCalling{
+class RegistrationViewModel with ChangeNotifier, ApiCalling {
   bool isHidden = false;
   bool checkBox = false;
   TextEditingController email = TextEditingController();
@@ -22,8 +22,7 @@ class RegistrationViewModel with ChangeNotifier  , ApiCalling{
   String? fullNameValidationError;
   String? confirmPasswordErrorValidator;
   final textFieldValidator = locator<TextFieldValidator>();
-   RegisterModel? registerModel;
-
+  RegisterModel? registerModel;
 
   void init() {}
 
@@ -38,7 +37,9 @@ class RegistrationViewModel with ChangeNotifier  , ApiCalling{
       mapErrorMessageUsingConditions: (text) {
         if (email.text.isEmpty) {
           return TextFieldValidatorModel(
-              isError: true, errorMessage: LocaleKeys.emailValidatorErrorText.translatedString());
+              isError: true,
+              errorMessage:
+                  LocaleKeys.emailValidatorErrorText.translatedString());
         } else if (!AppUtil.emailRegex.hasMatch(text)) {
           return TextFieldValidatorModel(
             isError: true,
@@ -55,7 +56,8 @@ class RegistrationViewModel with ChangeNotifier  , ApiCalling{
 
     bool passwordValidated = textFieldValidator.validateTextField(
       password,
-      defaultErrorMessage: LocaleKeys.passwordValidatorErrorText.translatedString(),
+      defaultErrorMessage:
+          LocaleKeys.passwordValidatorErrorText.translatedString(),
       onError: (text) {
         passwordValidationError = text;
         notifyListeners();
@@ -63,7 +65,8 @@ class RegistrationViewModel with ChangeNotifier  , ApiCalling{
     );
     bool confirmpasswordValidated = textFieldValidator.validateTextField(
       confirmPassword,
-      defaultErrorMessage: LocaleKeys.passwordValidatorErrorText.translatedString(),
+      defaultErrorMessage:
+          LocaleKeys.passwordValidatorErrorText.translatedString(),
       onError: (text) {
         confirmPasswordErrorValidator = text;
         notifyListeners();
@@ -83,22 +86,16 @@ class RegistrationViewModel with ChangeNotifier  , ApiCalling{
         confirmpasswordValidated &
         fullNameValidated;
   }
-   register(
+
+  register(
       {required String email,
       required BuildContext context,
       required String password,
       required fullName,
-      required String apple,
-      required String facebook,
-      required String google,
       required void Function(
         bool success,
-      )
-          completion}) {
+      ) completion}) {
     registerApiCalling(
-        apple: apple,
-        facebook: facebook,
-        google: google,
         fullName: fullName,
         pasword: password,
         email: email,
@@ -132,6 +129,7 @@ class RegistrationViewModel with ChangeNotifier  , ApiCalling{
           }
         });
   }
+
   socialLogin(
       {required String email,
       required BuildContext context,
@@ -140,12 +138,10 @@ class RegistrationViewModel with ChangeNotifier  , ApiCalling{
       required String providerName,
       required void Function(
         bool success,
-      )
-          completion}) {
+      ) completion}) {
     socialLoginApiCalling(
         token: token,
         providerName: providerName,
-        userName: userName,
         email: email,
         context: context,
         onForeground: true,
@@ -154,11 +150,12 @@ class RegistrationViewModel with ChangeNotifier  , ApiCalling{
           if (json != null && json is Map) {
             // response model adding data
             registerModel = RegisterModel.fromJson(json);
-            if (registerModel?.token != null && registerModel?.data!=null) {
-             // UserDefaults.setToken(registerModel.token!);
-              
-                await UserDefaults.setToken(registerModel!.token!);
-                await UserDefaults.setEmailAndUserName(registerModel?.data?.name??"",registerModel?.data?.email??"");
+            if (registerModel?.token != null && registerModel?.data != null) {
+              // UserDefaults.setToken(registerModel.token!);
+              await UserDefaults.setToken(registerModel!.token!);
+              await UserDefaults.setEmailAndUserName(
+                  registerModel?.data?.name ?? "",
+                  registerModel?.data?.email ?? "");
               debugPrint(registerModel?.token);
             }
             //  debugPrint("Response of login " + json.toString());
@@ -181,15 +178,13 @@ class RegistrationViewModel with ChangeNotifier  , ApiCalling{
         });
   }
 }
-mixin ApiCalling{
-   bool apiCallingProgress = false;
+
+mixin ApiCalling {
+  bool apiCallingProgress = false;
   registerApiCalling(
       {required String email,
       required String pasword,
       required String fullName,
-      required String apple,
-      required String facebook,
-      required String google,
       required BuildContext context,
       bool onForeground = false,
       required void Function(bool success, Map? json) callBack}) async {
@@ -197,8 +192,7 @@ mixin ApiCalling{
     apiCallingProgress = true;
     if (onForeground) {
       AppUtil.showLoader(context: context);
-      ServerManager.register(email, pasword, fullName, apple, facebook, google,
-          (responseBody, success) {
+      ServerManager.register(email, pasword, fullName, (responseBody, success) {
         apiCallingProgress = false;
         if (onForeground) {
           AppUtil.dismissLoader(context: context);
@@ -222,11 +216,11 @@ mixin ApiCalling{
       });
     }
   }
-   socialLoginApiCalling(
+
+  socialLoginApiCalling(
       {required String email,
       required String token,
-      required String userName,
-      required String providerName,
+      required providerName,
       required BuildContext context,
       bool onForeground = false,
       required void Function(bool success, Map? json) callBack}) async {
@@ -234,9 +228,9 @@ mixin ApiCalling{
     apiCallingProgress = true;
     if (onForeground) {
       AppUtil.showLoader(context: context);
-      ServerManager.socialLogin(email, userName, token, providerName,
+      ServerManager.socialLogin(email, token, providerName,
           (responseBody, success) {
-            debugPrint(responseBody.toString());
+        debugPrint(responseBody.toString());
         apiCallingProgress = false;
         if (onForeground) {
           AppUtil.dismissLoader(context: context);

@@ -101,5 +101,6 @@ flutter:
     - assets/icons/common/
     - assets/translations/es.json
     - assets/translations/en.json
+    - assets/lottie/
 
   

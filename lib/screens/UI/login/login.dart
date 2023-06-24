@@ -6,6 +6,7 @@ import 'package:safe/Utils/app_text_styles.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/extensions/string.extension.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
+import 'package:safe/screens/UI/user_details/userDetails.dart';
 import 'package:safe/screens/controllers/login/login_viewmodel.dart';
 import 'package:safe/Utils/generics/generic_asset_image.dart';
 import 'package:safe/Utils/generics/generic_button.dart';
@@ -153,16 +154,31 @@ class Login extends StatelessWidget {
                       height: 60.h,
                     ),
                     GenericButton(
-                      height: 80.h,
-                      width: double.infinity,
-                      color: AppColors.baseColor,
-                      child: GenericText(
-                        LocaleKeys.loginText,
-                        style: AppStyles.mediumBold16
-                            .copyWith(color: AppColors.whiteColor),
-                      ),
-                      onPressed: () => model.loginUser(context),
-                    ),
+                        height: 80.h,
+                        width: double.infinity,
+                        color: AppColors.baseColor,
+                        child: GenericText(
+                          LocaleKeys.loginText,
+                          style: AppStyles.mediumBold16
+                              .copyWith(color: AppColors.whiteColor),
+                        ),
+                        onPressed: () {
+                          if (model.validate()) {
+                            model.login(
+                                email: model.emailController.text,
+                                context: context,
+                                password: model.passwordController.text,
+                                completion: (check) {
+                                  model.showToaster(context);
+                                  if (check) {
+                                    AppUtil.pushRoute(
+                                      context: context,
+                                      route: const UserDetailsView(),
+                                    );
+                                  }
+                                });
+                          }
+                        }),
                     SizedBox(
                       height: 20.h,
                     ),
@@ -178,7 +194,7 @@ class Login extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        //TODO: Have to implement the google sigin on this button
+                         model.authenticate.googleSignInMethod();
                       },
                     ),
                     SizedBox(

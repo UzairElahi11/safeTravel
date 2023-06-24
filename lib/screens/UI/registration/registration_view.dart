@@ -32,9 +32,10 @@ class RegistationView extends StatelessWidget {
         builder:
             (BuildContext context, RegistrationViewModel model, Widget? child) {
           return Scaffold(
-            body: Padding(
-              padding: EdgeInsets.only(left: 34.h, right: 34.h, top: 100.h),
-              child: SingleChildScrollView(
+            resizeToAvoidBottomInset: true,
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.only(left: 34.h, right: 34.h, top: 100.h),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -250,7 +251,7 @@ class RegistationView extends StatelessWidget {
                             SizedBox(
                               height: 30.h,
                             ),
-                            button(model),
+                            button(model, context),
                             const SizedBox(
                               height: 20,
                             ),
@@ -289,7 +290,7 @@ class RegistationView extends StatelessWidget {
     );
   }
 
-  Widget button(RegistrationViewModel model) {
+  Widget button(RegistrationViewModel model, BuildContext context) {
     // return SizedBox(
     //   height: 50,
     //   width: double.infinity,
@@ -312,15 +313,27 @@ class RegistationView extends StatelessWidget {
     //       )),
     // );
     return GenericButton(
-      height: 80.h,
-      width: double.infinity,
-      color: AppColors.baseColor,
-      child: GenericText(
-        LocaleKeys.signUpButtonText,
-        style: AppStyles.mediumBold16.copyWith(color: AppColors.whiteColor),
-      ),
-      onPressed: () => model.validate(),
-    );
+        height: 80.h,
+        width: double.infinity,
+        color: AppColors.baseColor,
+        child: GenericText(
+          LocaleKeys.signUpButtonText,
+          style: AppStyles.mediumBold16.copyWith(color: AppColors.whiteColor),
+        ),
+        onPressed: () {
+          if (model.validate()) {
+            model.register(
+                email: email,
+                context: context,
+                password: model.password.text,
+                fullName: model.fullName.text,
+                completion: (check) {
+                  if (check) {
+                    AppUtil.pushRoute(context: context, route: const Login());
+                  }
+                });
+          }
+        });
   }
 
   Widget headerWidgetTop(BuildContext context) {

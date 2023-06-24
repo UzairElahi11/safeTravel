@@ -15,6 +15,7 @@ import 'package:safe/model/login-register/login_model.dart';
 import 'package:safe/screens/UI/user_details/userDetails.dart';
 import 'package:safe/server_manager/server_manager.dart';
 import 'package:safe/Utils/generics/generic_text.dart';
+import 'package:safe/service/social_auth_services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LoginViewModel with ChangeNotifier, loginApiCallingClass {
@@ -22,6 +23,8 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   LoginModel? loginModel;
+  final Authenticate authenticate = Authenticate();
+
 
   //TEXT FORM FIELD VALIDATOR
   final textFieldValidator = locator<TextFieldValidator>();
@@ -57,6 +60,7 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
         notifyListeners();
       },
     );
+    
 
     bool passwordValidated = textFieldValidator.validateTextField(
       passwordController,
@@ -68,6 +72,12 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
     );
 
     return emailValidated & passwordValidated;
+  }
+
+void showToaster(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("Welcome ${loginModel?.data!.name.toString()}"),
+    ));
   }
 
   /// if validated then we will move to the next screeb

@@ -38,13 +38,12 @@
   "phoneNumber" : "Phone number",
   "name" : "Name",
   "dateOfArivalAndDeparture" : "Date of\nArrival & Departure",
-  "addFamilyMembers" : "Add Family Members",
   "firstName": "First Name",
   "lastName": "Last Name",
   "hintFirstName" : "Enter first name",
   "hintLastName":"Enter last name",
   "dateOfBirth": "Date of Birth",
-  "dateOfBirthHint":"DD/MM/YYYY"
+  "dateOfBirthHint":"DD/MM/YYYY",
   "addFamilyMembers" : "Add Family Members",
   "sendLocationInEmergency" : "Send location only in Emergency"
 

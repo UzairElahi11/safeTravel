@@ -5,6 +5,7 @@ import 'package:safe/screens/UI/disablity/disability_viewmodel.dart';
 import 'package:safe/screens/UI/user_details/userDetail_viewModel.dart';
 import 'package:safe/screens/controllers/introduction/into_viewmodel.dart';
 import 'package:safe/screens/controllers/login/login_viewmodel.dart';
+import 'package:safe/screens/controllers/registration/registeration_viewmodel.dart';
 
 class AppProviders {
   final List<ChangeNotifierProvider> appProviders = [
@@ -15,6 +16,9 @@ class AppProviders {
 
     ChangeNotifierProvider<IntroViewModel>(
       create: (context) => IntroViewModel(),
+    ),
+    ChangeNotifierProvider<RegistrationViewModel>(
+      create: (context) => RegistrationViewModel(),
     ),
 
     ChangeNotifierProvider<DisabilityViewModel>(
