@@ -29,7 +29,7 @@ class Welcome extends StatelessWidget {
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 60.w),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Center(
@@ -90,8 +90,6 @@ class Welcome extends StatelessWidget {
                           context.setLocale(
                             L10n.all[0],
                           );
-
-                          
 
                           await model.storeLocaleLanguageCode(option ?? "");
                         } else {

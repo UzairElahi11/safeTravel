@@ -8,6 +8,7 @@ import 'package:safe/Utils/app_text_styles.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/extensions/string.extension.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
+import 'package:safe/screens/UI/registration/registration_view.dart';
 import 'package:safe/screens/UI/user_details/userDetails.dart';
 import 'package:safe/screens/controllers/login/login_viewmodel.dart';
 import 'package:safe/Utils/generics/generic_asset_image.dart';
@@ -36,6 +37,8 @@ class Login extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 100.w),
               child: SingleChildScrollView(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
                       height: 70.h,
@@ -43,6 +46,7 @@ class Login extends StatelessWidget {
                     GenericText(
                       LocaleKeys.welcomeMessage,
                       style: AppStyles.medium24,
+                      textAlign: TextAlign.center,
                     ),
                     SizedBox(
                       height: 10.h,
@@ -202,7 +206,26 @@ class Login extends StatelessWidget {
                       },
                     ),
                     SizedBox(
-                      height: 50.h,
+                      height: 30.h,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        AppUtil.pushRoute(
+                            context: context, route: const RegistationView());
+                      },
+                      child: const Text.rich(
+                        TextSpan(text: 'Have no account? ', children: [
+                          TextSpan(
+                              text: 'Create now',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.underline,
+                              )),
+                        ]),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30.h,
                     ),
                     Row(
                       children: [
@@ -233,10 +256,22 @@ class Login extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: () => model.facebookLoginFunc(context),
-                          child: GenericAssetImageWidget(
-                            image: AppImages.facebookPngIcon,
-                            height: 100.h,
-                            width: 100.w,
+                          child: Container(
+                            height: 45,
+                            width: 60,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 5),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  width: 1,
+                                  color: AppColors.socailContainerBorderSide),
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: GenericAssetImageWidget(
+                              image: AppImages.facebookPngIcon,
+                              // height: 80.h,
+                              // width: 80.w,
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -246,17 +281,27 @@ class Login extends StatelessWidget {
                           visible: Platform.isIOS ? true : false,
                           child: GestureDetector(
                             onTap: () => model.appleLogin(),
-                            child: GenericAssetImageWidget(
-                              image: AppImages.applePngIcon,
-                              height: 90.h,
-                              width: 90.w,
+                            child: Container(
+                              height: 45,
+                              width: 60,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 5),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    width: 1,
+                                    color: AppColors.socailContainerBorderSide),
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              child: GenericAssetImageWidget(
+                                image: AppImages.applePngIcon,
+                              ),
                             ),
                           ),
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: 50.h,
+                      height: 30.h,
                     ),
                     GenericText(
                       LocaleKeys.contactInfoText,

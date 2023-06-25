@@ -99,8 +99,7 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
       required String password,
       required void Function(
         bool success,
-      )
-          completion}) {
+      ) completion}) {
     loginApiCalling(
         pasword: password,
         email: email,
@@ -174,7 +173,8 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
 
 // CHECK AND HIGHTLIGHT THE EMAIL WHERE PRESENT IN THE TEXT
   checkingEmailText() {
-    final List<String> words = LocaleKeys.futhureAssistanceText.split(' ');
+    final List<String> words =
+        LocaleKeys.futhureAssistanceText.translatedString().split(' ');
     textSpans = words.map((word) {
       if (word.contains('@') && word.contains('.')) {
         return GestureDetector(

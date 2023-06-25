@@ -138,10 +138,13 @@ class GenericDropDown<T> extends StatelessWidget {
         onChanged: (value) {
           onDropDownItemChanged(value);
         },
-        icon: icon ??
-            GenericSvgImage(
-              svgPath: AppImages.dropDownSvgIcon,
-            ),
+        icon: Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: icon ??
+              GenericSvgImage(
+                svgPath: AppImages.dropDownSvgIcon,
+              ),
+        ),
       ),
     ));
   }
