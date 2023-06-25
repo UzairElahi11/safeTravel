@@ -6,7 +6,7 @@ import 'package:safe/Utils/local_storage.dart';
 import 'package:safe/locator.dart';
 
 import 'package:safe/Utils/app_util.dart';
-import 'package:safe/screens/UI/registration/registration_view.dart';
+import 'package:safe/screens/UI/login/login.dart';
 
 class IntroViewModel with ChangeNotifier {
   bool isHidden = false;
@@ -34,7 +34,7 @@ class IntroViewModel with ChangeNotifier {
       if (context.mounted) {
         AppUtil.pushRoute(
           context: context,
-          route: const RegistationView(),
+          route: const Login(),
         );
       }
       return true;
