@@ -117,19 +117,22 @@ class UserInformationDtails extends StatelessWidget {
                         ),
                 ),
               ),
-              GenericButton(
-                onPressed: () async {
-                  await model.selectImage();
-                },
-                padding: EdgeInsets.symmetric(horizontal: 40.w),
-                borderRadius: 8,
-                height: 50.h,
-                width: 150.h,
-                text: "Upload",
-                textStyle: TextStyle(color: AppColors.whiteColor),
-                leading: Icon(
-                  Icons.upload_file,
-                  color: AppColors.whiteColor,
+              Padding(
+                padding: const EdgeInsets.only(left:8.0),
+                child: GenericButton(
+                  onPressed: () async {
+                    await model.selectImage();
+                  },
+                  padding: EdgeInsets.symmetric(horizontal: 40.w),
+                  borderRadius: 8,
+                  height: 50.h,
+                  width: 150.h,
+                  text: "Upload",
+                  textStyle: TextStyle(color: AppColors.whiteColor),
+                  leading: Icon(
+                    Icons.upload_file,
+                    color: AppColors.whiteColor,
+                  ),
                 ),
               ),
             ],
