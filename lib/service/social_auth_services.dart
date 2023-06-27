@@ -51,7 +51,7 @@ class Authenticate {
                   AppUtil.pushRoute(
                       pushReplacement: true,
                       context: Keys.mainNavigatorKey.currentState!.context,
-                      route: const UserDetailsView());
+                      route: const UserDetailsView(isFromLogin: true,));
                 }
               });
         });

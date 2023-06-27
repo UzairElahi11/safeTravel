@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:safe/Utils/app_colors.dart';
+import 'package:safe/Utils/app_images_path.dart';
 import 'package:safe/Utils/app_text_styles.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/extensions/string.extension.dart';
 import 'package:safe/Utils/generics/generic_button.dart';
-import 'package:safe/Utils/generics/generic_check_box.dart';
 import 'package:safe/Utils/generics/generic_text.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/screens/UI/add_family_members/add_family_members_viewmodel.dart';
@@ -24,17 +25,21 @@ class AddFamilyMembers extends StatelessWidget {
           viewModelBuilder: () => AddFamilyMembersViewModel(),
           builder: (context, model, _) {
             return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40.w),
+              padding: EdgeInsets.symmetric(horizontal: 70.w),
               child: Column(
                 children: [
-                   SizedBox(height: 70.h,),
-                  GenericText(
-                    LocaleKeys.addFamilyMembers,
-                    style: AppStyles.medium24.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                    textAlign: TextAlign.center
+                  SizedBox(
+                    height: 50.h,
                   ),
+                  headerWidgetTop(context),
+                  SizedBox(
+                    height: 30.h,
+                  ),
+                  GenericText(LocaleKeys.addFamilyMembers,
+                      style: AppStyles.medium24.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                      textAlign: TextAlign.center),
                   SizedBox(
                     height: 20.h,
                   ),
@@ -42,17 +47,8 @@ class AddFamilyMembers extends StatelessWidget {
                     children: List.generate(
                       model.familyMembersList.length,
                       (index) => ListTile(
-                      
                         minVerticalPadding: 0.0,
                         contentPadding: EdgeInsets.zero,
-                        leading: GenericCheckBox(
-                          borderSide: BorderSide(
-                            width: 10,
-                            color: AppColors.iconBgColor),
-                          onChanged: (value) =>
-                              model.changeCheckBoxvalue(index),
-                          value: model.familyMembersList[index]['isChecked'],
-                        ),
                         title: GenericText(
                           "${model.familyMembersList[index]['member']}",
                           style: AppStyles.medium20.copyWith(
@@ -87,7 +83,7 @@ class AddFamilyMembers extends StatelessWidget {
                                 width: 40.w,
                               ),
                               GestureDetector(
-                                onTap: () => model.addMembers(index),
+                                onTap: () => model.addMembers(index,context),
                                 child: Container(
                                   height: 40.h,
                                   width: 100.w,
@@ -125,6 +121,24 @@ class AddFamilyMembers extends StatelessWidget {
           },
         ),
       ),
+    );
+  }
+
+  Widget headerWidgetTop(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      // mainAxisAlignment: Mai,
+      children: [
+        InkWell(
+            onTap: () {
+              AppUtil.pop(context: context);
+            },
+            child: SvgPicture.asset(AppImages.backArrow)),
+        SizedBox(
+          width: 100.h,
+        ),
+      ],
     );
   }
 }

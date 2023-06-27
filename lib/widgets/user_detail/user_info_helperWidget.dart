@@ -80,21 +80,35 @@ class UserInformationDtails extends StatelessWidget {
           SizedBox(
             height: 12.h,
           ),
-          GenericTextField(
-            contentPadding: EdgeInsets.symmetric(vertical: 20.h),
-            hintStyle: AppStyles.small12.copyWith(
-              color: AppColors.editTextColor,
-              fontWeight: FontWeight.w400,
+          InkWell(
+            onTap: () async{
+             await showDatePicker(
+                context: context,
+                initialDate: model.selectedDate,
+                firstDate: DateTime(2000),
+                lastDate: DateTime.now(),
+              ).then((value) => model.seletedDate(value));
+            },
+            child: GenericTextField(
+              contentPadding: EdgeInsets.symmetric(vertical: 20.h),
+              hintStyle: AppStyles.small12.copyWith(
+                color: AppColors.editTextColor,
+                fontWeight: FontWeight.w400,
+              ),
+              prefixPadding: EdgeInsets.symmetric(horizontal: 20.w),
+              fillColor: AppColors.containerBgColor,
+              controller: model.dateOfBirthController,
+              borderRadius: 12.h,
+              textColor: AppColors.editTextColor,
+              filled: true,
+              textInputType: TextInputType.text,
+              errorText: model.dateofBirthError,
+              trailingIcon: const Icon(
+                Icons.calendar_month,
+              ),
+              enable: false,
+              hintText: LocaleKeys.dateOfBirth.translatedString(),
             ),
-            prefixPadding: EdgeInsets.symmetric(horizontal: 20.w),
-            fillColor: AppColors.containerBgColor,
-            controller: model.dateOfBirthController,
-            borderRadius: 12.h,
-            textColor: AppColors.editTextColor,
-            filled: true,
-            textInputType: TextInputType.text,
-            errorText: model.dateofBirthError,
-            hintText: LocaleKeys.dateOfBirth.translatedString(),
           ),
           SizedBox(
             height: 20.h,
@@ -118,7 +132,7 @@ class UserInformationDtails extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left:8.0),
+                padding: const EdgeInsets.only(left: 8.0),
                 child: GenericButton(
                   onPressed: () async {
                     await model.selectImage();

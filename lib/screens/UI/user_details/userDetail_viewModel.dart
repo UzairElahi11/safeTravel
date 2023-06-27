@@ -13,7 +13,9 @@ import 'package:safe/screens/UI/disablity/disablity.dart';
 class UserDetailsViewModel extends ChangeNotifier {
   File? image;
   List<File?> reports = <File?>[];
+  DateTime selectedDate = DateTime.now();
   ScrollController scrollController = ScrollController();
+  String formattedDate = "";
 
   List<Map<String, dynamic>> disabilityTypes = [
     {"name": "Awais", "isChecked": false},
@@ -38,6 +40,24 @@ class UserDetailsViewModel extends ChangeNotifier {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController dateOfBirthController = TextEditingController();
+
+  //dateofbirthSelection
+  void seletedDate(DateTime? date) {
+    if (date != null) {
+      selectedDate = date;
+      String month = selectedDate.month.toString();
+      String day = selectedDate.day.toString();
+      if (month.length == 1) {
+        month = "0$month";
+      }
+      if (day.length == 1) {
+        day = "0$day";
+      }
+      formattedDate = "${selectedDate.year}/$month/$day";
+      dateOfBirthController.text = formattedDate;
+      notifyListeners();
+    }
+  }
 
   //Error text for the fields
   String? firstnameError;
@@ -94,11 +114,11 @@ class UserDetailsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  navigate(BuildContext context) {
+  navigate(BuildContext context,bool isFromLogin) {
     if (validate()) {
       AppUtil.pushRoute(
         context: context,
-        route: const Disability(),
+        route:  Disability(isFromLogin:isFromLogin),
       );
     }
   }

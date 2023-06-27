@@ -13,9 +13,11 @@ import '../../Utils/generics/generic_text.dart';
 
 class UserDetailHeathCondition extends StatelessWidget {
   final UserDetailsViewModel model;
+  final bool isFromLogin;
   const UserDetailHeathCondition({
     super.key,
     required this.model,
+    required this.isFromLogin
   });
 
   @override
@@ -274,7 +276,7 @@ class UserDetailHeathCondition extends StatelessWidget {
             color: AppColors.whiteColor,
             fontWeight: FontWeight.w400,
           ),
-          onPressed: () => model.navigate(context),
+          onPressed: () => model.navigate(context,isFromLogin),
         ),
       ],
     );

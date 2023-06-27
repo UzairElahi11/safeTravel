@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:safe/Utils/app_util.dart';
+import 'package:safe/screens/UI/user_details/userDetails.dart';
+import 'package:safe/widgets/dialogBoxAddNewPerson.dart';
 
 class AddFamilyMembersViewModel extends ChangeNotifier {
   List<Map<String, dynamic>> familyMembersList = [
     {
       "member": "Adults",
       "isChecked": false,
-      "numberOfMembers": 0,
+      "numberOfMembers": 1,
     },
     {
       "member": "Children",
@@ -20,8 +23,24 @@ class AddFamilyMembersViewModel extends ChangeNotifier {
   ];
 
   ///Add the members
-  addMembers(int index) {
-    familyMembersList[index]["numberOfMembers"] += 1;
+  addMembers(int index, BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return MyDialog(
+          cancelCallBack: () {
+            AppUtil.pop(context: context);
+          },
+          proceedCallBack: () {
+            familyMembersList[index]["numberOfMembers"] += 1;
+            AppUtil.pushRoute(
+                context: context,
+                route: const UserDetailsView(isFromLogin: false));
+          },
+        );
+      },
+    );
+
     notifyListeners();
   }
 
@@ -34,10 +53,10 @@ class AddFamilyMembersViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-   //Change the checkbox value
+  //Change the checkbox value
   changeCheckBoxvalue(int index) {
-    familyMembersList[index]['isChecked'] = !familyMembersList[index]['isChecked'];
+    familyMembersList[index]['isChecked'] =
+        !familyMembersList[index]['isChecked'];
     notifyListeners();
   }
-
 }

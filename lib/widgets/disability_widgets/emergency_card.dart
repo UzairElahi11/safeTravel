@@ -7,8 +7,6 @@ import 'package:safe/Utils/generics/generic_text.dart';
 
 import '../../Utils/app_colors.dart';
 import '../../l10n/locale_keys.g.dart';
-import '../../Utils/generics/generic_button.dart';
-import '../../Utils/generics/generic_icon.dart';
 import '../../Utils/generics/generic_text_field.dart';
 
 class EmergencyContactCard extends StatelessWidget {
@@ -109,24 +107,24 @@ class EmergencyContactCard extends StatelessWidget {
               errorText: model.notesError,
               hintText: LocaleKeys.addNotes.translatedString(),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 20.h),
-              child: GenericButton(
-                width: 500.w,
-                padding: EdgeInsets.zero,
-                onPressed: () {},
-                leading: GenericIcon(
-                  icon: Icons.add,
-                  color: AppColors.whiteColor,
-                ),
-                text: LocaleKeys.add.translatedString(),
-                borderRadius: 10,
-                textStyle: AppStyles.medium14.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.whiteColor,
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 20.h),
+            //   child: GenericButton(
+            //     width: 500.w,
+            //     padding: EdgeInsets.zero,
+            //     onPressed: () {},
+            //     leading: GenericIcon(
+            //       icon: Icons.add,
+            //       color: AppColors.whiteColor,
+            //     ),
+            //     text: LocaleKeys.add.translatedString(),
+            //     borderRadius: 10,
+            //     textStyle: AppStyles.medium14.copyWith(
+            //       fontWeight: FontWeight.w600,
+            //       color: AppColors.whiteColor,
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

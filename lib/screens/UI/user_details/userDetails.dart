@@ -9,10 +9,10 @@ import 'package:safe/widgets/user_detail/userDetailHelperWidget.dart';
 import 'package:safe/widgets/user_detail/user_info_helperWidget.dart';
 import 'package:stacked/stacked.dart';
 
-
 class UserDetailsView extends StatelessWidget {
   static const id = "UserDetail_screen";
-  const UserDetailsView({super.key});
+  final bool isFromLogin;
+  const UserDetailsView({super.key,required this.isFromLogin});
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +49,7 @@ class UserDetailsView extends StatelessWidget {
                 ),
                 UserDetailHeathCondition(
                   model: model,
+                  isFromLogin:isFromLogin
                 ),
 
                 // EmergencyContactCard(model: model),

@@ -88,7 +88,7 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
     if (validate()) {
       AppUtil.pushRoute(
         context: context,
-        route: const UserDetailsView(),
+        route: const UserDetailsView(isFromLogin: true,),
       );
     }
   }
@@ -232,7 +232,7 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
               AppUtil.pushRoute(
                   pushReplacement: true,
                   context: Keys.mainNavigatorKey.currentState!.context,
-                  route: const UserDetailsView());
+                  route: const UserDetailsView(isFromLogin: true,));
             }
           });
     }

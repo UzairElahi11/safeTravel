@@ -134,7 +134,7 @@ class ServerManager {
                 "responce error code ${response.statusCode} responce code ${response.body}");
             callCompletion(response.body, false, completion);
           }
-        }).catchError((Object error) {
+        }).catchError((Object? error) {
           if (error != null && error.runtimeType == String) {
             debugPrint("response: error " + error.toString());
           }

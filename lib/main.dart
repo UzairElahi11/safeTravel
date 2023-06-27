@@ -14,7 +14,6 @@ import 'package:safe/constants/keys.dart';
 import 'package:safe/locale.dart';
 import 'package:safe/locator.dart';
 import 'package:safe/observers/navigation_observer.dart';
-import 'package:safe/screens/UI/calendar/calendar.dart';
 import 'package:safe/screens/UI/splash/splash.dart';
 import 'package:sizer/sizer.dart';
 
