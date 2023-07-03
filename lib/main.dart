@@ -15,6 +15,7 @@ import 'package:safe/locale.dart';
 import 'package:safe/locator.dart';
 import 'package:safe/observers/navigation_observer.dart';
 import 'package:safe/screens/UI/splash/splash.dart';
+import 'package:safe/screens/UI/user_details/user_data_manager.dart';
 import 'package:sizer/sizer.dart';
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -147,6 +148,7 @@ Widget getErrorWidget(BuildContext context, FlutterErrorDetails error) {
 pushNotifications() async {
   final fcmToken = await FirebaseMessaging.instance.getToken();
   debugPrint(fcmToken.toString());
+  UserDataManager.getInstance().fcmToken = fcmToken.toString();
   var initializationSettingAndroid =
       const AndroidInitializationSettings('@mipmap/ic_launcher');
   var initializationSettingsIOS = const DarwinInitializationSettings();

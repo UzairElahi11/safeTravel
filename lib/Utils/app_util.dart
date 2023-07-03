@@ -47,7 +47,9 @@ class AppUtil {
     try {
       _deviceHeight = mediaQueryData.size.height;
     } catch (e) {
-      log(e.toString(),);
+      log(
+        e.toString(),
+      );
     }
     return _deviceHeight;
   }
@@ -58,7 +60,9 @@ class AppUtil {
     try {
       _deviceWidth = mediaQueryData.size.width;
     } catch (e) {
-      log(e.toString(),);
+      log(
+        e.toString(),
+      );
     }
     return _deviceWidth;
   }
@@ -83,6 +87,8 @@ class AppUtil {
       );
     }
   }
+
+
 
   static dynamic decodeString(String responseBody) {
     return json.decode(responseBody);

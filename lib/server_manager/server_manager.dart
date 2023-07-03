@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:safe/Utils/url_constants.dart';
+import 'package:safe/screens/UI/user_details/user_data_manager.dart';
 
 import '../Utils/app_util.dart';
 
@@ -327,6 +328,7 @@ class ServerManager {
       "email": email,
       "password": password,
       "name": name,
+      "device": UserDataManager.getInstance().deviceType
     };
      callPostApi(UrlConstants.registration, _defaultHeader(), json, completion);
   }
@@ -336,14 +338,17 @@ class ServerManager {
     Map<String, dynamic> json = {
       "email": email,
       "token": token,
-      "provider_name": providerName
+      "provider_name": providerName,
+      "fcm_token": UserDataManager.getInstance().fcmToken,
+      "device": UserDataManager.getInstance().deviceType
     };
      callPostApi(UrlConstants.socialLogin, _defaultHeader(), json, completion);
   }
 
   static void login(
       String email, String password, ResponseCompletion completion) {
-    Map<String, dynamic> json = {"email": email, "password": password};
+    Map<String, dynamic> json = {"email": email, "password": password,"fcm_token": UserDataManager.getInstance().fcmToken,
+      "device": UserDataManager.getInstance().deviceType};
      callPostApi(UrlConstants.login, _defaultHeader(), json, completion);
   }
 

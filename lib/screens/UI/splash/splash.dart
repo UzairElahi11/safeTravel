@@ -1,4 +1,4 @@
-import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -8,6 +8,7 @@ import 'package:safe/Utils/local_storage.dart';
 import 'package:safe/locator.dart';
 import 'package:safe/screens/UI/Welcome/welcome.dart';
 import 'package:safe/screens/UI/login/login.dart';
+import 'package:safe/screens/UI/user_details/user_data_manager.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -20,6 +21,11 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> {
   @override
   void initState() {
+    if (Platform.isAndroid) {
+      UserDataManager.getInstance().deviceType = "Android";
+    } else if (Platform.isIOS) {
+      UserDataManager.getInstance().deviceType = "IOS";
+    }
     super.initState();
     moveTopNextPage(context);
   }
