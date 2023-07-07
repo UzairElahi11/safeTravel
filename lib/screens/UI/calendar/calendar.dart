@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safe/Utils/app_colors.dart';
 import 'package:safe/Utils/app_text_styles.dart';
+import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/generics/generic_button.dart';
 import 'package:safe/Utils/generics/generic_tabar.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/Utils/generics/generic_text.dart';
 import 'package:safe/screens/UI/calendar/calendar_viewmodel.dart';
+import 'package:safe/screens/UI/payment/payment_view.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../widgets/calendar/arival_calendar_widget.dart';
@@ -43,7 +45,7 @@ class Calendar extends StatelessWidget {
                         height: 20.h,
                       ),
                       GenericTabBar(
-                        height: MediaQuery.of(context).size.height*0.57,
+                        height: MediaQuery.of(context).size.height * 0.57,
                         selectedLabelColor: AppColors.blackColor,
                         unselectedLabelColor: AppColors.unSelectedColor,
                         labelStyle: AppStyles.medium20.copyWith(
@@ -110,7 +112,10 @@ class Calendar extends StatelessWidget {
                       ),
                       GenericButton(
                         height: 70.h,
-                        onPressed: () {},
+                        onPressed: () {
+                          AppUtil.pushRoute(
+                              context: context, route: const PaymentView());
+                        },
                         text: LocaleKeys.next,
                         textStyle: AppStyles.mediumBold16.copyWith(
                           color: AppColors.whiteColor,

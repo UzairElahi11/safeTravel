@@ -24,4 +24,6 @@ class AppColors {
   static Color lightBlackColor = const Color(0XFF202020);
   static Color bgDetailColor = const Color(0xffC0C0C0);
   static Color socailContainerBorderSide = const Color(0xffDFE0E0);
+  static Color color232323 = const Color(0xFF232323);
+  static Color color5E5D5D = const Color(0xff5E5D5D);
 }

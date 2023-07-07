@@ -45,7 +45,15 @@
   "hintLastName":"Introduzca el apellido",
   "dateOfBirth": "Fecha de nacimiento",
   "dateOfBirthHint": "DD/MM/YYYY",
-  "sendLocationInEmergency": "Enviar ubicación solo en Emergencia"
+  "sendLocationInEmergency": "Enviar ubicación solo en Emergencia",
+  "paymentHeader": "Pagos \nMantenerse Segura Marruecos",
+  "paymentDescription":"Todos los días Incluido",
+  "price":"precio",
+  "familyRate":"Tarifa Familiar",
+  "tax":"impuesto",
+  "cardNumber":"Ingrese el número de tarjeta"
+
+
 
 
 

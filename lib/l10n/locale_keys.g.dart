@@ -47,4 +47,10 @@ abstract class LocaleKeys {
   static const dateOfBirth = "dateOfBirth";
   static const dateOfBirthHint = "dateOfBirthHint";
   static const sendLocationInEmergency = "sendLocationInEmergency";
+  static const paymentHeader = "paymentHeader";
+  static const paymentDescription = "paymentDescription";
+  static const price = "price";
+  static const tax = "tax";
+  static const familyRate = "familyRate";
+  static const cardNumber = "cardNumber";
 }

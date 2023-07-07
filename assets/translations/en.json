@@ -45,7 +45,14 @@
   "dateOfBirth": "Date of Birth",
   "dateOfBirthHint": "DD/MM/YYYY",
   "addFamilyMembers" : "Add Family Members",
-  "sendLocationInEmergency" : "Send location only in Emergency"
+  "sendLocationInEmergency" : "Send location only in Emergency",
+  "paymentHeader":"Payments \n Stay Safe Morocco",
+  "paymentDescription":"All days Included",
+  "price":"Price",
+  "familyRate":"Family Rate",
+  "tax":"Tax",
+  "cardNumber":"Enter Card Number"
+
 
 
 }
