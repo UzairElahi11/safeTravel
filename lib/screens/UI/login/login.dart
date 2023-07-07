@@ -181,7 +181,9 @@ class Login extends StatelessWidget {
                                   if (check) {
                                     AppUtil.pushRoute(
                                       context: context,
-                                      route: const UserDetailsView(isFromLogin: true,),
+                                      route: const UserDetailsView(
+                                        isFromLogin: true,
+                                      ),
                                     );
                                   }
                                 });

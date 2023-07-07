@@ -27,25 +27,24 @@ class Calendar extends StatelessWidget {
               onViewModelReady: (model) => model.initializeTabController(2),
               viewModelBuilder: () => CalendarViewModel(),
               builder: (context, model, _) {
-                return SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 20.h,
+                return Column(
+                  children: [
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    GenericText(
+                      LocaleKeys.dateOfArivalAndDeparture,
+                      style: AppStyles.medium24.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.blackColor,
                       ),
-                      GenericText(
-                        LocaleKeys.dateOfArivalAndDeparture,
-                        style: AppStyles.medium24.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.blackColor,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      GenericTabBar(
-                        height: MediaQuery.of(context).size.height * 0.57,
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Expanded(
+                      child: GenericTabBar(
                         selectedLabelColor: AppColors.blackColor,
                         unselectedLabelColor: AppColors.unSelectedColor,
                         labelStyle: AppStyles.medium20.copyWith(
@@ -67,7 +66,9 @@ class Calendar extends StatelessWidget {
                                 Radius.circular(10),
                               ),
                             ),
-                            child: const ArrivalCalendar(),
+                            child: ArrivalCalendar(
+                              focusDay: model.arrivalfocusDay,
+                            ),
                           ),
                           Card(
                             shadowColor: AppColors.blackColor.withOpacity(0.25),
@@ -78,55 +79,57 @@ class Calendar extends StatelessWidget {
                                 Radius.circular(10),
                               ),
                             ),
-                            child: const ArrivalCalendar(),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 30.h,
-                      ),
-                      Row(
-                        children: [
-                          Switch.adaptive(
-                            thumbColor:
-                                MaterialStateProperty.all(AppColors.whiteColor),
-                            activeColor: AppColors.baseColor,
-                            value: model.switchValue,
-                            onChanged: (value) {
-                              model.changeSwitchValue();
-                            },
-                          ),
-                          Expanded(
-                            child: GenericText(
-                              LocaleKeys.sendLocationInEmergency,
-                              style: AppStyles.medium14.copyWith(
-                                color: AppColors.blackColor,
-                                fontWeight: FontWeight.w400,
-                              ),
+                            child: ArrivalCalendar(
+                              focusDay: model.departureFocusDay,
                             ),
-                          )
+                          ),
                         ],
                       ),
-                      SizedBox(
-                        height: 40.h,
-                      ),
-                      GenericButton(
-                        height: 70.h,
-                        onPressed: () {
-                          AppUtil.pushRoute(
-                              context: context, route: const PaymentView());
-                        },
-                        text: LocaleKeys.next,
-                        textStyle: AppStyles.mediumBold16.copyWith(
-                          color: AppColors.whiteColor,
-                          fontWeight: FontWeight.w600,
+                    ),
+                    SizedBox(
+                      height: 30.h,
+                    ),
+                    Row(
+                      children: [
+                        Switch.adaptive(
+                          thumbColor:
+                              MaterialStateProperty.all(AppColors.whiteColor),
+                          activeColor: AppColors.baseColor,
+                          value: model.switchValue,
+                          onChanged: (value) {
+                            model.changeSwitchValue();
+                          },
                         ),
+                        Expanded(
+                          child: GenericText(
+                            LocaleKeys.sendLocationInEmergency,
+                            style: AppStyles.medium14.copyWith(
+                              color: AppColors.blackColor,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 40.h,
+                    ),
+                    GenericButton(
+                      height: 70.h,
+                      onPressed: () {
+                        AppUtil.pushRoute(
+                            context: context, route: const PaymentView());
+                      },
+                      text: LocaleKeys.next,
+                      textStyle: AppStyles.mediumBold16.copyWith(
+                        color: AppColors.whiteColor,
+                        fontWeight: FontWeight.w600,
                       ),
-                      // SizedBox(
-                      //   height: 60.h,
-                      // ),
-                    ],
-                  ),
+                    ),
+                    // SizedBox(
+                    //   height: 60.h,
+                    // ),
+                  ],
                 );
               }),
         ),

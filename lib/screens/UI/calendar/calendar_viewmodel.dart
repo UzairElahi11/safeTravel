@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 class CalendarViewModel extends ChangeNotifier implements TickerProvider {
+
+  DateTime arrivalfocusDay = DateTime.now();
+    DateTime departureFocusDay = DateTime.now();
+
   late TabController _tabController;
   bool switchValue = false;
   final List<String> tabs = [
