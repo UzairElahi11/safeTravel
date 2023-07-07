@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -7,10 +8,14 @@ import 'package:geolocator/geolocator.dart' as locatorr;
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/local_storage.dart';
 import 'package:safe/Utils/permission_handler_helper_model.dart';
+import 'package:safe/Utils/user_defaults.dart';
 import 'package:safe/locator.dart';
 import 'package:safe/screens/UI/Welcome/welcome.dart';
+import 'package:safe/screens/UI/dashboard/dashboard.dart';
 import 'package:safe/screens/UI/login/login.dart';
 import 'package:safe/screens/UI/user_details/user_data_manager.dart';
+
+import '../user_details/userDetails.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -67,10 +72,12 @@ class _SplashState extends State<Splash> {
             await locator<LocalSecureStorage>()
                 .readSecureStorage(AppUtil.isTermsAndConditionsAccepted);
 
+            final val = await UserDefaults.getToken();
+
+            log("value is $val");
+
             if (mounted) {
-              await locator<LocalSecureStorage>().readSecureStorage(
-                          AppUtil.isTermsAndConditionsAccepted) ==
-                      "1"
+              val == null
                   ? AppUtil.pushRoute(
                       pushReplacement: true,
                       context: context,
@@ -79,7 +86,9 @@ class _SplashState extends State<Splash> {
                   : AppUtil.pushRoute(
                       pushReplacement: true,
                       context: context,
-                      route: const Welcome(),
+                      route: const UserDetailsView(
+                        isFromLogin: true,
+                      ),
                     );
             }
           },

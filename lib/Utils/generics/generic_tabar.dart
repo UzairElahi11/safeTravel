@@ -60,8 +60,7 @@ class GenericTabBar extends StatelessWidget {
               )
               .toList(),
         ),
-        SizedBox(
-          height: height,
+        Expanded(
           child: TabBarView(
             controller: controller,
             children: tabChildren,
