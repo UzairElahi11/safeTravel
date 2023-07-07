@@ -189,7 +189,7 @@ class PaymentView extends StatelessWidget {
                                   height: 20.h,
                                 ),
                                 GenericTextField(
-                                  controller: model.cardNumberController,
+                                  controller: model.cvvController,
                                   fillColor: AppColors.containerBgColor,
                                   filled: true,
                                   isNumberField: true,
