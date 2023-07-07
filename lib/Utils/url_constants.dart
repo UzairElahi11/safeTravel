@@ -4,4 +4,8 @@ class UrlConstants {
   static String registration = "${baseUrl}user/create";
   static String logout = "${baseUrl}user/logout";
   static String socialLogin = "${baseUrl}social/login";
+  static String paymentApi = "${baseUrl}charge-customer";
+  static String callPolice = "${baseUrl}help/police";
+  static String callHealth = "${baseUrl}help/ambulance";
+  static String getPharmacy = "${baseUrl}get-pharmacies";
 }

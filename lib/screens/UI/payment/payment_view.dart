@@ -163,7 +163,7 @@ class PaymentView extends StatelessWidget {
                         isNumberField: true,
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly,
-                          LengthLimitingTextInputFormatter(19),
+                          LengthLimitingTextInputFormatter(16),
                           CardNumberInputFormatter()
                         ],
                         // contentPadding: EdgeInsets.symmetric(vertical: 20.h),

@@ -53,4 +53,7 @@ abstract class LocaleKeys {
   static const tax = "tax";
   static const familyRate = "familyRate";
   static const cardNumber = "cardNumber";
+  static const medical = "medical";
+  static const police = "police";
+  static const pharmacy = "pharmacy";
 }

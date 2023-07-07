@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:safe/Utils/app_util.dart';
+import 'package:safe/Utils/generics/generic_text.dart';
 import 'package:safe/screens/UI/user_details/userDetails.dart';
 import 'package:safe/widgets/dialogBoxAddNewPerson.dart';
 
@@ -27,16 +28,18 @@ class AddFamilyMembersViewModel extends ChangeNotifier {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return MyDialog(
-          cancelCallBack: () {
-            AppUtil.pop(context: context);
-          },
-          proceedCallBack: () {
-            familyMembersList[index]["numberOfMembers"] += 1;
-            AppUtil.pushRoute(
-                context: context,
-                route: const UserDetailsView(isFromLogin: false));
-          },
+        return AlertDialog(
+          title: const Text("Police"),
+          content: const Text(
+              "Police is on way at you current location please wait and and be safe"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                AppUtil.pop(context: context);
+              },
+              child: GenericText('Cancel'),
+            ),
+          ],
         );
       },
     );

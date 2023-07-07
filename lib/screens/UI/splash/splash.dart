@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:geolocator/geolocator.dart' as locatorr;
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/local_storage.dart';
+import 'package:safe/Utils/permission_handler_helper_model.dart';
 import 'package:safe/locator.dart';
 import 'package:safe/screens/UI/Welcome/welcome.dart';
 import 'package:safe/screens/UI/login/login.dart';
@@ -19,6 +21,7 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
+  locatorr.Position? currentLocation;
   @override
   void initState() {
     if (Platform.isAndroid) {
@@ -44,63 +47,90 @@ class _SplashState extends State<Splash> {
   }
 
   moveTopNextPage(BuildContext context) {
-    SchedulerBinding.instance.addPostFrameCallback(
-      (_) async {
-        await locator<LocalSecureStorage>()
-            .readSecureStorage(AppUtil.isTermsAndConditionsAccepted);
+    AppUtil.checkIfLocationPermissionAlreadyGranted().then((value) {
+      if (value.permissionsResult == PermissionsResult.granted) {
+        Future.delayed(
+          const Duration(milliseconds: 100),
+          () async {
+            try {
+              currentLocation = await locatorr.Geolocator.getCurrentPosition(
+                  desiredAccuracy: locatorr.LocationAccuracy.high);
+            } on Exception {
+              currentLocation = null;
+            }
+            UserDataManager.getInstance().lat = currentLocation != null
+                ? currentLocation!.latitude.toString()
+                : "";
+            UserDataManager.getInstance().long = currentLocation != null
+                ? currentLocation!.latitude.toString()
+                : "";
+            await locator<LocalSecureStorage>()
+                .readSecureStorage(AppUtil.isTermsAndConditionsAccepted);
 
-        if (mounted) {
-          await locator<LocalSecureStorage>().readSecureStorage(
-                      AppUtil.isTermsAndConditionsAccepted) ==
-                  "1"
-              ? AppUtil.pushRoute(
-                  pushReplacement: true,
-                  context: context,
-                  route: const Login(),
-                )
-              : AppUtil.pushRoute(
-                  pushReplacement: true,
-                  context: context,
-                  route: const Welcome(),
-                );
-        }
-      },
-    );
+            if (mounted) {
+              await locator<LocalSecureStorage>().readSecureStorage(
+                          AppUtil.isTermsAndConditionsAccepted) ==
+                      "1"
+                  ? AppUtil.pushRoute(
+                      pushReplacement: true,
+                      context: context,
+                      route: const Login(),
+                    )
+                  : AppUtil.pushRoute(
+                      pushReplacement: true,
+                      context: context,
+                      route: const Welcome(),
+                    );
+            }
+          },
+        );
+      } else if (value.permissionsResult == PermissionsResult.denied) {
+        AppUtil.checkIfLocationPermissionAlreadyGranted().then((value) {
+          if (value.permissionsResult == PermissionsResult.granted) {
+            SchedulerBinding.instance.addPostFrameCallback(
+              (_) async {
+                try {
+                  currentLocation =
+                      await locatorr.Geolocator.getCurrentPosition(
+                          desiredAccuracy: locatorr.LocationAccuracy.high);
+                } on Exception {
+                  currentLocation = null;
+                }
+                UserDataManager.getInstance().lat = currentLocation != null
+                    ? currentLocation!.latitude.toString()
+                    : "";
+                UserDataManager.getInstance().long = currentLocation != null
+                    ? currentLocation!.latitude.toString()
+                    : "";
+                await locator<LocalSecureStorage>()
+                    .readSecureStorage(AppUtil.isTermsAndConditionsAccepted);
 
-    // AppUtil.checkIfLocationPermissionAlreadyGranted().then((value) {
-    //   if (value.permissionsResult == PermissionsResult.granted) {
-    //     Future.delayed(const Duration(milliseconds: 1000), () {
-    //       AppUtil.pushRoute(
-    //           pushReplacement: true,
-    //           context: context,
-    //           route: isFirstTime == true
-    //               ? const Welcome()
-    //               : (bearerToken == null || bearerToken == "")
-    //                   ? const Welcome()
-    //                   : const Welcome());
-    //     });
-    //   } else if (value.permissionsResult == PermissionsResult.denied) {
-    //     AppUtil.checkIfLocationPermissionAlreadyGranted().then((value) {
-    //       if (value.permissionsResult == PermissionsResult.granted) {
-    //         Future.delayed(const Duration(milliseconds: 3000), () {
-    //           AppUtil.pushRoute(
-    //               pushReplacement: true,
-    //               context: context,
-    //               route: isFirstTime == true
-    //                   ? const Welcome()
-    //                   : (bearerToken == null || bearerToken == "")
-    //                       ? const Welcome()
-    //                       : const Welcome());
-    //         });
-    //       } else {
-    //         showDialog(
-    //           context: context,
-    //           builder: (context) => settingWidget(),
-    //         );
-    //       }
-    //     });
-    //   }
-    // });
+                if (mounted) {
+                  await locator<LocalSecureStorage>().readSecureStorage(
+                              AppUtil.isTermsAndConditionsAccepted) ==
+                          "1"
+                      ? AppUtil.pushRoute(
+                          pushReplacement: true,
+                          context: context,
+                          route: const Login(),
+                        )
+                      : AppUtil.pushRoute(
+                          pushReplacement: true,
+                          context: context,
+                          route: const Welcome(),
+                        );
+                }
+              },
+            );
+          } else {
+            showDialog(
+              context: context,
+              builder: (context) => settingWidget(),
+            );
+          }
+        });
+      }
+    });
   }
 
   Widget settingWidget() {

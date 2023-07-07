@@ -156,6 +156,7 @@ class RegistrationViewModel with ChangeNotifier, ApiCalling {
               await UserDefaults.setEmailAndUserName(
                   registerModel?.data?.name ?? "",
                   registerModel?.data?.email ?? "");
+                  
               debugPrint(registerModel?.token);
             }
             //  debugPrint("Response of login " + json.toString());
