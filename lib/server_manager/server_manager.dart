@@ -15,7 +15,7 @@ class ServerManager {
   static const int timeOutSeconds = 30;
 
   ServerManager._();
-   static void callPostApi(String url, Map<String, String> headers,
+  static void callPostApi(String url, Map<String, String> headers,
       Map<String, dynamic> body, completion(String responseBody, bool success),
       {int timeout = timeOutSeconds}) {
     bool onCallDone = false;
@@ -125,8 +125,7 @@ class ServerManager {
             .then((http.Response response) {
           onCallDone = true;
           debugPrint("internal reach");
-          log(
-              'Response Success $url ${body?.toString()} Header: ${headers?.toString() ?? ""}');
+          log('Response Success $url ${body?.toString()} Header: ${headers?.toString() ?? ""}');
           if (response != null && response.statusCode == 200) {
             log("-------" + response.body.toString());
             callCompletion(response.body, true, completion);
@@ -323,18 +322,20 @@ class ServerManager {
     return null;
   }
 
-  static void register(String email, String password, String name, ResponseCompletion completion) {
+  static void register(String email, String password, String name,
+      ResponseCompletion completion) {
     Map<String, dynamic> json = {
       "email": email,
       "password": password,
       "name": name,
       "device": UserDataManager.getInstance().deviceType
     };
-     callPostApi(UrlConstants.registration, _defaultHeader(), json, completion);
+    callPostApi(UrlConstants.registration, _defaultHeader(), json, completion);
   }
 
   // social login
-  static void socialLogin(String email,String token,String providerName, ResponseCompletion completion) {
+  static void socialLogin(String email, String token, String providerName,
+      ResponseCompletion completion) {
     Map<String, dynamic> json = {
       "email": email,
       "token": token,
@@ -342,14 +343,55 @@ class ServerManager {
       "fcm_token": UserDataManager.getInstance().fcmToken,
       "device": UserDataManager.getInstance().deviceType
     };
-     callPostApi(UrlConstants.socialLogin, _defaultHeader(), json, completion);
+    callPostApi(UrlConstants.socialLogin, _defaultHeader(), json, completion);
+  }
+
+  //payment api
+  static void payment( String cardNumber, String cvv , String expDate, ResponseCompletion completion
+   ) {
+    Map<String, dynamic> json = {
+      "card_number": cardNumber,
+      "cvv": cvv,
+      "expiry": expDate,
+    };
+    callPostApi(UrlConstants.paymentApi, _defaultHeader(), json, completion);
+  }
+   static void callPolice( String lat , String long, ResponseCompletion completion
+   ) {
+    Map<String, dynamic> json = {
+      "lat": lat,
+      "long": long,
+  
+    };
+    callPostApi(UrlConstants.callPolice, _defaultHeader(), json, completion);
+  }
+     static void callHealth( String lat , String long, ResponseCompletion completion
+   ) {
+    Map<String, dynamic> json = {
+      "lat": lat,
+      "long": long,
+    };
+    callPostApi(UrlConstants.callHealth, _defaultHeader(), json, completion);
+  }
+   static void getPharmacy( String lat , String long, ResponseCompletion completion
+   ) {
+    Map<String, dynamic> json = {
+      "lat": lat,
+      "long": long,
+      "radius":"5"
+    };
+    callPostApi(UrlConstants.callHealth, _defaultHeader(), json, completion);
   }
 
   static void login(
       String email, String password, ResponseCompletion completion) {
-    Map<String, dynamic> json = {"email": email, "password": password,"fcm_token": UserDataManager.getInstance().fcmToken,
-      "device": UserDataManager.getInstance().deviceType};
-     callPostApi(UrlConstants.login, _defaultHeader(), json, completion);
+    Map<String, dynamic> json = {
+      "email": email,
+      "password": password,
+      "fcm_token": UserDataManager.getInstance().fcmToken,
+      "device": UserDataManager.getInstance().deviceType
+    };
+    callPostApi(UrlConstants.login, _defaultHeader(), json, completion);
   }
 
   static void checkuser(String email, ResponseCompletion completion) {
@@ -359,7 +401,7 @@ class ServerManager {
 
   static void logout(ResponseCompletion completion) {
     Map<String, dynamic> json = {};
-     getApiCalling(UrlConstants.logout, _defaultHeader(), json, completion);
+    getApiCalling(UrlConstants.logout, _defaultHeader(), json, completion);
   }
 
   static void getAllStation(ResponseCompletion completion) {

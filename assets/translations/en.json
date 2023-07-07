@@ -51,7 +51,11 @@
   "price":"Price",
   "familyRate":"Family Rate",
   "tax":"Tax",
-  "cardNumber":"Enter Card Number"
+  "cardNumber":"Enter Card Number",
+  "police":"Government police",
+  "pharmacy":"Pharmacy",
+  "medical":"Medical Health"
+
 
 
 

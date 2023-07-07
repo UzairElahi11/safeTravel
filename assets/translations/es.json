@@ -51,7 +51,10 @@
   "price":"precio",
   "familyRate":"Tarifa Familiar",
   "tax":"impuesto",
-  "cardNumber":"Ingrese el número de tarjeta"
+  "cardNumber":"Ingrese el número de tarjeta",
+  "police":"policía del gobierno",
+  "pharmacy":"Farmacia",
+  "medical":"Salud médica"
 
 
 
