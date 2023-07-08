@@ -216,14 +216,18 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
 
               listData = getLabelsModel.data?.toJson().values.toList();
 
-              healthCheckList = List<bool>.filled(
-                  getLabelsModel.data?.healthConditions?.length ?? 0, false);
-              medicalCheckList = List<bool>.filled(
-                  getLabelsModel.data?.medicalAllergies?.length ?? 0, false);
-              foodAlergiesLies = List<bool>.filled(
-                  getLabelsModel.data?.foodAllergies?.length ?? 0, false);
-              disablitiesList = List<bool>.filled(
-                  getLabelsModel.data?.disabilities?.length ?? 0, false);
+              healthCheckList = List<bool>.generate(
+                  getLabelsModel.data?.healthConditions?.length ?? 0,
+                  (index) => false);
+              medicalCheckList = List<bool>.generate(
+                  getLabelsModel.data?.medicalAllergies?.length ?? 0,
+                  (index) => false);
+              foodAlergiesLies = List<bool>.generate(
+                  getLabelsModel.data?.foodAllergies?.length ?? 0,
+                  (index) => false);
+              disablitiesList = List<bool>.generate(
+                  getLabelsModel.data?.disabilities?.length ?? 0,
+                  (index) => false);
 
               notifyListeners();
 
@@ -258,6 +262,7 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
   //add the hitem to the respective list
   addItem(int index) {
     listData![index].add(addItemsController.text);
+    addNewBoolToListWhenAddNewItem(index);
     notifyListeners();
 
     addItemsController.clear();
@@ -272,7 +277,7 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
     } else if (mainIndex == 2) {
       foodAlergiesLies[index] = !foodAlergiesLies[index];
     } else {
-      disablitiesList[index] = !foodAlergiesLies[index];
+      disablitiesList[index] = !disablitiesList[index];
     }
     notifyListeners();
   }
@@ -286,6 +291,18 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
       return foodAlergiesLies[index];
     } else {
       return disablitiesList[index];
+    }
+  }
+
+  addNewBoolToListWhenAddNewItem(int mainIndex) {
+    if (mainIndex == 0) {
+      healthCheckList.add(false);
+    } else if (mainIndex == 1) {
+      medicalCheckList.add(false);
+    } else if (mainIndex == 2) {
+      foodAlergiesLies.add(false);
+    } else {
+      disablitiesList.add(false);
     }
   }
 }
