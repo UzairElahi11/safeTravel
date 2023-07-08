@@ -26,9 +26,7 @@ class UserDetailHeathCondition extends StatelessWidget {
             shrinkWrap: true,
             itemCount: model.totalNumberOfListInDataObject,
             itemBuilder: (context, index) {
-              final List<dynamic>? listData =
-                  model.getLabelsModel.data?.toJson().values.toList();
-              final List<String> listItems = listData?[index] ?? [];
+              final List<String> listItems = model.listData?[index] ?? [];
 
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

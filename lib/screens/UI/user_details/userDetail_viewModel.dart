@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -19,6 +18,10 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
   GetLabels getLabelsModel = GetLabels();
   List<String> listNames = [];
   int totalNumberOfListInDataObject = 0;
+
+   List<dynamic>? listData = [];
+
+    List<String> listItems = [];
 
   File? image;
   List<File?> reports = <File?>[];
@@ -190,6 +193,16 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
 
               totalNumberOfListInDataObject =
                   getLabelsModel.data?.toJson().keys.length ?? 0;
+
+                 listData =
+                  getLabelsModel.data?.toJson().values.toList();
+
+
+                  
+
+                
+
+           
               notifyListeners();
 
               // }
