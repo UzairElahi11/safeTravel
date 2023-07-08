@@ -357,8 +357,6 @@ class ServerManager {
   //payment api
   static void payment(String cardNumber, String cvv, String expDate,
       ResponseCompletion completion) {
-  static void payment(String cardNumber, String cvv, String expDate,
-      ResponseCompletion completion) {
     Map<String, dynamic> json = {
       "card_number": cardNumber,
       "cvv": cvv,
@@ -366,9 +364,6 @@ class ServerManager {
     };
     callPostApi(UrlConstants.paymentApi, _defaultHeader(), json, completion);
   }
-
-  static void callPolice(
-      String lat, String long, ResponseCompletion completion) {
 
   static void callPolice(
       String lat, String long, ResponseCompletion completion) {
@@ -381,19 +376,19 @@ class ServerManager {
 
   static void callHealth(
       String lat, String long, ResponseCompletion completion) {
-
-  static void callHealth(
-      String lat, String long, ResponseCompletion completion) {
     Map<String, dynamic> json = {
       "lat": lat,
       "long": long,
     };
     callPostApi(UrlConstants.callHealth, _defaultHeader(), json, completion);
   }
-
-  static void getPharmacy(
-      String lat, String long, ResponseCompletion completion) {
-    Map<String, dynamic> json = {"lat": lat, "long": long, "radius": "5"};
+   static void getPharmacy( String lat , String long, ResponseCompletion completion
+   ) {
+    Map<String, dynamic> json = {
+      "lat": lat,
+      "long": long,
+      "radius":"5"
+    };
     callPostApi(UrlConstants.callHealth, _defaultHeader(), json, completion);
   }
 
