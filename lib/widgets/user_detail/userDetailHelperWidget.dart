@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,17 +25,18 @@ class UserDetailHeathCondition extends StatelessWidget {
         ListView.builder(
             physics: const ClampingScrollPhysics(),
             shrinkWrap: true,
-            itemCount: model.getLabelsModel.data?.toJson().length,
+            itemCount: 4,
             itemBuilder: (context, index) {
               final List<dynamic>? listData =
                   model.getLabelsModel.data?.toJson().values.toList();
-              final List<String> listItems = listData ?[index] ?? []; 
+              final List<String> listItems = listData?[index] ?? [];
 
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    model.listNames.isNotEmpty ? model.listNames[index] : "",
+                    model.listNames.isNotEmpty ? model.listNames[index] :
+                     "",
                     style: AppStyles.medium14
                         .copyWith(color: AppColors.blackColor),
                   ),

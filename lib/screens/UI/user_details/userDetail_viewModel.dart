@@ -186,6 +186,8 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
 
               listNames = getLabelsModel.data?.toJson().keys.toList() ?? [];
 
+              notifyListeners();
+
               // }
               completion(success);
             } else {

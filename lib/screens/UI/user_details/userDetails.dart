@@ -4,9 +4,10 @@ import 'package:safe/Utils/app_text_styles.dart';
 import 'package:safe/Utils/generics/generic_text.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/screens/UI/user_details/userDetail_viewModel.dart';
-import 'package:safe/widgets/user_detail/userDetailHelperWidget.dart';
 import 'package:safe/widgets/user_detail/user_info_helperWidget.dart';
 import 'package:stacked/stacked.dart';
+
+import '../../../widgets/user_detail/userDetailHelperWidget.dart';
 
 class UserDetailsView extends StatelessWidget {
   static const id = "UserDetail_screen";
@@ -50,7 +51,7 @@ class UserDetailsView extends StatelessWidget {
               
                 UserDetailHeathCondition(
                     model: model, isFromLogin: isFromLogin),
-// //
+//
                 // EmergencyContactCard(model: model),
 
                 SizedBox(
