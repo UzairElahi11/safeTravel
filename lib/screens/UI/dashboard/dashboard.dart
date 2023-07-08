@@ -119,20 +119,58 @@ class DashboardView extends StatelessWidget {
                       context: context,
                       completion: (success) {
                         if (success) {
-                        showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return MyDialog(
-          cancelCallBack: () {
-            AppUtil.pop(context: context);
-          },
-          proceedCallBack: () {
-         
-          },
-        );
-      },
-    );
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text("Police"),
+                                content: const Text(
+                                    "Police is on way at you current location please wait and and be safe"),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      AppUtil.pop(context: context);
+                                    },
+                                    child: GenericText('Cancel'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         }
+                      });
+                }
+                if (index == 1) {
+                  model.callHealth(
+                      context: context,
+                      completion: (success) {
+                        if (success) {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text("Health"),
+                                content: const Text(
+                                    "Health is on way at you current location please wait and and be safe"),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      AppUtil.pop(context: context);
+                                    },
+                                    child: const GenericText('Cancel'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
+                      });
+                }
+                if (index == 2) {
+                  model.getPharmacyList(
+                      context: context,
+                      completion: (success) {
+                        if (success) {}
                       });
                 }
               },

@@ -28,18 +28,16 @@ class AddFamilyMembersViewModel extends ChangeNotifier {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Police"),
-          content: const Text(
-              "Police is on way at you current location please wait and and be safe"),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                AppUtil.pop(context: context);
-              },
-              child: GenericText('Cancel'),
-            ),
-          ],
+        return MyDialog(
+          cancelCallBack: () {
+            AppUtil.pop(context: context);
+          },
+          proceedCallBack: () {
+            familyMembersList[index]["numberOfMembers"] += 1;
+            AppUtil.pushRoute(
+                context: context,
+                route: const UserDetailsView(isFromLogin: false));
+          },
         );
       },
     );
