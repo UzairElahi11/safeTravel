@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:safe/Utils/generics/generic_text.dart';
+import 'package:safe/Utils/generics/generic_text_field.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/screens/UI/user_details/userDetail_viewModel.dart';
 
@@ -25,14 +27,14 @@ class UserDetailHeathCondition extends StatelessWidget {
             physics: const ClampingScrollPhysics(),
             shrinkWrap: true,
             itemCount: model.totalNumberOfListInDataObject,
-            itemBuilder: (context, index) {
-              final List<String> listItems = model.listData?[index] ?? [];
+            itemBuilder: (context, index1) {
+              model.listItems = model.listData?[index1] ?? [];
 
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    model.listNames.isNotEmpty ? model.listNames[index] : "",
+                    model.listNames.isNotEmpty ? model.listNames[index1] : "",
                     style: AppStyles.medium14
                         .copyWith(color: AppColors.blackColor),
                   ),
@@ -52,7 +54,7 @@ class UserDetailHeathCondition extends StatelessWidget {
                             physics: const ClampingScrollPhysics(),
                             padding: EdgeInsets.symmetric(horizontal: 30.w),
                             shrinkWrap: true,
-                            itemCount: listItems.length,
+                            itemCount: model.listItems.length,
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
                                     childAspectRatio: 16 / 4,
@@ -62,13 +64,13 @@ class UserDetailHeathCondition extends StatelessWidget {
                                 children: [
                                   GenericCheckBox(
                                     visualDensity: VisualDensity.compact,
-                                    value: true,
+                                    value: model.getBoolValue(index , index1),
                                     onChanged: (value) {
-                                      model.changeCheckBoxvalue(index);
+                                      model.checkboxes(index, index1);
                                     },
                                   ),
                                   SizedBox(width: 10.w),
-                                  Text(listItems[index]),
+                                  Text(model.listItems[index]),
                                 ],
                               );
                             }),
@@ -80,7 +82,52 @@ class UserDetailHeathCondition extends StatelessWidget {
                           child: GenericButton(
                             width: 400.w,
                             padding: EdgeInsets.symmetric(horizontal: 20.w),
-                            onPressed: () {},
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => Dialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12.r),
+                                  ),
+                                  child: ClipRRect(
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 40.w),
+                                      height: 200.h,
+                                      width: 400.w,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          GenericTextField(
+                                              hintText: "Add new items",
+                                              filled: true,
+                                              fillColor:
+                                                  AppColors.containerBgColor,
+                                              controller:
+                                                  model.addItemsController),
+                                          SizedBox(
+                                            height: 20.h,
+                                          ),
+                                          GenericButton(
+                                            height: 80.h,
+                                            radius: 12.r,
+                                            onPressed: () =>
+                                                model.addItem(index1),
+                                            color: AppColors.baseColor,
+                                            child: const GenericText(
+                                              "Add",
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
                             leading: GenericIcon(
                               icon: Icons.add,
                               color: AppColors.whiteColor,

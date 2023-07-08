@@ -7,8 +7,10 @@ import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/extensions/string.extension.dart';
 import 'package:safe/Utils/validator/textformfield_model.dart';
 import 'package:safe/Utils/validator/textformfield_validator.dart';
+import 'package:safe/constants/keys.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/locator.dart';
+import 'package:safe/screens/UI/calendar/calendar_viewmodel.dart';
 import 'package:safe/screens/UI/disablity/disablity.dart';
 
 import '../../../model/get_labels.dart';
@@ -19,9 +21,51 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
   List<String> listNames = [];
   int totalNumberOfListInDataObject = 0;
 
-   List<dynamic>? listData = [];
+  List<dynamic>? listData = [];
 
-    List<String> listItems = [];
+  List<String> listItems = [];
+
+  List<bool> healthCheckList = [];
+  List<bool> medicalCheckList = [];
+  List<bool> foodAlergiesLies = [];
+  List<bool> disablitiesList = [];
+
+  Map<String, dynamic> bodyToBePosted = {
+    "emergency_contact": {"name": "", "phone": "", "notes": ""},
+    "booking": {
+      "arrival": CalendarViewModel.of(listen: false).arrivalfocusDay,
+      "departure": CalendarViewModel.of(listen: false).arrivalfocusDay,
+    },
+    "family_members": {
+      "adults": 1,
+      "childrens": 0,
+      "new_borns": 0,
+      "members": [
+        {
+          "first_name": "",
+          "last_name": "",
+          "dob": "",
+          "picture": "",
+          "health_conditions": ["condition 1", "condition 2"],
+          "medical_allergies": ["medical allergy 1", "medical allergy 2"],
+          "food_allergies": ["food allergy 1", "food allergy 2"],
+          "disabilities": ["disabilities 1", "disabilities 2"],
+          "health_reports": ["base64 string 1", "base64 string 2"]
+        },
+        {
+          "first_name": "",
+          "last_name": "",
+          "dob": "",
+          "picture": "",
+          "health_conditions": ["condition 1", "condition 2"],
+          "medical_allergies": ["medical allergy 1", "medical allergy 2"],
+          "food_allergies": ["food allergy 1", "food allergy 2"],
+          "disabilities": ["disabilities 1", "disabilities 2"],
+          "health_reports": ["base64 string 1", "base64 string 2"]
+        }
+      ]
+    }
+  };
 
   File? image;
   List<File?> reports = <File?>[];
@@ -29,29 +73,11 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
   ScrollController scrollController = ScrollController();
   String formattedDate = "";
 
-  List<Map<String, dynamic>> disabilityTypes = [
-    {"name": "Awais", "isChecked": false},
-    {"name": "Sarwar", "isChecked": true},
-    {"name": "Khan", "isChecked": true},
-    {"name": "first", "isChecked": true},
-    {"name": "first", "isChecked": true},
-    {"name": "first", "isChecked": true},
-    {"name": "first", "isChecked": true},
-  ];
-  List<Map<String, dynamic>> heathDisablities = [
-    {"name": "Fitness", "isChecked": false},
-    {"name": "Fitness", "isChecked": true},
-    {"name": "Fitness", "isChecked": true},
-    {"name": "Fitness", "isChecked": true},
-    {"name": "Fitness", "isChecked": true},
-    {"name": "Fitness", "isChecked": true},
-    {"name": "Fitness", "isChecked": true},
-  ];
-
   //Textediting controllers
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController dateOfBirthController = TextEditingController();
+  TextEditingController addItemsController = TextEditingController();
 
   //dateofbirthSelection
   void seletedDate(DateTime? date) {
@@ -118,12 +144,6 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
 
     notifyListeners();
     return firstNameValidator & lastNaneValidator & dateOfBirthValidator;
-  }
-
-  //Change the checkbox value
-  changeCheckBoxvalue(int index) {
-    disabilityTypes[index]['isChecked'] = !disabilityTypes[index]['isChecked'];
-    notifyListeners();
   }
 
   navigate(BuildContext context, bool isFromLogin) {
@@ -194,15 +214,17 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
               totalNumberOfListInDataObject =
                   getLabelsModel.data?.toJson().keys.length ?? 0;
 
-                 listData =
-                  getLabelsModel.data?.toJson().values.toList();
+              listData = getLabelsModel.data?.toJson().values.toList();
 
+              healthCheckList = List<bool>.filled(
+                  getLabelsModel.data?.healthConditions?.length ?? 0, false);
+              medicalCheckList = List<bool>.filled(
+                  getLabelsModel.data?.medicalAllergies?.length ?? 0, false);
+              foodAlergiesLies = List<bool>.filled(
+                  getLabelsModel.data?.foodAllergies?.length ?? 0, false);
+              disablitiesList = List<bool>.filled(
+                  getLabelsModel.data?.disabilities?.length ?? 0, false);
 
-                  
-
-                
-
-           
               notifyListeners();
 
               // }
@@ -231,6 +253,40 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
             );
           }
         });
+  }
+
+  //add the hitem to the respective list
+  addItem(int index) {
+    listData![index].add(addItemsController.text);
+    notifyListeners();
+
+    addItemsController.clear();
+    Keys.mainNavigatorKey.currentState!.pop();
+  }
+
+  checkboxes(int index, int mainIndex) {
+    if (mainIndex == 0) {
+      healthCheckList[index] = !healthCheckList[index];
+    } else if (mainIndex == 1) {
+      medicalCheckList[index] = !medicalCheckList[index];
+    } else if (mainIndex == 2) {
+      foodAlergiesLies[index] = !foodAlergiesLies[index];
+    } else {
+      disablitiesList[index] = !foodAlergiesLies[index];
+    }
+    notifyListeners();
+  }
+
+  bool getBoolValue(int index, int mainIndex) {
+    if (mainIndex == 0) {
+      return healthCheckList[index];
+    } else if (mainIndex == 1) {
+      return medicalCheckList[index];
+    } else if (mainIndex == 2) {
+      return foodAlergiesLies[index];
+    } else {
+      return disablitiesList[index];
+    }
   }
 }
 
