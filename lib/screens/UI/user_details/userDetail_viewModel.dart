@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:safe/Utils/app_util.dart';
@@ -10,7 +11,13 @@ import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/locator.dart';
 import 'package:safe/screens/UI/disablity/disablity.dart';
 
-class UserDetailsViewModel extends ChangeNotifier {
+import '../../../model/get_labels.dart';
+import '../../../server_manager/server_manager.dart';
+
+class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
+  GetLabels getLabelsModel = GetLabels();
+  List<String> listNames = [];
+
   File? image;
   List<File?> reports = <File?>[];
   DateTime selectedDate = DateTime.now();
@@ -114,11 +121,11 @@ class UserDetailsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  navigate(BuildContext context,bool isFromLogin) {
+  navigate(BuildContext context, bool isFromLogin) {
     if (validate()) {
       AppUtil.pushRoute(
         context: context,
-        route:  Disability(isFromLogin:isFromLogin),
+        route: Disability(isFromLogin: isFromLogin),
       );
     }
   }
@@ -145,9 +152,9 @@ class UserDetailsViewModel extends ChangeNotifier {
     try {
       final ImagePicker picker = ImagePicker();
       final List<XFile> imagesList = await picker.pickMultiImage();
-      imagesList.forEach((element) {
+      for (var element in imagesList) {
         reports.add(File(element.path));
-      });
+      }
 
       //  reports.addAll(File(imagesList!.path))
 
@@ -155,6 +162,92 @@ class UserDetailsViewModel extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       debugPrint(e.toString());
+    }
+  }
+
+  getLabels(
+      {required BuildContext context,
+      required void Function(bool success) completion}) {
+    getAllLabelss(
+        context: context,
+        onForeground: true,
+        callBack: (success, json) {
+          if (json != null && json is Map) {
+            // response model adding data
+
+            getLabelsModel = GetLabels.fromJson(json);
+            if (getLabelsModel.status == 1) {
+              // if (mainScreenModel.data != null) {
+              //   for (var element in mainScreenModel.data!) {
+              //     latlong.add(LatLng(double.parse(element.latitude!),
+              //         double.parse(element.longitude!)));
+              //   }
+              //   debugPrint("latitude" + latlong![0].latitude.toString());
+
+              listNames = getLabelsModel.data?.toJson().keys.toList() ?? [];
+
+              // }
+              completion(success);
+            } else {
+              // completion(success);
+              // AppUtil.showWarning(
+              //   context: context,
+              //   title: "Error",
+              //   barrierDismissible: false,
+              //   handler: (action) {
+              //     completion(false);
+              //     Navigator.of(context, rootNavigator: true).pop();
+              //   },
+              // );
+            }
+          } else {
+            AppUtil.showWarning(
+              context: context,
+              title: "Retry",
+              barrierDismissible: false,
+              handler: (action) {
+                completion(false);
+                Navigator.of(context, rootNavigator: true).pop();
+              },
+            );
+          }
+        });
+  }
+}
+
+mixin GetAllLabels {
+  bool apiCallingProgress = false;
+  getAllLabelss(
+      {required BuildContext context,
+      bool onForeground = false,
+      required void Function(bool success, Map? json) callBack}) async {
+    if (apiCallingProgress) return;
+    apiCallingProgress = true;
+    if (onForeground) {
+      AppUtil.showLoader(context: context);
+      ServerManager.getLabels((responseBody, success) {
+        debugPrint(responseBody.toString());
+        apiCallingProgress = false;
+        if (onForeground) {
+          AppUtil.dismissLoader(context: context);
+        }
+        if (success) {
+          try {
+            dynamic json = AppUtil.decodeString(responseBody);
+            if (json != null && json is Map) {
+              callBack(true, json);
+            } else {
+              callBack(false, json);
+            }
+          } catch (e) {
+            if (onForeground) {
+              AppUtil.showWarning(
+                  context: context, title: "Error", bodyText: "Error");
+            }
+            callBack(false, null);
+          }
+        }
+      });
     }
   }
 }

@@ -7,6 +7,7 @@ import 'package:safe/Utils/app_text_styles.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/extensions/string.extension.dart';
 import 'package:safe/Utils/generics/generic_text.dart';
+import 'package:safe/Utils/local_storage.dart';
 import 'package:safe/Utils/user_defaults.dart';
 import 'package:safe/Utils/validator/textformfield_model.dart';
 import 'package:safe/Utils/validator/textformfield_validator.dart';
@@ -127,7 +128,8 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
             } else {
               loginModel = LoginModel.fromJson(json);
               if (loginModel?.token != null) {
-                await UserDefaults.setToken(loginModel!.token!);
+                  await UserDefaults.setToken(loginModel!.token!);
+                  // locator<LocalSecureStorage>().writeIntoSecureStorage(value, key)
                 await UserDefaults.setEmailAndUserName(
                     loginModel?.data?.name ?? "",
                     loginModel?.data?.email ?? "");

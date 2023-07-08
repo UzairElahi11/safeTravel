@@ -8,6 +8,7 @@ import 'package:safe/Utils/url_constants.dart';
 import 'package:safe/screens/UI/user_details/user_data_manager.dart';
 
 import '../Utils/app_util.dart';
+import '../Utils/user_defaults.dart';
 
 typedef ResponseCompletion = void Function(String responseBody, bool success);
 
@@ -172,9 +173,14 @@ class ServerManager {
       Map<String, String> headers,
       Map<String, dynamic> body,
       Function(String responseBody, bool success) completion,
-      {int timeout = timeOutSeconds}) {
+      {int timeout = timeOutSeconds}) async{
+
+        var token = await UserDefaults.getToken();
+
+
+
     bool onCallDone = false;
-    if (!url.startsWith("https")) {
+    if (!url.startsWith("http")) {
       HttpClient httpClient = HttpClient();
       httpClient.badCertificateCallback =
           ((X509Certificate cert, String host, int port) => true);
@@ -225,10 +231,12 @@ class ServerManager {
     } else {
       var client = http.Client();
       try {
+
+        log("token ------- $token");
         client
             .get(Uri.parse(url), headers: {
               HttpHeaders.contentTypeHeader: "application/json",
-              HttpHeaders.authorizationHeader: "Bearer ${bearerToken!}"
+              HttpHeaders.authorizationHeader: "Bearer $token"
             })
             .timeout(Duration(seconds: timeout))
             .then((http.Response response) {
@@ -347,8 +355,8 @@ class ServerManager {
   }
 
   //payment api
-  static void payment( String cardNumber, String cvv , String expDate, ResponseCompletion completion
-   ) {
+  static void payment(String cardNumber, String cvv, String expDate,
+      ResponseCompletion completion) {
     Map<String, dynamic> json = {
       "card_number": cardNumber,
       "cvv": cvv,
@@ -356,30 +364,28 @@ class ServerManager {
     };
     callPostApi(UrlConstants.paymentApi, _defaultHeader(), json, completion);
   }
-   static void callPolice( String lat , String long, ResponseCompletion completion
-   ) {
+
+  static void callPolice(
+      String lat, String long, ResponseCompletion completion) {
     Map<String, dynamic> json = {
       "lat": lat,
       "long": long,
-  
     };
     callPostApi(UrlConstants.callPolice, _defaultHeader(), json, completion);
   }
-     static void callHealth( String lat , String long, ResponseCompletion completion
-   ) {
+
+  static void callHealth(
+      String lat, String long, ResponseCompletion completion) {
     Map<String, dynamic> json = {
       "lat": lat,
       "long": long,
     };
     callPostApi(UrlConstants.callHealth, _defaultHeader(), json, completion);
   }
-   static void getPharmacy( String lat , String long, ResponseCompletion completion
-   ) {
-    Map<String, dynamic> json = {
-      "lat": lat,
-      "long": long,
-      "radius":"5"
-    };
+
+  static void getPharmacy(
+      String lat, String long, ResponseCompletion completion) {
+    Map<String, dynamic> json = {"lat": lat, "long": long, "radius": "5"};
     callPostApi(UrlConstants.callHealth, _defaultHeader(), json, completion);
   }
 
@@ -392,6 +398,11 @@ class ServerManager {
       "device": UserDataManager.getInstance().deviceType
     };
     callPostApi(UrlConstants.login, _defaultHeader(), json, completion);
+  }
+
+  static void getLabels(ResponseCompletion completion) {
+    Map<String ,dynamic> json = {};
+    getApiCalling(UrlConstants.healthLabels, _defaultHeader(), json, completion);
   }
 
   static void checkuser(String email, ResponseCompletion completion) {

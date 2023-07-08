@@ -22,7 +22,7 @@ class UserInformationDtails extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           GenericText(
-            LocaleKeys.firstName.translatedString(),
+            LocaleKeys.firstName,
             style: AppStyles.medium14.copyWith(color: AppColors.blackColor),
           ),
           SizedBox(
@@ -48,7 +48,7 @@ class UserInformationDtails extends StatelessWidget {
             height: 20.h,
           ),
           GenericText(
-            LocaleKeys.lastName.translatedString(),
+            LocaleKeys.lastName,
             style: AppStyles.medium14.copyWith(color: AppColors.blackColor),
           ),
           SizedBox(
@@ -74,15 +74,15 @@ class UserInformationDtails extends StatelessWidget {
             height: 12.h,
           ),
           GenericText(
-            LocaleKeys.dateOfBirth.translatedString(),
+            LocaleKeys.dateOfBirth,
             style: AppStyles.medium14.copyWith(color: AppColors.blackColor),
           ),
           SizedBox(
             height: 12.h,
           ),
           InkWell(
-            onTap: () async{
-             await showDatePicker(
+            onTap: () async {
+              await showDatePicker(
                 context: context,
                 initialDate: model.selectedDate,
                 firstDate: DateTime(2000),
@@ -141,7 +141,7 @@ class UserInformationDtails extends StatelessWidget {
                   borderRadius: 8,
                   height: 50.h,
                   width: 150.h,
-                  text: "Upload",
+                  text: LocaleKeys.upload,
                   textStyle: TextStyle(color: AppColors.whiteColor),
                   leading: Icon(
                     Icons.upload_file,
