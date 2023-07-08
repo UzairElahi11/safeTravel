@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
@@ -25,7 +24,7 @@ class UserDetailHeathCondition extends StatelessWidget {
         ListView.builder(
             physics: const ClampingScrollPhysics(),
             shrinkWrap: true,
-            itemCount: 4,
+            itemCount: model.totalNumberOfListInDataObject,
             itemBuilder: (context, index) {
               final List<dynamic>? listData =
                   model.getLabelsModel.data?.toJson().values.toList();
@@ -35,8 +34,7 @@ class UserDetailHeathCondition extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    model.listNames.isNotEmpty ? model.listNames[index] :
-                     "",
+                    model.listNames.isNotEmpty ? model.listNames[index] : "",
                     style: AppStyles.medium14
                         .copyWith(color: AppColors.blackColor),
                   ),
