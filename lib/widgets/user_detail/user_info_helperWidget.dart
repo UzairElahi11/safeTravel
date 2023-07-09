@@ -85,7 +85,7 @@ class UserInformationDtails extends StatelessWidget {
               await showDatePicker(
                 context: context,
                 initialDate: model.selectedDate,
-                firstDate: DateTime(2000),
+                firstDate: DateTime(1900),
                 lastDate: DateTime.now(),
               ).then((value) => model.seletedDate(value));
             },

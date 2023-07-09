@@ -28,7 +28,7 @@ class UserDetailHeathCondition extends StatelessWidget {
             shrinkWrap: true,
             itemCount: model.totalNumberOfListInDataObject,
             itemBuilder: (context, index1) {
-              model.listItems = model.listData?[index1] ?? [];
+              model.listItems = (model.listData?[index1] ?? []);
 
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,7 +64,7 @@ class UserDetailHeathCondition extends StatelessWidget {
                                 children: [
                                   GenericCheckBox(
                                     visualDensity: VisualDensity.compact,
-                                    value: model.getBoolValue(index , index1),
+                                    value: model.getBoolValue(index, index1),
                                     onChanged: (value) {
                                       model.checkboxes(index, index1);
                                     },

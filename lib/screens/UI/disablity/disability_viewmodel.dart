@@ -81,11 +81,11 @@ class DisabilityViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  navigate(BuildContext context) {
+  navigate(BuildContext context , Map<String , dynamic> body) {
     if (validate()) {
       AppUtil.pushRoute(
         context: context,
-        route: const AddFamilyMembers(),
+        route:  AddFamilyMembers(body :body ),
       );
     }
   }

@@ -17,7 +17,8 @@ import '../../../widgets/disability_widgets/emergency_card.dart';
 class Disability extends StatelessWidget {
   static const id = "DISABILITY_SCREEN";
   final bool isFromLogin;
-  const Disability({super.key,required this.isFromLogin});
+  final Map<String , dynamic> body;
+  const Disability({super.key,required this.isFromLogin, required this.body});
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +74,7 @@ class Disability extends StatelessWidget {
                     color: AppColors.whiteColor,
                     fontWeight: FontWeight.w400,
                   ),
-                  onPressed: () => model.navigate(context),
+                  onPressed: () => model.navigate(context , body),
                 ),
                 SizedBox(
                   height: 30.h,

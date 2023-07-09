@@ -15,7 +15,8 @@ import '../../../widgets/calendar/arival_calendar_widget.dart';
 
 class Calendar extends StatelessWidget {
   static const id = "CALENDAR_SCREEN";
-  const Calendar({super.key});
+  final Map<String, dynamic> body;
+  const Calendar({super.key, required this.body});
 
   @override
   Widget build(BuildContext context) {
@@ -116,10 +117,7 @@ class Calendar extends StatelessWidget {
                     ),
                     GenericButton(
                       height: 70.h,
-                      onPressed: () {
-                        AppUtil.pushRoute(
-                            context: context, route: const PaymentView());
-                      },
+                      onPressed: () => model.createBooking(body),
                       text: LocaleKeys.next,
                       textStyle: AppStyles.mediumBold16.copyWith(
                         color: AppColors.whiteColor,

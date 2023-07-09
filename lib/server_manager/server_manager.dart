@@ -164,6 +164,7 @@ class ServerManager {
       debugPrint("Invalid response");
     }
     if (completion != null) {
+      log("here is completion");
       completion(responseBody!, success);
     }
   }
@@ -173,11 +174,8 @@ class ServerManager {
       Map<String, String> headers,
       Map<String, dynamic> body,
       Function(String responseBody, bool success) completion,
-      {int timeout = timeOutSeconds}) async{
-
-        var token = await UserDefaults.getToken();
-
-
+      {int timeout = timeOutSeconds}) async {
+    var token = await UserDefaults.getToken();
 
     bool onCallDone = false;
     if (!url.startsWith("http")) {
@@ -231,7 +229,6 @@ class ServerManager {
     } else {
       var client = http.Client();
       try {
-
         log("token ------- $token");
         client
             .get(Uri.parse(url), headers: {
@@ -354,6 +351,11 @@ class ServerManager {
     callPostApi(UrlConstants.socialLogin, _defaultHeader(), json, completion);
   }
 
+  static void createBooking(
+      Map<String, dynamic> json, ResponseCompletion completion) {
+    callPostApi(UrlConstants.createBooking, _defaultHeader(), json, completion);
+  }
+
   //payment api
   static void payment(String cardNumber, String cvv, String expDate,
       ResponseCompletion completion) {
@@ -382,13 +384,10 @@ class ServerManager {
     };
     callPostApi(UrlConstants.callHealth, _defaultHeader(), json, completion);
   }
-   static void getPharmacy( String lat , String long, ResponseCompletion completion
-   ) {
-    Map<String, dynamic> json = {
-      "lat": lat,
-      "long": long,
-      "radius":"5"
-    };
+
+  static void getPharmacy(
+      String lat, String long, ResponseCompletion completion) {
+    Map<String, dynamic> json = {"lat": lat, "long": long, "radius": "5"};
     callPostApi(UrlConstants.callHealth, _defaultHeader(), json, completion);
   }
 
@@ -404,8 +403,9 @@ class ServerManager {
   }
 
   static void getLabels(ResponseCompletion completion) {
-    Map<String ,dynamic> json = {};
-    getApiCalling(UrlConstants.healthLabels, _defaultHeader(), json, completion);
+    Map<String, dynamic> json = {};
+    getApiCalling(
+        UrlConstants.healthLabels, _defaultHeader(), json, completion);
   }
 
   static void checkuser(String email, ResponseCompletion completion) {

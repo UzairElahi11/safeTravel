@@ -9,4 +9,6 @@ class UrlConstants {
   static String callHealth = "${baseUrl}help/ambulance";
   static String getPharmacy = "${baseUrl}get-pharmacies";
   static String healthLabels = "${baseUrl}health/labels";
+
+  static String createBooking = "${baseUrl}create-booking";
 }

@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:safe/constants/keys.dart';
+import 'package:safe/screens/UI/user_details/userDetail_viewModel.dart';
 
 class CalendarViewModel extends ChangeNotifier implements TickerProvider {
   DateTime arrivalfocusDay = DateTime.now();
@@ -43,5 +46,15 @@ class CalendarViewModel extends ChangeNotifier implements TickerProvider {
   static CalendarViewModel of({required bool listen}) {
     return Provider.of(Keys.mainNavigatorKey.currentState!.context,
         listen: listen);
+  }
+
+  createBooking(Map<String, dynamic> body) {
+    log("create booking $body");
+    UserDetailsViewModel.of(listen: false).createBookingFunc(
+        body: body,
+        context: Keys.mainNavigatorKey.currentState!.context,
+        completion: (sucess) {
+          log("success is $sucess");
+        });
   }
 }
