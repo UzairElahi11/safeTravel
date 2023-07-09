@@ -74,8 +74,8 @@ class UserDetailsViewModel extends ChangeNotifier
             DisabilityViewModel.of(listen: false).notesController.text.trim()
       },
       "booking": {
-        "arrival": "2023/07/09",
-        "departure": "2023/08/09",
+        "arrival": CalendarViewModel.of(listen: false).formateArrivalDate(),
+        "departure": CalendarViewModel.of(listen: false).formateArrivalDate()
       },
       "family_members": {
         "adults": AddFamilyMembersViewModel.of(listen: false)
@@ -246,10 +246,9 @@ class UserDetailsViewModel extends ChangeNotifier
               DisabilityViewModel.of(listen: false).notesController.text.trim()
         },
         "booking": {
-          "arrival":
-              CalendarViewModel.of(listen: false).arrivalfocusDay.toString(),
+          "arrival": CalendarViewModel.of(listen: false).formateArrivalDate(),
           "departure":
-              CalendarViewModel.of(listen: false).arrivalfocusDay.toString()
+              CalendarViewModel.of(listen: false).formateDepartureDate()
         },
         "family_members": {
           "adults": AddFamilyMembersViewModel.of(listen: false)
@@ -460,7 +459,8 @@ class UserDetailsViewModel extends ChangeNotifier
       required Map<String, dynamic> body,
       required void Function(
         bool success,
-      ) completion}) {
+      )
+          completion}) {
     // log
     createBooking(
         json: body,

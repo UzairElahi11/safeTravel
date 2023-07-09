@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
@@ -12,10 +13,7 @@ class CalendarViewModel extends ChangeNotifier implements TickerProvider {
 
   late TabController _tabController;
   bool switchValue = false;
-  final List<String> tabs = [
-    "Arrivals",
-    "Departures"
-  ];
+  final List<String> tabs = ["Arrivals", "Departures"];
   List<Ticker> tickers = [];
   TabController get tabController => _tabController;
 
@@ -27,6 +25,14 @@ class CalendarViewModel extends ChangeNotifier implements TickerProvider {
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  String formateArrivalDate() {
+    return DateFormat('yyyy/MM/dd').format(arrivalfocusDay);
+  }
+
+  String formateDepartureDate() {
+    return DateFormat('yyyy/MM/dd').format(departureFocusDay);
   }
 
   @override
