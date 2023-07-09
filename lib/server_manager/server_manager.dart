@@ -176,8 +176,6 @@ class ServerManager {
       Function(String responseBody, bool success) completion,
       {int timeout = timeOutSeconds}) async {
     var token = await UserDefaults.getToken();
-      {int timeout = timeOutSeconds}) async {
-    var token = await UserDefaults.getToken();
 
     bool onCallDone = false;
     if (!url.startsWith("http")) {
@@ -386,10 +384,13 @@ class ServerManager {
     };
     callPostApi(UrlConstants.callHealth, _defaultHeader(), json, completion);
   }
-
-  static void getPharmacy(
-      String lat, String long, ResponseCompletion completion) {
-    Map<String, dynamic> json = {"lat": lat, "long": long, "radius": "5"};
+   static void getPharmacy( String lat , String long, ResponseCompletion completion
+   ) {
+    Map<String, dynamic> json = {
+      "lat": lat,
+      "long": long,
+      "radius":"5"
+    };
     callPostApi(UrlConstants.callHealth, _defaultHeader(), json, completion);
   }
 
@@ -405,9 +406,6 @@ class ServerManager {
   }
 
   static void getLabels(ResponseCompletion completion) {
-    Map<String, dynamic> json = {};
-    getApiCalling(
-        UrlConstants.healthLabels, _defaultHeader(), json, completion);
     Map<String, dynamic> json = {};
     getApiCalling(
         UrlConstants.healthLabels, _defaultHeader(), json, completion);
