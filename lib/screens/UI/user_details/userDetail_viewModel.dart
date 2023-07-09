@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -19,15 +21,16 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
   List<String> listNames = [];
   int totalNumberOfListInDataObject = 0;
 
-   List<dynamic>? listData = [];
+  List<dynamic>? listData = [];
 
-    List<String> listItems = [];
+  List<String> listItems = [];
 
   File? image;
   List<File?> reports = <File?>[];
   DateTime selectedDate = DateTime.now();
   ScrollController scrollController = ScrollController();
   String formattedDate = "";
+  String base64Image = "";
 
   List<Map<String, dynamic>> disabilityTypes = [
     {"name": "Awais", "isChecked": false},
@@ -139,6 +142,10 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: ImageSource.camera);
     image = File(pickedImage!.path);
+    Uint8List bytes = image!.readAsBytesSync();
+    String base64Image = base64Encode(bytes);
+    print(base64Image);
+
     notifyListeners();
   }
 
@@ -147,6 +154,9 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
       final ImagePicker picker = ImagePicker();
       final XFile? imagee = await picker.pickImage(source: ImageSource.gallery);
       image = File(imagee!.path);
+      Uint8List bytes = image!.readAsBytesSync();
+       base64Image = base64Encode(bytes);
+
       notifyListeners();
     } catch (e) {
       debugPrint(e.toString());
@@ -194,15 +204,8 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
               totalNumberOfListInDataObject =
                   getLabelsModel.data?.toJson().keys.length ?? 0;
 
-                 listData =
-                  getLabelsModel.data?.toJson().values.toList();
+              listData = getLabelsModel.data?.toJson().values.toList();
 
-
-                  
-
-                
-
-           
               notifyListeners();
 
               // }
