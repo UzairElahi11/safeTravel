@@ -89,7 +89,9 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
     if (validate()) {
       AppUtil.pushRoute(
         context: context,
-        route: const UserDetailsView(isFromLogin: true,),
+        route: const UserDetailsView(
+          isFromLogin: true,
+        ),
       );
     }
   }
@@ -99,7 +101,7 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
       required BuildContext context,
       required String password,
       required void Function(
-        bool success,
+        bool success, int formFillForm
       ) completion}) {
     loginApiCalling(
         pasword: password,
@@ -120,7 +122,7 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
                 barrierDismissible: false,
                 handler: (action) {
                   completion(
-                    false,
+                    false,0
                   );
                   Navigator.of(context, rootNavigator: true).pop();
                 },
@@ -128,14 +130,20 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
             } else {
               loginModel = LoginModel.fromJson(json);
               if (loginModel?.token != null) {
-                  await UserDefaults.setToken(loginModel!.token!);
-                  // locator<LocalSecureStorage>().writeIntoSecureStorage(value, key)
+                await UserDefaults.setToken(loginModel!.token!);
+                // locator<LocalSecureStorage>().writeIntoSecureStorage(value, key)
                 await UserDefaults.setEmailAndUserName(
                     loginModel?.data?.name ?? "",
                     loginModel?.data?.email ?? "");
+                if (loginModel?.data?.onTrip == 1) {
+                   completion(
+                success,1
+              );
+                  }
+                    
               }
               completion(
-                success,
+                success,1
               );
 
               log("Token coming from the application ${loginModel!.token}");
@@ -149,7 +157,7 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
               barrierDismissible: false,
               handler: (action) {
                 completion(
-                  false,
+                  false,0
                 );
                 Navigator.of(context, rootNavigator: true).pop();
               },
@@ -234,7 +242,9 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
               AppUtil.pushRoute(
                   pushReplacement: true,
                   context: Keys.mainNavigatorKey.currentState!.context,
-                  route: const UserDetailsView(isFromLogin: true,));
+                  route: const UserDetailsView(
+                    isFromLogin: true,
+                  ));
             }
           });
     }
