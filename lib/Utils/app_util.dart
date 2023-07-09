@@ -88,8 +88,6 @@ class AppUtil {
     }
   }
 
-
-
   static dynamic decodeString(String responseBody) {
     return json.decode(responseBody);
   }
@@ -281,6 +279,8 @@ String onBoardingKey = "onBoardingKey";
 String emailKey = "emailKey";
 String userNameKey = "UserNameKey";
 bool isFirstTime = true;
+String countryCode = "+212";
+String helplineNumber = "661060114";
 
 AccessToken? facebookToken;
 Map<String, dynamic>? facebookUserData;
@@ -290,6 +290,3 @@ String publicKeyStripe =
 typedef PawaHandler = void Function(PawaAlertHandler action);
 
 String mapMarkerKey = "currentLocation";
-
-
-

@@ -34,6 +34,7 @@ class Data {
   int? apple;
   int? facebook;
   int? google;
+  int? onTrip;
   String? createdAt;
   String? updatedAt;
 
@@ -46,6 +47,7 @@ class Data {
       this.apple,
       this.facebook,
       this.google,
+      this.onTrip,
       this.createdAt,
       this.updatedAt});
 
@@ -58,6 +60,7 @@ class Data {
     apple = json['apple'];
     facebook = json['facebook'];
     google = json['google'];
+    onTrip = json['on_trip'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }

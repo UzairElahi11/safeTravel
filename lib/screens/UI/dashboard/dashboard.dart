@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:safe/Utils/app_colors.dart';
 import 'package:safe/Utils/app_images_path.dart';
 import 'package:safe/Utils/app_text_styles.dart';
 import 'package:safe/Utils/app_util.dart';
-import 'package:safe/Utils/extensions/string.extension.dart';
 import 'package:safe/Utils/generics/generic_button.dart';
 import 'package:safe/Utils/generics/generic_svg_image.dart';
 import 'package:safe/Utils/generics/generic_text.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
+import 'package:safe/screens/UI/dashboard/crips.dart';
 import 'package:safe/screens/UI/dashboard/dashboard_viewModel.dart';
-import 'package:safe/widgets/dialogBoxAddNewPerson.dart';
+import 'package:safe/screens/UI/dashboard/pharmacyListView.dart';
 import 'package:stacked/stacked.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class DashboardView extends StatelessWidget {
   const DashboardView({super.key});
@@ -79,7 +79,11 @@ class DashboardView extends StatelessWidget {
                           Expanded(
                             child: GenericButton(
                               height: 70.h,
-                              onPressed: () {},
+                              onPressed: () {
+                                AppUtil.pushRoute(
+                                    context: context,
+                                    route: const CrispScreen());
+                              },
                               text: "Chat",
                               textStyle: AppStyles.mediumBold16.copyWith(
                                 color: AppColors.whiteColor,
@@ -90,9 +94,22 @@ class DashboardView extends StatelessWidget {
                           const SizedBox(
                             width: 10,
                           ),
-                          SizedBox(
-                              height: 70.h,
-                              child: Image.asset(AppImages.whatsApp))
+                          InkWell(
+                            onTap: () async {
+                              try {
+                                String phoneNumberCode =
+                                    countryCode.replaceAll('+', '');
+                                //launchUrlString is method of url_launcher package and //phoneNoController.text is the number from phone number textfield
+                                await launchUrlString(
+                                    'whatsapp://send?phone=${phoneNumberCode + helplineNumber}&text=${Uri.encodeFull("Stay Safe")}');
+                              } catch (e) {
+                                debugPrint('Error Launching WhatsApp');
+                              }
+                            },
+                            child: SizedBox(
+                                height: 70.h,
+                                child: Image.asset(AppImages.whatsApp)),
+                          )
                         ],
                       )
                     ]),
@@ -170,7 +187,12 @@ class DashboardView extends StatelessWidget {
                   model.getPharmacyList(
                       context: context,
                       completion: (success) {
-                        if (success) {}
+                        if (success) {
+                          AppUtil.pushRoute(
+                              context: context,
+                              route: PharmacyListView(
+                                  pharmacyList: model.pharmacyList));
+                        }
                       });
                 }
               },

@@ -73,6 +73,9 @@ class _SplashState extends State<Splash> {
                 .readSecureStorage(AppUtil.isTermsAndConditionsAccepted);
 
             final val = await UserDefaults.getToken();
+            if (val != null) {
+              bearerToken = val;
+            }
 
             log("value is $val");
 

@@ -176,6 +176,8 @@ class ServerManager {
       Function(String responseBody, bool success) completion,
       {int timeout = timeOutSeconds}) async {
     var token = await UserDefaults.getToken();
+      {int timeout = timeOutSeconds}) async {
+    var token = await UserDefaults.getToken();
 
     bool onCallDone = false;
     if (!url.startsWith("http")) {
@@ -403,6 +405,9 @@ class ServerManager {
   }
 
   static void getLabels(ResponseCompletion completion) {
+    Map<String, dynamic> json = {};
+    getApiCalling(
+        UrlConstants.healthLabels, _defaultHeader(), json, completion);
     Map<String, dynamic> json = {};
     getApiCalling(
         UrlConstants.healthLabels, _defaultHeader(), json, completion);
