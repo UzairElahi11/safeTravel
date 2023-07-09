@@ -11,6 +11,7 @@ import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/screens/UI/dashboard/crips.dart';
 import 'package:safe/screens/UI/dashboard/dashboard_viewModel.dart';
 import 'package:safe/screens/UI/dashboard/pharmacyListView.dart';
+import 'package:safe/screens/UI/editForm/editFormView.dart';
 import 'package:stacked/stacked.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -50,13 +51,14 @@ class DashboardView extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(right: 15),
                     child: GestureDetector(
-                        onTap: () {},
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: GenericSvgImage(
-                            svgPath: AppImages.user,
-                          ),
-                        )),
+                      onTap: () {
+                        AppUtil.pushRoute(
+                            context: context, route: const ProfileView());
+                      },
+                      child: GenericSvgImage(
+                        svgPath: AppImages.user,
+                      ),
+                    ),
                   )
                 ],
               ),

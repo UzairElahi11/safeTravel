@@ -405,6 +405,11 @@ class ServerManager {
     getApiCalling(
         UrlConstants.healthLabels, _defaultHeader(), json, completion);
   }
+    static void getProfileForm(ResponseCompletion completion) {
+    Map<String, dynamic> json = {};
+    getApiCalling(
+        UrlConstants.profileGetForm, _defaultHeader(), json, completion);
+  }
 
   static void checkuser(String email, ResponseCompletion completion) {
     Map<String, dynamic> json = {"email": email};

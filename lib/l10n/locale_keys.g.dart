@@ -59,4 +59,5 @@ abstract class LocaleKeys {
   static const addPicture = "addPicture";
   static const upload = "upload";
   static const pharmacyList = "pharmacyList";
+  static const profile = "profile";
 }
