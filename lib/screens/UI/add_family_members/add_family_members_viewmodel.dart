@@ -40,8 +40,9 @@ class AddFamilyMembersViewModel extends ChangeNotifier {
           proceedCallBack: () {
             familyMembersList[index]["numberOfMembers"] += 1;
             notifyListeners();
-            Navigator.pop(context);
-            Navigator.pop(context);
+            int count = 2;
+            Navigator.of(context).popUntil((_) => count-- <= 0);
+
             // AppUtil.pushRoute(
             //     context: context,
             //     route: const UserDetailsView(isFromLogin: false)

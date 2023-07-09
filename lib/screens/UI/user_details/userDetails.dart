@@ -12,7 +12,7 @@ import 'package:stacked/stacked.dart';
 import '../../../widgets/user_detail/userDetailHelperWidget.dart';
 
 class UserDetailsView extends StatelessWidget {
-  static const id = "UserDetail_screen";
+  static const id = "/UserDetail_screen";
   final bool isFromLogin;
   const UserDetailsView({super.key, required this.isFromLogin});
 
