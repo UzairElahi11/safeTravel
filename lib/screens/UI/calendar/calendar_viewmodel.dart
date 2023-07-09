@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:provider/provider.dart';
+import 'package:safe/constants/keys.dart';
 
 class CalendarViewModel extends ChangeNotifier implements TickerProvider {
-
   DateTime arrivalfocusDay = DateTime.now();
-    DateTime departureFocusDay = DateTime.now();
+  DateTime departureFocusDay = DateTime.now();
 
   late TabController _tabController;
   bool switchValue = false;
@@ -37,5 +38,10 @@ class CalendarViewModel extends ChangeNotifier implements TickerProvider {
     switchValue = !switchValue;
     notifyListeners();
     return switchValue;
+  }
+
+  static CalendarViewModel of({required bool listen}) {
+    return Provider.of(Keys.mainNavigatorKey.currentState!.context,
+        listen: listen);
   }
 }

@@ -19,11 +19,10 @@ class UserDetailsView extends StatelessWidget {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => UserDetailsViewModel(),
       onViewModelReady: (viewModel) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
           viewModel.getLabels(
               context: context,
               completion: (sucess) {
-
               });
         });
       },
@@ -47,8 +46,7 @@ class UserDetailsView extends StatelessWidget {
                 SizedBox(
                   height: 20.h,
                 ),
-                
-              
+
                 UserDetailHeathCondition(
                     model: model, isFromLogin: isFromLogin),
 //
