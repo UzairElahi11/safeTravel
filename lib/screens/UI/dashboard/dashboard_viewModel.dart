@@ -4,11 +4,15 @@ import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/extensions/string.extension.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/model/helper/services_helperModel.dart';
+import 'package:safe/model/pharmacy/pharmacyListModel.dart';
 import 'package:safe/screens/UI/user_details/user_data_manager.dart';
 import 'package:safe/server_manager/server_manager.dart';
 
 class DashboardViewModel with ChangeNotifier, ApiCalling {
   List<ServicesHelperModel> services = [];
+  PharmacyListModel? pharmacyListModel;
+  List<Datum> pharmacyList = [];
+  Datum? list;
   init() {
     services.add(ServicesHelperModel(
         name: LocaleKeys.police.translatedString(),
@@ -23,7 +27,8 @@ class DashboardViewModel with ChangeNotifier, ApiCalling {
         imagePath: AppImages.pharmacy,
         icon: AppImages.warning));
   }
-    void showToasterPolice(BuildContext context) {
+
+  void showToasterPolice(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text("Police is on way"),
     ));
@@ -85,6 +90,7 @@ class DashboardViewModel with ChangeNotifier, ApiCalling {
           }
         });
   }
+
   callHealth(
       {required BuildContext context,
       required void Function(
@@ -141,6 +147,7 @@ class DashboardViewModel with ChangeNotifier, ApiCalling {
           }
         });
   }
+
   getPharmacyList(
       {required BuildContext context,
       required void Function(
@@ -171,13 +178,13 @@ class DashboardViewModel with ChangeNotifier, ApiCalling {
                 },
               );
             } else {
-              // loginModel = LoginModel.fromJson(json);
-              if (true) {
-                // await UserDefaults.setToken(loginModel!.token!);
-                // await UserDefaults.setEmailAndUserName(
-                //     loginModel?.data?.name ?? "",
-                //     loginModel?.data?.email ?? "");
+              pharmacyListModel = PharmacyListModel.fromJson(json);
+              if (pharmacyListModel != null &&
+                  pharmacyListModel?.data != null &&
+                  pharmacyListModel!.data.isNotEmpty) {
+                pharmacyList = pharmacyListModel!.data;
               }
+              notifyListeners();
               completion(
                 success,
               );
@@ -211,7 +218,7 @@ mixin ApiCalling {
     apiCallingProgress = true;
     if (onForeground) {
       AppUtil.showLoader(context: context);
-      ServerManager.callPolice(lat,long, (responseBody, success) {
+      ServerManager.callPolice(lat, long, (responseBody, success) {
         apiCallingProgress = false;
         if (onForeground) {
           AppUtil.dismissLoader(context: context);
@@ -235,6 +242,7 @@ mixin ApiCalling {
       });
     }
   }
+
   callHealthApiCalling(
       {required BuildContext context,
       required lat,
@@ -245,7 +253,7 @@ mixin ApiCalling {
     apiCallingProgress = true;
     if (onForeground) {
       AppUtil.showLoader(context: context);
-      ServerManager.callHealth(lat,long, (responseBody, success) {
+      ServerManager.callHealth(lat, long, (responseBody, success) {
         apiCallingProgress = false;
         if (onForeground) {
           AppUtil.dismissLoader(context: context);
@@ -269,6 +277,7 @@ mixin ApiCalling {
       });
     }
   }
+
   getPharmacyApiCalling(
       {required BuildContext context,
       required lat,
@@ -279,7 +288,7 @@ mixin ApiCalling {
     apiCallingProgress = true;
     if (onForeground) {
       AppUtil.showLoader(context: context);
-      ServerManager.getPharmacy(lat,long, (responseBody, success) {
+      ServerManager.getPharmacy(lat, long, (responseBody, success) {
         apiCallingProgress = false;
         if (onForeground) {
           AppUtil.dismissLoader(context: context);

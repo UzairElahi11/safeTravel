@@ -56,5 +56,6 @@
   "pharmacy": "Farmacia",
   "medical": "Salud médica",
   "addPicture": "Add picture",
-  "upload": "Upload"
+  "upload": "Upload",
+  "pharmacyList":"Lista de farmacias"
 }

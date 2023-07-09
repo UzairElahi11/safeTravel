@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:safe/Utils/app_colors.dart';
 import 'package:safe/Utils/app_images_path.dart';
 import 'package:safe/Utils/app_text_styles.dart';
 import 'package:safe/Utils/app_util.dart';
-import 'package:safe/Utils/extensions/string.extension.dart';
 import 'package:safe/Utils/generics/generic_button.dart';
 import 'package:safe/Utils/generics/generic_svg_image.dart';
 import 'package:safe/Utils/generics/generic_text.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/screens/UI/dashboard/dashboard_viewModel.dart';
-import 'package:safe/widgets/dialogBoxAddNewPerson.dart';
+import 'package:safe/screens/UI/dashboard/pharmacyListView.dart';
 import 'package:stacked/stacked.dart';
 
 class DashboardView extends StatelessWidget {
@@ -170,7 +168,12 @@ class DashboardView extends StatelessWidget {
                   model.getPharmacyList(
                       context: context,
                       completion: (success) {
-                        if (success) {}
+                        if (success) {
+                          AppUtil.pushRoute(
+                              context: context,
+                              route: PharmacyListView(
+                                  pharmacyList: model.pharmacyList));
+                        }
                       });
                 }
               },
