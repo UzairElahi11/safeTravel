@@ -57,7 +57,7 @@ class UserDetailsViewModel extends ChangeNotifier
       "medical_allergies": [],
       "disabilities": [],
       "health_reports": [],
-      "food_allergies": [],
+      "food_allergies": []
     },
   ];
 
@@ -74,8 +74,8 @@ class UserDetailsViewModel extends ChangeNotifier
             DisabilityViewModel.of(listen: false).notesController.text.trim()
       },
       "booking": {
-        "arrival": CalendarViewModel.of(listen: false).arrivalfocusDay,
-        "departure": CalendarViewModel.of(listen: false).arrivalfocusDay,
+        "arrival": "2023/07/09",
+        "departure": "2023/08/09",
       },
       "family_members": {
         "adults": AddFamilyMembersViewModel.of(listen: false)
@@ -230,7 +230,7 @@ class UserDetailsViewModel extends ChangeNotifier
           "medical_allergies": selectedMediacalIssuesList,
           "disabilities": selectedDisablitiesIssueList,
           "health_reports": base64Images,
-          "food_allergies": selectedFoodIssuesList,
+          "food_allergies": selectedFoodIssuesList
         },
       ];
 
@@ -246,8 +246,10 @@ class UserDetailsViewModel extends ChangeNotifier
               DisabilityViewModel.of(listen: false).notesController.text.trim()
         },
         "booking": {
-          "arrival": CalendarViewModel.of(listen: false).arrivalfocusDay,
-          "departure": CalendarViewModel.of(listen: false).arrivalfocusDay,
+          "arrival":
+              CalendarViewModel.of(listen: false).arrivalfocusDay.toString(),
+          "departure":
+              CalendarViewModel.of(listen: false).arrivalfocusDay.toString()
         },
         "family_members": {
           "adults": AddFamilyMembersViewModel.of(listen: false)
@@ -256,7 +258,7 @@ class UserDetailsViewModel extends ChangeNotifier
               .familyMembersList[1]['numberOfMembers'],
           "new_borns": AddFamilyMembersViewModel.of(listen: false)
               .familyMembersList[2]['numberOfMembers'],
-          "members": maintingUserDetails,
+          "members": maintingUserDetails
         }
       };
 
@@ -458,8 +460,7 @@ class UserDetailsViewModel extends ChangeNotifier
       required Map<String, dynamic> body,
       required void Function(
         bool success,
-      )
-          completion}) {
+      ) completion}) {
     // log
     createBooking(
         json: body,

@@ -14,7 +14,7 @@ class CalendarViewModel extends ChangeNotifier implements TickerProvider {
   bool switchValue = false;
   final List<String> tabs = [
     "Arrivals",
-    "Departures",
+    "Departures"
   ];
   List<Ticker> tickers = [];
   TabController get tabController => _tabController;

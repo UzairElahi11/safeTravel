@@ -16,8 +16,12 @@ class ServerManager {
   static const int timeOutSeconds = 30;
 
   ServerManager._();
-  static void callPostApi(String url, Map<String, String> headers,
-      Map<String, dynamic> body, completion(String responseBody, bool success),
+  static void callPostApi(
+      String url,
+      Map<String, String> headers,
+      Map<String, dynamic> body,
+      completion(String responseBody, bool success),
+      bool isform,
       {int timeout = timeOutSeconds}) {
     bool onCallDone = false;
     if (!url.startsWith("http")) {
@@ -113,9 +117,15 @@ class ServerManager {
     } else {
       var client = http.Client();
       try {
+        String ? jsonString;
+        if (isform) {
+           jsonString = json.encode(body);
+        }
+
+        //  request.add(utf8.encode(json.encode(body)));
         client
             .post(Uri.parse(url),
-                body: body,
+                body: jsonString ?? body,
                 headers: bearerToken != null
                     ? {
                         // HttpHeaders.contentTypeHeader: "application/json",
@@ -158,14 +168,16 @@ class ServerManager {
   }
 
   static void callCompletion(
-      String? responseBody, bool success, ResponseCompletion completion) {
+      String? responseBody, bool success, ResponseCompletion? completion) {
     if (responseBody != null && responseBody.runtimeType == String) {
     } else {
       debugPrint("Invalid response");
     }
-    if (completion != null) {
+    if (responseBody != null && completion != null) {
       log("here is completion");
-      completion(responseBody!, success);
+      completion(responseBody, success);
+    } else {
+      completion!("", success);
     }
   }
 
@@ -335,7 +347,8 @@ class ServerManager {
       "name": name,
       "device": UserDataManager.getInstance().deviceType
     };
-    callPostApi(UrlConstants.registration, _defaultHeader(), json, completion);
+    callPostApi(
+        UrlConstants.registration, _defaultHeader(), json, completion, false);
   }
 
   // social login
@@ -348,12 +361,18 @@ class ServerManager {
       "fcm_token": UserDataManager.getInstance().fcmToken,
       "device": UserDataManager.getInstance().deviceType
     };
-    callPostApi(UrlConstants.socialLogin, _defaultHeader(), json, completion);
+    callPostApi(
+        UrlConstants.socialLogin, _defaultHeader(), json, completion, false);
   }
 
   static void createBooking(
-      Map<String, dynamic> json, ResponseCompletion completion) {
-    callPostApi(UrlConstants.createBooking, _defaultHeader(), json, completion);
+    Map<String, dynamic> json,
+    ResponseCompletion completion,
+  ) {
+    // print(jsonDecode(json.toString()));
+
+    callPostApi(
+        UrlConstants.createBooking, _defaultHeader(), json, completion, true);
   }
 
   //payment api
@@ -364,7 +383,8 @@ class ServerManager {
       "cvv": cvv,
       "expiry": expDate,
     };
-    callPostApi(UrlConstants.paymentApi, _defaultHeader(), json, completion);
+    callPostApi(
+        UrlConstants.paymentApi, _defaultHeader(), json, completion, false);
   }
 
   static void callPolice(
@@ -373,7 +393,8 @@ class ServerManager {
       "lat": lat,
       "long": long,
     };
-    callPostApi(UrlConstants.callPolice, _defaultHeader(), json, completion);
+    callPostApi(
+        UrlConstants.callPolice, _defaultHeader(), json, completion, false);
   }
 
   static void callHealth(
@@ -382,16 +403,15 @@ class ServerManager {
       "lat": lat,
       "long": long,
     };
-    callPostApi(UrlConstants.callHealth, _defaultHeader(), json, completion);
+    callPostApi(
+        UrlConstants.callHealth, _defaultHeader(), json, completion, false);
   }
-   static void getPharmacy( String lat , String long, ResponseCompletion completion
-   ) {
-    Map<String, dynamic> json = {
-      "lat": lat,
-      "long": long,
-      "radius":"5"
-    };
-    callPostApi(UrlConstants.callHealth, _defaultHeader(), json, completion);
+
+  static void getPharmacy(
+      String lat, String long, ResponseCompletion completion) {
+    Map<String, dynamic> json = {"lat": lat, "long": long, "radius": "5"};
+    callPostApi(
+        UrlConstants.callHealth, _defaultHeader(), json, completion, false);
   }
 
   static void login(
@@ -402,7 +422,7 @@ class ServerManager {
       "fcm_token": UserDataManager.getInstance().fcmToken,
       "device": UserDataManager.getInstance().deviceType
     };
-    callPostApi(UrlConstants.login, _defaultHeader(), json, completion);
+    callPostApi(UrlConstants.login, _defaultHeader(), json, completion, false);
   }
 
   static void getLabels(ResponseCompletion completion) {
@@ -410,7 +430,8 @@ class ServerManager {
     getApiCalling(
         UrlConstants.healthLabels, _defaultHeader(), json, completion);
   }
-    static void getProfileForm(ResponseCompletion completion) {
+
+  static void getProfileForm(ResponseCompletion completion) {
     Map<String, dynamic> json = {};
     getApiCalling(
         UrlConstants.profileGetForm, _defaultHeader(), json, completion);
