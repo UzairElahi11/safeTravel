@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/extensions/string.extension.dart';
 import 'package:safe/Utils/validator/textformfield_model.dart';
@@ -13,12 +15,15 @@ import 'package:safe/constants/keys.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/locator.dart';
 import 'package:safe/screens/UI/calendar/calendar_viewmodel.dart';
-import 'package:safe/screens/UI/disablity/disablity.dart';
+import 'package:safe/screens/UI/disablity/disability_viewmodel.dart';
 
 import '../../../model/get_labels.dart';
 import '../../../server_manager/server_manager.dart';
+import '../add_family_members/add_family_members_viewmodel.dart';
+import '../disablity/disablity.dart';
 
-class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
+class UserDetailsViewModel extends ChangeNotifier
+    with GetAllLabels, CreateBooking {
   GetLabels getLabelsModel = GetLabels();
   List<String> listNames = [];
   int totalNumberOfListInDataObject = 0;
@@ -29,45 +34,60 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
 
   List<bool> healthCheckList = [];
   List<bool> medicalCheckList = [];
-  List<bool> foodAlergiesLies = [];
+  List<bool> foodAlergiesList = [];
   List<bool> disablitiesList = [];
 
-  Map<String, dynamic> bodyToBePosted = {
-    "emergency_contact": {"name": "", "phone": "", "notes": ""},
-    "booking": {
-      "arrival": CalendarViewModel.of(listen: false).arrivalfocusDay,
-      "departure": CalendarViewModel.of(listen: false).arrivalfocusDay,
+  Map<String, dynamic> bodyToBePosted = {};
+
+  /// these are lists of items where the checkbox are seleted
+  List<dynamic> selectedHealthIssueList = [];
+  List<dynamic> selectedMediacalIssuesList = [];
+  List<dynamic> selectedFoodIssuesList = [];
+  List<dynamic> selectedDisablitiesIssueList = [];
+
+  List<String> base64Images = [];
+
+  List<Map<String, dynamic>> maintingUserDetails = [
+    {
+      "first_name": '',
+      "last_name": '',
+      "dob": '',
+      "picture": "",
+      "health_conditions": [],
+      "medical_allergies": [],
+      "disabilities": [],
+      "health_reports": [],
+      "food_allergies": [],
     },
-    "family_members": {
-      "adults": 1,
-      "childrens": 0,
-      "new_borns": 0,
-      "members": [
-        {
-          "first_name": "",
-          "last_name": "",
-          "dob": "",
-          "picture": "",
-          "health_conditions": ["condition 1", "condition 2"],
-          "medical_allergies": ["medical allergy 1", "medical allergy 2"],
-          "food_allergies": ["food allergy 1", "food allergy 2"],
-          "disabilities": ["disabilities 1", "disabilities 2"],
-          "health_reports": ["base64 string 1", "base64 string 2"]
-        },
-        {
-          "first_name": "",
-          "last_name": "",
-          "dob": "",
-          "picture": "",
-          "health_conditions": ["condition 1", "condition 2"],
-          "medical_allergies": ["medical allergy 1", "medical allergy 2"],
-          "food_allergies": ["food allergy 1", "food allergy 2"],
-          "disabilities": ["disabilities 1", "disabilities 2"],
-          "health_reports": ["base64 string 1", "base64 string 2"]
-        }
-      ]
-    }
-  };
+  ];
+
+  Map<String, dynamic> postUserDetails() {
+    return bodyToBePosted = {
+      "emergency_contact": {
+        "name":
+            DisabilityViewModel.of(listen: false).nameController.text.trim(),
+        "phone": DisabilityViewModel.of(listen: false)
+            .phoneNumberController
+            .text
+            .trim(),
+        "notes":
+            DisabilityViewModel.of(listen: false).notesController.text.trim()
+      },
+      "booking": {
+        "arrival": CalendarViewModel.of(listen: false).arrivalfocusDay,
+        "departure": CalendarViewModel.of(listen: false).arrivalfocusDay,
+      },
+      "family_members": {
+        "adults": AddFamilyMembersViewModel.of(listen: false)
+            .familyMembersList[0]['numberOfMembers'],
+        "childrens": AddFamilyMembersViewModel.of(listen: false)
+            .familyMembersList[1]['numberOfMembers'],
+        "new_borns": AddFamilyMembersViewModel.of(listen: false)
+            .familyMembersList[2]['numberOfMembers'],
+        "members": maintingUserDetails,
+      }
+    };
+  }
 
   File? image;
   List<File?> reports = <File?>[];
@@ -96,6 +116,7 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
       }
       formattedDate = "${selectedDate.year}/$month/$day";
       dateOfBirthController.text = formattedDate;
+
       notifyListeners();
     }
   }
@@ -149,14 +170,137 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
     return firstNameValidator & lastNaneValidator & dateOfBirthValidator;
   }
 
-  navigate(BuildContext context, bool isFromLogin) {
+  navigate(BuildContext context, bool isFromLogin) async {
     if (validate()) {
+      selectedDisablitiesIssueList = disablitiesList
+          .asMap()
+          .entries
+          .where((entry) {
+            int index = entry.key;
+            bool value = entry.value;
+            return value && index < listData![0].length;
+          })
+          .map((entry) => listData![0][entry.key])
+          .toList();
+      selectedHealthIssueList = healthCheckList
+          .asMap()
+          .entries
+          .where((entry) {
+            int index = entry.key;
+            bool value = entry.value;
+            return value && index < listData!.length;
+          })
+          .map((entry) => listData![1][entry.key])
+          .toList();
+      selectedMediacalIssuesList = medicalCheckList
+          .asMap()
+          .entries
+          .where((entry) {
+            int index = entry.key;
+            bool value = entry.value;
+            return value && index < listData![2].length;
+          })
+          .map((entry) => listData![2][entry.key])
+          .toList();
+      selectedFoodIssuesList = foodAlergiesList
+          .asMap()
+          .entries
+          .where((entry) {
+            int index = entry.key;
+            bool value = entry.value;
+            return value && index < listData![3].length;
+          })
+          .map((entry) => listData![3][entry.key])
+          .toList();
+
+      log("selected is $selectedDisablitiesIssueList");
+      log("selected is $selectedFoodIssuesList");
+
+      log("selected is $selectedMediacalIssuesList");
+
+      log("selected is $selectedHealthIssueList");
+
+      maintingUserDetails = [
+        {
+          "first_name": firstNameController.text.trim(),
+          "last_name": lastNameController.text.trim(),
+          "dob": formattedDate,
+          "picture": base64Image,
+          "health_conditions": selectedHealthIssueList,
+          "medical_allergies": selectedMediacalIssuesList,
+          "disabilities": selectedDisablitiesIssueList,
+          "health_reports": base64Images,
+          "food_allergies": selectedFoodIssuesList,
+        },
+      ];
+
+      bodyToBePosted = {
+        "emergency_contact": {
+          "name":
+              DisabilityViewModel.of(listen: false).nameController.text.trim(),
+          "phone": DisabilityViewModel.of(listen: false)
+              .phoneNumberController
+              .text
+              .trim(),
+          "notes":
+              DisabilityViewModel.of(listen: false).notesController.text.trim()
+        },
+        "booking": {
+          "arrival": CalendarViewModel.of(listen: false).arrivalfocusDay,
+          "departure": CalendarViewModel.of(listen: false).arrivalfocusDay,
+        },
+        "family_members": {
+          "adults": AddFamilyMembersViewModel.of(listen: false)
+              .familyMembersList[0]['numberOfMembers'],
+          "childrens": AddFamilyMembersViewModel.of(listen: false)
+              .familyMembersList[1]['numberOfMembers'],
+          "new_borns": AddFamilyMembersViewModel.of(listen: false)
+              .familyMembersList[2]['numberOfMembers'],
+          "members": maintingUserDetails,
+        }
+      };
+
+      notifyListeners();
+
       AppUtil.pushRoute(
         context: context,
-        route: Disability(isFromLogin: isFromLogin),
+        route: Disability(
+          isFromLogin: isFromLogin,
+          body: bodyToBePosted,
+        ),
       );
     }
   }
+
+  fillTheListWhereSelected() async {
+    // await compareAndSelectTheList(selectedHealthIssueList, healthCheckList);
+    // await compareAndSelectTheList(selectedMediacalIssuesList, medicalCheckList);
+    // await compareAndSelectTheList(selectedFoodIssuesList, healthCheckList);
+    // await compareAndSelectTheList(
+    //     selectedDisablitiesIssueList, healthCheckList);
+
+    // log("health issues $selectedHealthIssueList");
+    // log("medical issues $selectedMediacalIssuesList");
+
+    // log("food issues $selectedFoodIssuesList");
+
+    // log("disabilities issues $selectedDisablitiesIssueList");
+  }
+
+  //compare the bool list with relative list of disabilities and only choose which are selected
+  // compareAndSelectTheList(
+  //     List<String> issuesList, List<bool> selectedBoolList) {
+  //   issuesList = selectedBoolList
+  //       .asMap()
+  //       .entries
+  //       .where((entry) {
+  //         int index = entry.key;
+  //         bool value = entry.value;
+  //         return value && index < listItems.length;
+  //       })
+  //       .map((entry) => listItems[entry.key])
+  //       .toList();
+  // }
 
   Future<void> takePhoto() async {
     final picker = ImagePicker();
@@ -175,7 +319,7 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
       final XFile? imagee = await picker.pickImage(source: ImageSource.gallery);
       image = File(imagee!.path);
       Uint8List bytes = image!.readAsBytesSync();
-       base64Image = base64Encode(bytes);
+      base64Image = base64Encode(bytes);
 
       notifyListeners();
     } catch (e) {
@@ -190,6 +334,12 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
       for (var element in imagesList) {
         reports.add(File(element.path));
       }
+
+      base64Images = reports.map((file) {
+        List<int> bytes = file!.readAsBytesSync();
+        String base64Image = base64Encode(bytes);
+        return base64Image;
+      }).toList();
 
       //  reports.addAll(File(imagesList!.path))
 
@@ -212,13 +362,6 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
 
             getLabelsModel = GetLabels.fromJson(json);
             if (getLabelsModel.status == 1) {
-              // if (mainScreenModel.data != null) {
-              //   for (var element in mainScreenModel.data!) {
-              //     latlong.add(LatLng(double.parse(element.latitude!),
-              //         double.parse(element.longitude!)));
-              //   }
-              //   debugPrint("latitude" + latlong![0].latitude.toString());
-
               listNames = getLabelsModel.data?.toJson().keys.toList() ?? [];
 
               totalNumberOfListInDataObject =
@@ -232,7 +375,7 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
               medicalCheckList = List<bool>.generate(
                   getLabelsModel.data?.medicalAllergies?.length ?? 0,
                   (index) => false);
-              foodAlergiesLies = List<bool>.generate(
+              foodAlergiesList = List<bool>.generate(
                   getLabelsModel.data?.foodAllergies?.length ?? 0,
                   (index) => false);
               disablitiesList = List<bool>.generate(
@@ -243,18 +386,7 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
 
               // }
               completion(success);
-            } else {
-              // completion(success);
-              // AppUtil.showWarning(
-              //   context: context,
-              //   title: "Error",
-              //   barrierDismissible: false,
-              //   handler: (action) {
-              //     completion(false);
-              //     Navigator.of(context, rootNavigator: true).pop();
-              //   },
-              // );
-            }
+            } else {}
           } else {
             AppUtil.showWarning(
               context: context,
@@ -285,7 +417,7 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
     } else if (mainIndex == 1) {
       medicalCheckList[index] = !medicalCheckList[index];
     } else if (mainIndex == 2) {
-      foodAlergiesLies[index] = !foodAlergiesLies[index];
+      foodAlergiesList[index] = !foodAlergiesList[index];
     } else {
       disablitiesList[index] = !disablitiesList[index];
     }
@@ -298,7 +430,7 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
     } else if (mainIndex == 1) {
       return medicalCheckList[index];
     } else if (mainIndex == 2) {
-      return foodAlergiesLies[index];
+      return foodAlergiesList[index];
     } else {
       return disablitiesList[index];
     }
@@ -310,10 +442,66 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
     } else if (mainIndex == 1) {
       medicalCheckList.add(false);
     } else if (mainIndex == 2) {
-      foodAlergiesLies.add(false);
+      foodAlergiesList.add(false);
     } else {
       disablitiesList.add(false);
     }
+  }
+
+  static UserDetailsViewModel of({required bool listen}) {
+    return Provider.of(Keys.mainNavigatorKey.currentState!.context,
+        listen: listen);
+  }
+
+  createBookingFunc(
+      {required BuildContext context,
+      required Map<String, dynamic> body,
+      required void Function(
+        bool success,
+      )
+          completion}) {
+    // log
+    createBooking(
+        json: body,
+        context: context,
+        onForeground: true,
+        callBack: (success, json) async {
+          debugPrint("Response of create booking $json");
+
+          if (json != null) {
+            debugPrint("Response of booking $json");
+
+            if (json["status"] == 0) {
+              AppUtil.showWarning(
+                context: context,
+                bodyText: json["message"] ?? "",
+                title: "Retry",
+                barrierDismissible: false,
+                handler: (action) {
+                  completion(
+                    false,
+                  );
+                  Navigator.of(context, rootNavigator: true).pop();
+                },
+              );
+            } else {}
+            completion(
+              success,
+            );
+          } else {
+            AppUtil.showWarning(
+              context: context,
+              title: "Retry",
+              barrierDismissible: false,
+              handler: (action) {
+                completion(
+                  false,
+                );
+                Navigator.of(context, rootNavigator: true).pop();
+              },
+            );
+          }
+        });
   }
 }
 
@@ -329,6 +517,43 @@ mixin GetAllLabels {
       AppUtil.showLoader(context: context);
       ServerManager.getLabels((responseBody, success) {
         debugPrint(responseBody.toString());
+        apiCallingProgress = false;
+        if (onForeground) {
+          AppUtil.dismissLoader(context: context);
+        }
+        if (success) {
+          try {
+            dynamic json = AppUtil.decodeString(responseBody);
+            if (json != null && json is Map) {
+              callBack(true, json);
+            } else {
+              callBack(false, json);
+            }
+          } catch (e) {
+            if (onForeground) {
+              AppUtil.showWarning(
+                  context: context, title: "Error", bodyText: "Error");
+            }
+            callBack(false, null);
+          }
+        }
+      });
+    }
+  }
+}
+
+mixin CreateBooking {
+  bool apiCallingProgress = false;
+  createBooking(
+      {required Map<String, dynamic> json,
+      required BuildContext context,
+      bool onForeground = false,
+      required void Function(bool success, Map? json) callBack}) async {
+    if (apiCallingProgress) return;
+    apiCallingProgress = true;
+    if (onForeground) {
+      AppUtil.showLoader(context: context);
+      ServerManager.createBooking(json, (responseBody, success) {
         apiCallingProgress = false;
         if (onForeground) {
           AppUtil.dismissLoader(context: context);

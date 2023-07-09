@@ -10,4 +10,6 @@ class UrlConstants {
   static String getPharmacy = "${baseUrl}get-pharmacies";
   static String healthLabels = "${baseUrl}health/labels";
   static String profileGetForm = "${baseUrl}get-booking-details";
+
+  static String createBooking = "${baseUrl}create-booking";
 }

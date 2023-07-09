@@ -17,12 +17,12 @@ class AppRoutes {
       case Disability.id:
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => const Disability(isFromLogin: true,),
+          builder: (_) => const  Disability(isFromLogin: true, body: {},),
         );
       case Calendar.id:
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => const Calendar(),
+          builder: (_) => const  Calendar(body: {},),
         );
          case UserDetailsView.id:
         return MaterialPageRoute(
@@ -32,7 +32,7 @@ class AppRoutes {
       case AddFamilyMembers.id:
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => const AddFamilyMembers(),
+          builder: (_) => const AddFamilyMembers(body: {}),
         );
 
       // case LoginView.id:

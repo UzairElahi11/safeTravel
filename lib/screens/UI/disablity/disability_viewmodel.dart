@@ -1,5 +1,7 @@
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:safe/Utils/app_util.dart';
+import 'package:safe/constants/keys.dart';
 // import 'package:safe/Utils/extensions/string.extension.dart';
 // import 'package:safe/Utils/validator/textformfield_model.dart';
 // import 'package:safe/Utils/validator/textformfield_validator.dart';
@@ -79,12 +81,17 @@ class DisabilityViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  navigate(BuildContext context) {
+  navigate(BuildContext context , Map<String , dynamic> body) {
     if (validate()) {
       AppUtil.pushRoute(
         context: context,
-        route: const AddFamilyMembers(),
+        route:  AddFamilyMembers(body :body ),
       );
     }
+  }
+
+  static DisabilityViewModel of({required bool listen}) {
+    return Provider.of(Keys.mainNavigatorKey.currentState!.context,
+        listen: listen);
   }
 }

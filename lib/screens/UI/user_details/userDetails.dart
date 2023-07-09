@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safe/Utils/app_text_styles.dart';
@@ -23,8 +25,12 @@ class UserDetailsView extends StatelessWidget {
           viewModel.getLabels(
               context: context,
               completion: (sucess) {
+                log("success is $sucess");
+                log('body to be posted ${viewModel.bodyToBePosted}');
               });
         });
+
+        viewModel.postUserDetails();
       },
       builder: (context, model, _) {
         return Scaffold(

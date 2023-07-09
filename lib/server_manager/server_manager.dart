@@ -164,6 +164,7 @@ class ServerManager {
       debugPrint("Invalid response");
     }
     if (completion != null) {
+      log("here is completion");
       completion(responseBody!, success);
     }
   }
@@ -173,6 +174,8 @@ class ServerManager {
       Map<String, String> headers,
       Map<String, dynamic> body,
       Function(String responseBody, bool success) completion,
+      {int timeout = timeOutSeconds}) async {
+    var token = await UserDefaults.getToken();
       {int timeout = timeOutSeconds}) async {
     var token = await UserDefaults.getToken();
 
@@ -350,6 +353,11 @@ class ServerManager {
     callPostApi(UrlConstants.socialLogin, _defaultHeader(), json, completion);
   }
 
+  static void createBooking(
+      Map<String, dynamic> json, ResponseCompletion completion) {
+    callPostApi(UrlConstants.createBooking, _defaultHeader(), json, completion);
+  }
+
   //payment api
   static void payment(String cardNumber, String cvv, String expDate,
       ResponseCompletion completion) {
@@ -381,12 +389,8 @@ class ServerManager {
 
   static void getPharmacy(
       String lat, String long, ResponseCompletion completion) {
-    Map<String, dynamic> json = {
-      "lat": "7.8987",
-      "long": "0.8987",
-      "radius": "5"
-    };
-    callPostApi(UrlConstants.getPharmacy, _defaultHeader(), json, completion);
+    Map<String, dynamic> json = {"lat": lat, "long": long, "radius": "5"};
+    callPostApi(UrlConstants.callHealth, _defaultHeader(), json, completion);
   }
 
   static void login(
@@ -401,6 +405,9 @@ class ServerManager {
   }
 
   static void getLabels(ResponseCompletion completion) {
+    Map<String, dynamic> json = {};
+    getApiCalling(
+        UrlConstants.healthLabels, _defaultHeader(), json, completion);
     Map<String, dynamic> json = {};
     getApiCalling(
         UrlConstants.healthLabels, _defaultHeader(), json, completion);

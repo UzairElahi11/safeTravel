@@ -15,7 +15,10 @@ import 'package:stacked/stacked.dart';
 
 class AddFamilyMembers extends StatelessWidget {
   static const id = "ADD_FAMILY_SCREEN";
-  const AddFamilyMembers({super.key});
+
+  final Map<String, dynamic> body;
+
+  const AddFamilyMembers({super.key, required this.body});
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +86,7 @@ class AddFamilyMembers extends StatelessWidget {
                                 width: 40.w,
                               ),
                               GestureDetector(
-                                onTap: () => model.addMembers(index,context),
+                                onTap: () => model.addMembers(index, context),
                                 child: Container(
                                   height: 40.h,
                                   width: 100.w,
@@ -105,7 +108,7 @@ class AddFamilyMembers extends StatelessWidget {
                     onPressed: () {
                       AppUtil.pushRoute(
                         context: context,
-                        route: const Calendar(),
+                        route: Calendar(body: body),
                       );
                     },
                     text: LocaleKeys.next.translatedString(),

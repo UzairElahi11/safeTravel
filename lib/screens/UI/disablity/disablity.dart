@@ -6,19 +6,19 @@ import 'package:safe/Utils/app_images_path.dart';
 import 'package:safe/Utils/app_text_styles.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/extensions/string.extension.dart';
-import 'package:safe/l10n/locale_keys.g.dart';
-import 'package:safe/screens/UI/disablity/disability_viewmodel.dart';
 import 'package:safe/Utils/generics/generic_button.dart';
 import 'package:safe/Utils/generics/generic_text.dart';
+import 'package:safe/l10n/locale_keys.g.dart';
+import 'package:safe/screens/UI/disablity/disability_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
-import '../../../widgets/disability_widgets/disability_types_card.dart';
 import '../../../widgets/disability_widgets/emergency_card.dart';
 
 class Disability extends StatelessWidget {
   static const id = "DISABILITY_SCREEN";
   final bool isFromLogin;
-  const Disability({super.key,required this.isFromLogin});
+  final Map<String , dynamic> body;
+  const Disability({super.key,required this.isFromLogin, required this.body});
 
   @override
   Widget build(BuildContext context) {
@@ -37,18 +37,18 @@ class Disability extends StatelessWidget {
                 SizedBox(
                   height: 30.h,
                 ),
-                GenericText(
-                  LocaleKeys.disability,
-                  style: AppStyles.medium24.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                DisabilityTypesCard(
-                  model: model,
-                ),
+                // GenericText(
+                //   LocaleKeys.disability,
+                //   style: AppStyles.medium24.copyWith(
+                //     fontWeight: FontWeight.w600,
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: 20.h,
+                // ),
+                // DisabilityTypesCard(
+                //   model: model,
+                // ),
                 SizedBox(
                   height: 30.h,
                 ),
@@ -74,7 +74,7 @@ class Disability extends StatelessWidget {
                     color: AppColors.whiteColor,
                     fontWeight: FontWeight.w400,
                   ),
-                  onPressed: () => model.navigate(context),
+                  onPressed: () => model.navigate(context , body),
                 ),
                 SizedBox(
                   height: 30.h,
