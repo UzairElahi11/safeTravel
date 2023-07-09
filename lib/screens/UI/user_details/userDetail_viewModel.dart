@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -11,10 +12,12 @@ import 'package:safe/constants/keys.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/locator.dart';
 import 'package:safe/screens/UI/calendar/calendar_viewmodel.dart';
+import 'package:safe/screens/UI/disablity/disability_viewmodel.dart';
 import 'package:safe/screens/UI/disablity/disablity.dart';
 
 import '../../../model/get_labels.dart';
 import '../../../server_manager/server_manager.dart';
+import '../add_family_members/add_family_members_viewmodel.dart';
 
 class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
   GetLabels getLabelsModel = GetLabels();
@@ -30,42 +33,58 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
   List<bool> foodAlergiesLies = [];
   List<bool> disablitiesList = [];
 
-  Map<String, dynamic> bodyToBePosted = {
-    "emergency_contact": {"name": "", "phone": "", "notes": ""},
-    "booking": {
-      "arrival": CalendarViewModel.of(listen: false).arrivalfocusDay,
-      "departure": CalendarViewModel.of(listen: false).arrivalfocusDay,
-    },
-    "family_members": {
-      "adults": 1,
-      "childrens": 0,
-      "new_borns": 0,
-      "members": [
-        {
-          "first_name": "",
-          "last_name": "",
-          "dob": "",
-          "picture": "",
-          "health_conditions": ["condition 1", "condition 2"],
-          "medical_allergies": ["medical allergy 1", "medical allergy 2"],
-          "food_allergies": ["food allergy 1", "food allergy 2"],
-          "disabilities": ["disabilities 1", "disabilities 2"],
-          "health_reports": ["base64 string 1", "base64 string 2"]
-        },
-        {
-          "first_name": "",
-          "last_name": "",
-          "dob": "",
-          "picture": "",
-          "health_conditions": ["condition 1", "condition 2"],
-          "medical_allergies": ["medical allergy 1", "medical allergy 2"],
-          "food_allergies": ["food allergy 1", "food allergy 2"],
-          "disabilities": ["disabilities 1", "disabilities 2"],
-          "health_reports": ["base64 string 1", "base64 string 2"]
-        }
-      ]
-    }
-  };
+  Map<String, dynamic> bodyToBePosted = {};
+
+  postUserDetails() {
+    bodyToBePosted = {
+      "emergency_contact": {
+        "name":
+            DisabilityViewModel.of(listen: false).nameController.text.trim(),
+        "phone": DisabilityViewModel.of(listen: false)
+            .phoneNumberController
+            .text
+            .trim(),
+        "notes":
+            DisabilityViewModel.of(listen: false).notesController.text.trim()
+      },
+      "booking": {
+        "arrival": CalendarViewModel.of(listen: false).arrivalfocusDay,
+        "departure": CalendarViewModel.of(listen: false).arrivalfocusDay,
+      },
+      "family_members": {
+        "adults": AddFamilyMembersViewModel.of(listen: false)
+            .familyMembersList[0]['numberOfMembers'],
+        "childrens": AddFamilyMembersViewModel.of(listen: false)
+            .familyMembersList[1]['numberOfMembers'],
+        "new_borns": AddFamilyMembersViewModel.of(listen: false)
+            .familyMembersList[2]['numberOfMembers'],
+        "members": [
+          {
+            "first_name": firstNameController.text.trim(),
+            "last_name": lastNameController.text.trim(),
+            "dob": formattedDate,
+            "picture": "",
+            "health_conditions": ["condition 1", "condition 2"],
+            "medical_allergies": ["medical allergy 1", "medical allergy 2"],
+            "food_allergies": ["food allergy 1", "food allergy 2"],
+            "disabilities": ["disabilities 1", "disabilities 2"],
+            "health_reports": ["base64 string 1", "base64 string 2"]
+          },
+          {
+            "first_name": "",
+            "last_name": "",
+            "dob": "",
+            "picture": "",
+            "health_conditions": ["condition 1", "condition 2"],
+            "medical_allergies": ["medical allergy 1", "medical allergy 2"],
+            "food_allergies": ["food allergy 1", "food allergy 2"],
+            "disabilities": ["disabilities 1", "disabilities 2"],
+            "health_reports": ["base64 string 1", "base64 string 2"]
+          }
+        ]
+      }
+    };
+  }
 
   File? image;
   List<File?> reports = <File?>[];
@@ -93,7 +112,10 @@ class UserDetailsViewModel extends ChangeNotifier with GetAllLabels {
       }
       formattedDate = "${selectedDate.year}/$month/$day";
       dateOfBirthController.text = formattedDate;
+
       notifyListeners();
+
+      log("date is $formattedDate");
     }
   }
 
