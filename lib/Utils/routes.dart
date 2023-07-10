@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:safe/screens/UI/add_family_members/add_family_members.dart';
 import 'package:safe/screens/UI/calendar/calendar.dart';
 import 'package:safe/screens/UI/disablity/disablity.dart';
+import 'package:safe/screens/UI/editForm/editFormView.dart';
 import 'package:safe/screens/UI/splash/splash.dart';
 import 'package:safe/screens/UI/user_details/userDetails.dart';
 
@@ -17,17 +18,24 @@ class AppRoutes {
       case Disability.id:
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => const  Disability(isFromLogin: true, body: {},),
+          builder: (_) => const Disability(
+            isFromLogin: true,
+            body: {},
+          ),
         );
       case Calendar.id:
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => const  Calendar(body: {},),
+          builder: (_) => const Calendar(
+            body: {},
+          ),
         );
-         case UserDetailsView.id:
+      case UserDetailsView.id:
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => const UserDetailsView(isFromLogin:true ,),
+          builder: (_) => const UserDetailsView(
+            isFromLogin: true,
+          ),
         );
       case AddFamilyMembers.id:
         return MaterialPageRoute(
@@ -42,6 +50,12 @@ class AppRoutes {
       // case MainScreen.id:
       //   return MaterialPageRoute(
       //       settings: settings, builder: (_) => MainScreen());
+
+      case ProfileView.id:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const ProfileView(),
+        );
       default:
         return MaterialPageRoute(
           settings: settings,
