@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -8,6 +10,13 @@ import 'package:safe/Utils/generics/generic_text.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/screens/UI/editForm/editFormViewModel.dart';
 import 'package:stacked/stacked.dart';
+
+import '../../../Utils/app_colors.dart';
+import '../../../Utils/app_text_styles.dart';
+import '../../../Utils/generics/generic_button.dart';
+import '../../../Utils/generics/generic_check_box.dart';
+import '../../../Utils/generics/generic_icon.dart';
+import '../../../Utils/generics/generic_text_field.dart';
 
 class ProfileView extends StatelessWidget {
   static const id = '/profileScreen';
@@ -25,9 +34,9 @@ class ProfileView extends StatelessWidget {
           },
           viewModelBuilder: () => ProfileViewModel(),
           builder: (context, model, _) {
-            return Scaffold(
-              body: Padding(
-                padding: EdgeInsets.only(left: 34.h, right: 34.h, top: 50.h),
+            return Padding(
+              padding: EdgeInsets.only(left: 34.h, right: 34.h, top: 50.h),
+              child: SingleChildScrollView(
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.max,
@@ -47,10 +56,165 @@ class ProfileView extends StatelessWidget {
                             style: GoogleFonts.inter(
                                 fontWeight: FontWeight.w500, fontSize: 20),
                           ),
-
-                          SizedBox(height: 10.h,),
+                          SizedBox(
+                            height: 10.h,
+                          ),
                         ],
-                      )
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount:
+                              model.savingTheListsDataFromDataObject.length,
+                          itemBuilder: (context, index) => SizedBox(
+                                child: Card(
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  color: AppColors.containerBgColor,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        height: 20.h,
+                                      ),
+                                      Text(
+                                        model.firstLetterUpperCase(index),
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      GridView.builder(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 30.w),
+                                          physics:
+                                              const ClampingScrollPhysics(),
+                                          shrinkWrap: true,
+                                          itemCount: model
+                                              .savingTheListsDataFromDataObject[
+                                                  index]
+                                              .length,
+                                          gridDelegate:
+                                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                                  childAspectRatio: 16 / 4,
+                                                  crossAxisCount: 2),
+                                          itemBuilder: (context, innerIndex) {
+                                            return Row(
+                                              children: [
+                                                GenericCheckBox(
+                                                  visualDensity:
+                                                      VisualDensity.compact,
+                                                  value: model
+                                                          .checkboxStates[index]
+                                                      [innerIndex],
+                                                  onChanged: (value) {
+                                                    model.updateCheckboxState(
+                                                        index,
+                                                        innerIndex,
+                                                        value!);
+                                                  },
+                                                ),
+                                                SizedBox(width: 10.w),
+                                                Text(model
+                                                        .savingTheListsDataFromDataObject[
+                                                    index][innerIndex]),
+                                              ],
+                                            );
+                                          }),
+                                      SizedBox(
+                                        height: 20.h,
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 30.w),
+                                        child: GenericButton(
+                                          width: 400.w,
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 20.w),
+                                          onPressed: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) => Dialog(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12.r),
+                                                ),
+                                                child: ClipRRect(
+                                                  child: Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 40.w),
+                                                    height: 200.h,
+                                                    width: 400.w,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        GenericTextField(
+                                                            hintText:
+                                                                "Add new items",
+                                                            filled: true,
+                                                            fillColor: AppColors
+                                                                .containerBgColor,
+                                                            controller: model
+                                                                .addItemsController),
+                                                        SizedBox(
+                                                          height: 20.h,
+                                                        ),
+                                                        GenericButton(
+                                                          height: 80.h,
+                                                          radius: 12.r,
+                                                          onPressed: () => model
+                                                              .addItem(index),
+                                                          color: AppColors
+                                                              .baseColor,
+                                                          child:
+                                                              const GenericText(
+                                                            "Add",
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white),
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          leading: GenericIcon(
+                                            icon: Icons.add,
+                                            color: AppColors.whiteColor,
+                                          ),
+                                          text: LocaleKeys.add,
+                                          borderRadius: 8,
+                                          textStyle:
+                                              AppStyles.medium14.copyWith(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 14,
+                                            color: AppColors.whiteColor,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 20.h,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )),
+                      // Image.asset(base64Encode(model.getEditProfileData['data']
+                      //     ['health_reports']['10']))
                     ]),
               ),
             );

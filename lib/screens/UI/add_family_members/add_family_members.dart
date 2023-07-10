@@ -24,7 +24,7 @@ class AddFamilyMembers extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: ViewModelBuilder<AddFamilyMembersViewModel>.reactive(
+        child: ViewModelBuilder<AddFamilyMembersViewModel>.nonReactive(
           viewModelBuilder: () => AddFamilyMembersViewModel(),
           builder: (context, model, _) {
             return Padding(
