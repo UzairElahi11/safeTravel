@@ -117,9 +117,11 @@ class ServerManager {
     } else {
       var client = http.Client();
       try {
-        String ? jsonString;
+        String? jsonString;
         if (isform) {
-           jsonString = json.encode(body);
+          jsonString = json.encode(body);
+
+          debugPrint("json string $jsonString");
         }
 
         //  request.add(utf8.encode(json.encode(body)));
@@ -362,17 +364,49 @@ class ServerManager {
       "device": UserDataManager.getInstance().deviceType
     };
     callPostApi(
-        UrlConstants.socialLogin, _defaultHeader(), json, completion, false);
+        UrlConstants.socialLogin, _defaultHeader(), json, completion, true);
   }
 
   static void createBooking(
+    ResponseCompletion completion,
+  ) {
+    Map<String, dynamic> json = {
+      "emergency_contact": {
+        "name": "Nawab Ali",
+        "phone": "+923420909974",
+        "notes": "Nothing special"
+      },
+      "booking": {"arrival": "2023/07/11", "departure": "2023/07/11"},
+      "family_members": {
+        "adults": "1",
+        "childrens": "0",
+        "new_borns": "0",
+        "members": [
+          {
+            "first_name": "Jawad",
+            "last_name": "khan",
+            "dob": "2023/07/11",
+            "picture": "",
+            "health_conditions": ["condition 1", "condition 2"],
+            "medical_allergies": ["medical allergy 1", "medical allergy 2"],
+            "food_allergies": ["food allergy 1", "food allergy 2"],
+            "disabilities": ["disability 1", "disability 2"],
+            "health_reports": []
+          }
+        ]
+      }
+    };
+
+    callPostApi(
+        UrlConstants.createBooking, _defaultHeader(), json, completion, false);
+  }
+
+  static void updateBooking(
     Map<String, dynamic> json,
     ResponseCompletion completion,
   ) {
-    // print(jsonDecode(json.toString()));
-
     callPostApi(
-        UrlConstants.createBooking, _defaultHeader(), json, completion, true);
+        UrlConstants.updateBooking, _defaultHeader(), json, completion, true);
   }
 
   //payment api

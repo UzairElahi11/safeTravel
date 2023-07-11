@@ -11,7 +11,6 @@ import 'package:safe/Utils/permission_handler_helper_model.dart';
 import 'package:safe/Utils/user_defaults.dart';
 import 'package:safe/locator.dart';
 import 'package:safe/screens/UI/Welcome/welcome.dart';
-import 'package:safe/screens/UI/dashboard/dashboard.dart';
 import 'package:safe/screens/UI/login/login.dart';
 import 'package:safe/screens/UI/user_details/user_data_manager.dart';
 

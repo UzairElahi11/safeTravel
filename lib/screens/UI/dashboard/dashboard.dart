@@ -53,7 +53,9 @@ class DashboardView extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () {
                         AppUtil.pushRoute(
-                            context: context, route: const ProfileView());
+                          context: context,
+                          route: const ProfileView(),
+                        );
                       },
                       child: GenericSvgImage(
                         svgPath: AppImages.user,

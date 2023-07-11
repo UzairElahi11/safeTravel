@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:ffi';
 import 'dart:io';
 import 'dart:typed_data';
+
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -9,6 +12,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/extensions/string.extension.dart';
+import 'package:safe/Utils/url_constants.dart';
 import 'package:safe/Utils/validator/textformfield_model.dart';
 import 'package:safe/Utils/validator/textformfield_validator.dart';
 import 'package:safe/constants/keys.dart';
@@ -46,48 +50,6 @@ class UserDetailsViewModel extends ChangeNotifier
   List<dynamic> selectedDisablitiesIssueList = [];
 
   List<String> base64Images = [];
-
-  List<Map<String, dynamic>> maintingUserDetails = [
-    {
-      "first_name": '',
-      "last_name": '',
-      "dob": '',
-      "picture": "",
-      "health_conditions": [],
-      "medical_allergies": [],
-      "disabilities": [],
-      "health_reports": [],
-      "food_allergies": []
-    },
-  ];
-
-  Map<String, dynamic> postUserDetails() {
-    return bodyToBePosted = {
-      "emergency_contact": {
-        "name":
-            DisabilityViewModel.of(listen: false).nameController.text.trim(),
-        "phone": DisabilityViewModel.of(listen: false)
-            .phoneNumberController
-            .text
-            .trim(),
-        "notes":
-            DisabilityViewModel.of(listen: false).notesController.text.trim()
-      },
-      "booking": {
-        "arrival": CalendarViewModel.of(listen: false).formateArrivalDate(),
-        "departure": CalendarViewModel.of(listen: false).formateArrivalDate()
-      },
-      "family_members": {
-        "adults": AddFamilyMembersViewModel.of(listen: false)
-            .familyMembersList[0]['numberOfMembers'],
-        "childrens": AddFamilyMembersViewModel.of(listen: false)
-            .familyMembersList[1]['numberOfMembers'],
-        "new_borns": AddFamilyMembersViewModel.of(listen: false)
-            .familyMembersList[2]['numberOfMembers'],
-        "members": maintingUserDetails,
-      }
-    };
-  }
 
   File? image;
   List<File?> reports = <File?>[];
@@ -220,19 +182,20 @@ class UserDetailsViewModel extends ChangeNotifier
 
       log("selected is $selectedHealthIssueList");
 
-      maintingUserDetails = [
-        {
-          "first_name": firstNameController.text.trim(),
-          "last_name": lastNameController.text.trim(),
-          "dob": formattedDate,
-          "picture": base64Image,
-          "health_conditions": selectedHealthIssueList,
-          "medical_allergies": selectedMediacalIssuesList,
-          "disabilities": selectedDisablitiesIssueList,
-          "health_reports": base64Images,
-          "food_allergies": selectedFoodIssuesList
-        },
-      ];
+      List<dynamic> maintingUserDetails = [];
+      Map<String, dynamic> memberDetails = {
+        "first_name": firstNameController.text.trim(),
+        "last_name": lastNameController.text.trim(),
+        "dob": formattedDate,
+        "picture": base64Image,
+        "health_conditions": selectedHealthIssueList,
+        "medical_allergies": selectedMediacalIssuesList,
+        "disabilities": selectedDisablitiesIssueList,
+        "health_reports": base64Images,
+        "food_allergies": selectedFoodIssuesList
+      };
+
+      maintingUserDetails.add(memberDetails);
 
       bodyToBePosted = {
         "emergency_contact": {
@@ -251,15 +214,43 @@ class UserDetailsViewModel extends ChangeNotifier
               CalendarViewModel.of(listen: false).formateDepartureDate()
         },
         "family_members": {
-          "adults": AddFamilyMembersViewModel.of(listen: false)
-              .familyMembersList[0]['numberOfMembers'],
-          "childrens": AddFamilyMembersViewModel.of(listen: false)
-              .familyMembersList[1]['numberOfMembers'],
-          "new_borns": AddFamilyMembersViewModel.of(listen: false)
-              .familyMembersList[2]['numberOfMembers'],
+          "adults":
+              "${AddFamilyMembersViewModel.of(listen: false).familyMembersList[0]['numberOfMembers']}",
+          "childrens":
+              "${AddFamilyMembersViewModel.of(listen: false).familyMembersList[1]['numberOfMembers']}",
+          "new_borns":
+              "${AddFamilyMembersViewModel.of(listen: false).familyMembersList[2]['numberOfMembers']}",
           "members": maintingUserDetails
         }
       };
+
+      // debugPrint("data is")
+      // {
+      //   "emergency_contact": {
+      //     "name":
+      //         DisabilityViewModel.of(listen: false).nameController.text.trim(),
+      //     "phone": DisabilityViewModel.of(listen: false)
+      //         .phoneNumberController
+      //         .text
+      //         .trim(),
+      //     "notes":
+      //         DisabilityViewModel.of(listen: false).notesController.text.trim()
+      //   },
+      //   "booking": {
+      //     "arrival": CalendarViewModel.of(listen: false).formateArrivalDate(),
+      //     "departure":
+      //         CalendarViewModel.of(listen: false).formateDepartureDate()
+      //   },
+      //   "family_members": {
+      //     "adults": AddFamilyMembersViewModel.of(listen: false)
+      //         .familyMembersList[0]['numberOfMembers'],
+      //     "childrens": AddFamilyMembersViewModel.of(listen: false)
+      //         .familyMembersList[1]['numberOfMembers'],
+      //     "new_borns": AddFamilyMembersViewModel.of(listen: false)
+      //         .familyMembersList[2]['numberOfMembers'],
+      //     "members": maintingUserDetails
+      //   }
+      // };
 
       notifyListeners();
 
@@ -454,6 +445,54 @@ class UserDetailsViewModel extends ChangeNotifier
         listen: listen);
   }
 
+  Future<void> makePostRequest() async {
+    final url = Uri.parse('http://staysafema.com/api/create-booking');
+
+    final data = {
+      "emergency_contact": {"name": "", "phone": "", "notes": ""},
+      "booking": {"arrival": "2023/07/11", "departure": "2023/07/11"},
+      "family_members": {
+        "adults": 1,
+        "childrens": 0,
+        "new_borns": 0,
+        "members": [
+          {
+            "first_name": "fff",
+            "last_name": "ggg",
+            "dob": "2023/07/11",
+            "picture": "",
+            "health_conditions": ["medicalallergy1", "medicalallergy2"],
+            "medical_allergies": ["foodallergy1", "foodallergy2"],
+            "disabilities": ["condition1", "condition2"],
+            "health_reports": [],
+            "food_allergies": ["disability4"]
+          }
+        ]
+      }
+    };
+
+    final headers = <String, String>{
+      // 'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $bearerToken!',
+    };
+    log("beatere $bearerToken!");
+    final response = await http.post(
+      url,
+      headers: headers,
+      body: jsonEncode(data),
+    );
+
+    if (response.statusCode == 200) {
+      // Successful request
+      print('Request successful!');
+      print('Response body: ${response.body}');
+    } else {
+      // Request failed
+      print('Request failed with status: ${response.statusCode}');
+    }
+  }
+
   createBookingFunc(
       {required BuildContext context,
       required Map<String, dynamic> body,
@@ -463,7 +502,6 @@ class UserDetailsViewModel extends ChangeNotifier
           completion}) {
     // log
     createBooking(
-        json: body,
         context: context,
         onForeground: true,
         callBack: (success, json) async {
@@ -546,15 +584,14 @@ mixin GetAllLabels {
 mixin CreateBooking {
   bool apiCallingProgress = false;
   createBooking(
-      {required Map<String, dynamic> json,
-      required BuildContext context,
+      {required BuildContext context,
       bool onForeground = false,
       required void Function(bool success, Map? json) callBack}) async {
     if (apiCallingProgress) return;
     apiCallingProgress = true;
     if (onForeground) {
       AppUtil.showLoader(context: context);
-      ServerManager.createBooking(json, (responseBody, success) {
+      ServerManager.createBooking((responseBody, success) {
         apiCallingProgress = false;
         if (onForeground) {
           AppUtil.dismissLoader(context: context);

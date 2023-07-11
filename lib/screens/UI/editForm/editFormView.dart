@@ -83,12 +83,15 @@ class ProfileView extends StatelessWidget {
                                       SizedBox(
                                         height: 20.h,
                                       ),
-                                      Text(
-                                        model.firstLetterUpperCase(index),
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16,
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 50.w),
+                                        child: Text(
+                                          model.firstLetterUpperCase(index),
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16,
+                                          ),
                                         ),
                                       ),
                                       GridView.builder(
@@ -133,7 +136,7 @@ class ProfileView extends StatelessWidget {
                                       ),
                                       Padding(
                                         padding: EdgeInsets.symmetric(
-                                            horizontal: 30.w),
+                                            horizontal: 50.w),
                                         child: GenericButton(
                                           width: 400.w,
                                           padding: EdgeInsets.symmetric(
@@ -213,8 +216,84 @@ class ProfileView extends StatelessWidget {
                                   ),
                                 ),
                               )),
-                      // Image.asset(base64Encode(model.getEditProfileData['data']
-                      //     ['health_reports']['10']))
+                      SizedBox(
+                        height: 30.h,
+                      ),
+                      Card(
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        color: AppColors.containerBgColor,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 20.h,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 50.w),
+                              child: const Text(
+                                "Health Reports",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            model.getEditProfileData.isEmpty
+                                ? const SizedBox.shrink()
+                                : ListView.separated(
+                                    shrinkWrap: true,
+                                    itemCount: model.getEditProfileData.isEmpty
+                                        ? 1
+                                        : model
+                                            .getEditProfileData['data'][0]
+                                                ['health_reports']
+                                            .length,
+                                    separatorBuilder: (context, index) =>
+                                        SizedBox(
+                                      height: 10.h,
+                                    ),
+                                    itemBuilder: (context, index) => Center(
+                                      child: Image.network(
+                                        model.getEditProfileData['data'][0]
+                                            ['health_reports']['10'],
+                                        errorBuilder:
+                                            (context, exception, stacTrace) =>
+                                                const Icon(
+                                          Icons.error,
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                            SizedBox(
+                              height: 20.h,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 30.h,
+                      ),
+                      GenericButton(
+                        height: 80.h,
+                        radius: 12.r,
+                        onPressed: () => model.updateProfile(),
+                        color: AppColors.baseColor,
+                        child: const GenericText(
+                          "Update",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 30.h,
+                      ),
                     ]),
               ),
             );

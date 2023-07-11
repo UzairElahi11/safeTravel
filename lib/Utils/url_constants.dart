@@ -12,4 +12,6 @@ class UrlConstants {
   static String profileGetForm = "${baseUrl}get-booking-details";
 
   static String createBooking = "${baseUrl}create-booking";
+
+  static String updateBooking = "${baseUrl}update-booking-details";
 }

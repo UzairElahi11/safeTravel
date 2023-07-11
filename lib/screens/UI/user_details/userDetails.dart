@@ -29,8 +29,6 @@ class UserDetailsView extends StatelessWidget {
                 log('body to be posted ${viewModel.bodyToBePosted}');
               });
         });
-
-        viewModel.postUserDetails();
       },
       builder: (context, model, _) {
         return Scaffold(

@@ -57,16 +57,11 @@ class CalendarViewModel extends ChangeNotifier implements TickerProvider {
   }
 
   createBooking(Map<String, dynamic> body) {
-    AppUtil.pushRoute(
-      context: Keys.mainNavigatorKey.currentState!.context,
-      route: const ProfileView(),
-    );
+    // AppUtil.pushRoute(
+    //   context: Keys.mainNavigatorKey.currentState!.context,
+    //   route: const ProfileView(),
+    // );
     // log("create booking $body");
-    // UserDetailsViewModel.of(listen: false).createBookingFunc(
-    //     body: body,
-    //     context: Keys.mainNavigatorKey.currentState!.context,
-    //     completion: (sucess) {
-    //       log("success is $sucess");
-    //     });
+    UserDetailsViewModel.of(listen: false).makePostRequest();
   }
 }
