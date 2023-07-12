@@ -439,7 +439,8 @@ class UserDetailsViewModel extends ChangeNotifier
           debugPrint('Response body: ${value.data}');
 
           value.data['status'] == 1
-              ? Navigator.of(Keys.mainNavigatorKey.currentState!.context).push(
+              ? Navigator.of(Keys.mainNavigatorKey.currentState!.context)
+                  .pushReplacement(
                   MaterialPageRoute(
                     builder: (context) => const PaymentView(),
                   ),

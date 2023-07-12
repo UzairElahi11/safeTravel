@@ -17,69 +17,79 @@ import '../../../widgets/disability_widgets/emergency_card.dart';
 class Disability extends StatelessWidget {
   static const id = "DISABILITY_SCREEN";
   final bool isFromLogin;
-  final Map<String , dynamic> body;
-  const Disability({super.key,required this.isFromLogin, required this.body});
+  final Map<String, dynamic> body;
+  const Disability({super.key, required this.isFromLogin, required this.body});
 
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => DisabilityViewModel(),
       builder: (context, model, _) {
-        return Scaffold(
-          body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 60.w),
-            child: ListView(
-              children: [
-                SizedBox(
-                  height: 50.h,
-                ),
-                headerWidgetTop(context),
-                SizedBox(
-                  height: 30.h,
-                ),
-                // GenericText(
-                //   LocaleKeys.disability,
-                //   style: AppStyles.medium24.copyWith(
-                //     fontWeight: FontWeight.w600,
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: 20.h,
-                // ),
-                // DisabilityTypesCard(
-                //   model: model,
-                // ),
-                SizedBox(
-                  height: 30.h,
-                ),
-                isFromLogin?
-                GenericText(
-                  "Emergency Contact",
-                  style: AppStyles.medium24.copyWith(
-                    fontWeight: FontWeight.w600,
+        return WillPopScope(
+          onWillPop: () async {
+            return false;
+          },
+          child: Scaffold(
+            body: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 60.w),
+              child: ListView(
+                children: [
+                  SizedBox(
+                    height: 50.h,
                   ),
-                ):const SizedBox(),
-              isFromLogin?   SizedBox(
-                  height: 15.h,
-                ):const  SizedBox(),
-              isFromLogin?  EmergencyContactCard(model: model):const SizedBox(),
-                SizedBox(
-                  height: 30.h,
-                ),
-                GenericButton(
-                  height: 70.h,
-                  width: double.infinity,
-                  text: LocaleKeys.next.translatedString(),
-                  textStyle: AppStyles.mediumBold16.copyWith(
-                    color: AppColors.whiteColor,
-                    fontWeight: FontWeight.w400,
+                  // headerWidgetTop(context),
+                  SizedBox(
+                    height: 30.h,
                   ),
-                  onPressed: () => model.navigate(context , body),
-                ),
-                SizedBox(
-                  height: 30.h,
-                ),
-              ],
+                  // GenericText(
+                  //   LocaleKeys.disability,
+                  //   style: AppStyles.medium24.copyWith(
+                  //     fontWeight: FontWeight.w600,
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   height: 20.h,
+                  // ),
+                  // DisabilityTypesCard(
+                  //   model: model,
+                  // ),
+                  SizedBox(
+                    height: 30.h,
+                  ),
+                  isFromLogin
+                      ? GenericText(
+                          "Emergency Contact",
+                          style: AppStyles.medium24.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        )
+                      : const SizedBox(),
+                  isFromLogin
+                      ? SizedBox(
+                          height: 15.h,
+                        )
+                      : const SizedBox(),
+                  isFromLogin
+                      ? EmergencyContactCard(model: model)
+                      : const SizedBox(),
+                  SizedBox(
+                    height: 30.h,
+                  ),
+                  GenericButton(
+                    height: 70.h,
+                    width: double.infinity,
+                    text: LocaleKeys.next.translatedString(),
+                    textStyle: AppStyles.mediumBold16.copyWith(
+                      color: AppColors.whiteColor,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    onPressed: () => model.navigate(context, body),
+                  ),
+                  SizedBox(
+                    height: 30.h,
+                  ),
+                ],
+              ),
             ),
           ),
         );

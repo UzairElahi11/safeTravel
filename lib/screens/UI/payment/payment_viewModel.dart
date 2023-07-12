@@ -27,7 +27,10 @@ class PaymentViewModel with ChangeNotifier, paymentApiCallingClass {
           completion: (success) {
             if (success) {
               showToaster(context);
-              AppUtil.pushRoute(context: context, route: const DashboardView());
+              AppUtil.pushRoute(
+                  pushReplacement: true,
+                  context: context,
+                  route: const DashboardView());
             }
           });
     }
@@ -45,7 +48,8 @@ class PaymentViewModel with ChangeNotifier, paymentApiCallingClass {
       {required BuildContext context,
       required void Function(
         bool success,
-      ) completion}) {
+      )
+          completion}) {
     paymentApiCalling(
         cardNumber: cardNumberController.text,
         cvv: cvvController.text,
