@@ -26,7 +26,6 @@ class UserDetailsView extends StatelessWidget {
               context: context,
               completion: (sucess) {
                 log("success is $sucess");
-                log('body to be posted ${viewModel.bodyToBePosted}');
               });
         });
       },

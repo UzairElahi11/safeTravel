@@ -1,13 +1,17 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/constants/keys.dart';
 import 'package:safe/screens/UI/editForm/editFormView.dart';
 import 'package:safe/screens/UI/user_details/userDetail_viewModel.dart';
+
+import '../../../dynamic_size.dart';
 
 class CalendarViewModel extends ChangeNotifier implements TickerProvider {
   DateTime arrivalfocusDay = DateTime.now();
@@ -57,11 +61,6 @@ class CalendarViewModel extends ChangeNotifier implements TickerProvider {
   }
 
   createBooking(Map<String, dynamic> body) {
-    // AppUtil.pushRoute(
-    //   context: Keys.mainNavigatorKey.currentState!.context,
-    //   route: const ProfileView(),
-    // );
-    // log("create booking $body");
-    UserDetailsViewModel.of(listen: false).makePostRequest();
+    UserDetailsViewModel.of(listen: false).makePostRequest(body);
   }
 }

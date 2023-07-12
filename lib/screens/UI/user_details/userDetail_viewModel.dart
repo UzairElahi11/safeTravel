@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/extensions/string.extension.dart';
@@ -22,10 +23,12 @@ import 'package:safe/locator.dart';
 import 'package:safe/screens/UI/calendar/calendar_viewmodel.dart';
 import 'package:safe/screens/UI/disablity/disability_viewmodel.dart';
 
+import '../../../dynamic_size.dart';
 import '../../../model/get_labels.dart';
 import '../../../server_manager/server_manager.dart';
 import '../add_family_members/add_family_members_viewmodel.dart';
 import '../disablity/disablity.dart';
+import '../payment/payment_view.dart';
 
 class UserDetailsViewModel extends ChangeNotifier
     with GetAllLabels, CreateBooking {
@@ -41,8 +44,6 @@ class UserDetailsViewModel extends ChangeNotifier
   List<bool> medicalCheckList = [];
   List<bool> foodAlergiesList = [];
   List<bool> disablitiesList = [];
-
-  Map<String, dynamic> bodyToBePosted = {};
 
   /// these are lists of items where the checkbox are seleted
   List<dynamic> selectedHealthIssueList = [];
@@ -183,7 +184,6 @@ class UserDetailsViewModel extends ChangeNotifier
 
       log("selected is $selectedHealthIssueList");
 
-      List<dynamic> maintingUserDetails = [];
       Map<String, dynamic> memberDetails = {
         "first_name": firstNameController.text.trim(),
         "last_name": lastNameController.text.trim(),
@@ -196,9 +196,9 @@ class UserDetailsViewModel extends ChangeNotifier
         "food_allergies": selectedFoodIssuesList
       };
 
-      maintingUserDetails.add(memberDetails);
+      maintingUserDetails!.add(memberDetails);
 
-      bodyToBePosted = {
+      Map<String, dynamic> bodyToBePosted = {
         "emergency_contact": {
           "name":
               DisabilityViewModel.of(listen: false).nameController.text.trim(),
@@ -215,46 +215,18 @@ class UserDetailsViewModel extends ChangeNotifier
               CalendarViewModel.of(listen: false).formateDepartureDate()
         },
         "family_members": {
-          "adults":
-              "${AddFamilyMembersViewModel.of(listen: false).familyMembersList[0]['numberOfMembers']}",
-          "childrens":
-              "${AddFamilyMembersViewModel.of(listen: false).familyMembersList[1]['numberOfMembers']}",
-          "new_borns":
-              "${AddFamilyMembersViewModel.of(listen: false).familyMembersList[2]['numberOfMembers']}",
+          "adults": familyMembersList[0]['numberOfMembers'],
+          "childrens": familyMembersList[1]['numberOfMembers'],
+          "new_borns": familyMembersList[2]['numberOfMembers'],
           "members": maintingUserDetails
         }
       };
 
-      // debugPrint("data is")
-      // {
-      //   "emergency_contact": {
-      //     "name":
-      //         DisabilityViewModel.of(listen: false).nameController.text.trim(),
-      //     "phone": DisabilityViewModel.of(listen: false)
-      //         .phoneNumberController
-      //         .text
-      //         .trim(),
-      //     "notes":
-      //         DisabilityViewModel.of(listen: false).notesController.text.trim()
-      //   },
-      //   "booking": {
-      //     "arrival": CalendarViewModel.of(listen: false).formateArrivalDate(),
-      //     "departure":
-      //         CalendarViewModel.of(listen: false).formateDepartureDate()
-      //   },
-      //   "family_members": {
-      //     "adults": AddFamilyMembersViewModel.of(listen: false)
-      //         .familyMembersList[0]['numberOfMembers'],
-      //     "childrens": AddFamilyMembersViewModel.of(listen: false)
-      //         .familyMembersList[1]['numberOfMembers'],
-      //     "new_borns": AddFamilyMembersViewModel.of(listen: false)
-      //         .familyMembersList[2]['numberOfMembers'],
-      //     "members": maintingUserDetails
-      //   }
-      // };
+      log("here is th $bodyToBePosted");
 
       notifyListeners();
 
+      log("body to be [osted] :$bodyToBePosted");
       AppUtil.pushRoute(
         context: context,
         route: Disability(
@@ -446,61 +418,50 @@ class UserDetailsViewModel extends ChangeNotifier
         listen: listen);
   }
 
-  Future<void> makePostRequest() async {
+  bool isLoading = false;
+
+  Future<void> makePostRequest(Map<String, dynamic> json) async {
     // final url = Uri.parse('http://staysafema.com/api/create-booking');
     final String valueUrl = "http://staysafema.com/api/create-booking";
-
-    final data = {
-      "emergency_contact": {"name": "", "phone": "", "notes": ""},
-      "booking": {"arrival": "2023/07/11", "departure": "2023/07/11"},
-      "family_members": {
-        "adults": 1,
-        "childrens": 0,
-        "new_borns": 0,
-        "members": [
-          {
-            "first_name": "fff",
-            "last_name": "ggg",
-            "dob": "2023/07/11",
-            "picture": "",
-            "health_conditions": ["medicalallergy1", "medicalallergy2"],
-            "medical_allergies": ["foodallergy1", "foodallergy2"],
-            "disabilities": ["condition1", "condition2"],
-            "health_reports": [],
-            "food_allergies": ["disability4"]
-          }
-        ]
-      }
-    };
-
-    final headers = <String, String>{
-      // 'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $bearerToken!',
-    };
-    log("beatere $bearerToken!");
-    // final response = await http.post(
-    //   url,
-    //   headers: headers,
-    //   body: FormData.fromMap(body),
-    // );
 
     final dio = Dio();
     dio.options.headers['Accept'] = 'application/json';
     dio.options.headers["Authorization"] = "Bearer $bearerToken";
     // print(formData.toString());
-    dio.post(valueUrl, data: data).then((value) {
-      if (value.statusCode == 200) {
-        // Successful request
-        print('Request successful!');
-        print('Response body: ${value.data}');
-      } else {
-        // Request failed
-        print('Request failed with status: ${value.statusCode}');
+    dio.post(valueUrl, data: json).then((value) {
+      try {
+        isLoading = true;
+        notifyListeners();
+
+        if (value.statusCode == 200) {
+          // Successful request
+          debugPrint('Request successful!');
+          debugPrint('Response body: ${value.data}');
+
+          value.data['status'] == 1
+              ? Navigator.of(Keys.mainNavigatorKey.currentState!.context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const PaymentView(),
+                  ),
+                )
+              : null;
+        } else {
+          // Request failed
+          debugPrint('Request failed with status: ${value.statusCode}');
+
+          isLoading = false;
+          notifyListeners();
+        }
+      } catch (e) {
+        debugPrint(e.toString());
+        isLoading = false;
+        notifyListeners();
+      } finally {
+        isLoading = false;
+        notifyListeners();
       }
     });
   }
-
 
   createBookingFunc(
       {required BuildContext context,
@@ -628,3 +589,5 @@ mixin CreateBooking {
     }
   }
 }
+
+List<dynamic> maintingUserDetails = [];

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 import 'package:safe/Utils/app_colors.dart';
 import 'package:safe/Utils/app_text_styles.dart';
 import 'package:safe/Utils/app_util.dart';
@@ -11,7 +12,10 @@ import 'package:safe/screens/UI/calendar/calendar_viewmodel.dart';
 import 'package:safe/screens/UI/payment/payment_view.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../../constants/keys.dart';
+import '../../../dynamic_size.dart';
 import '../../../widgets/calendar/arival_calendar_widget.dart';
+import '../user_details/userDetail_viewModel.dart';
 
 class Calendar extends StatelessWidget {
   static const id = "CALENDAR_SCREEN";
@@ -117,7 +121,30 @@ class Calendar extends StatelessWidget {
                     ),
                     GenericButton(
                       height: 70.h,
-                      onPressed: () => model.createBooking(body),
+                      onPressed: () async {
+                        // model.isLoading
+                        //     ? showDialog(
+                        //         context:
+                        //             Keys.mainNavigatorKey.currentState!.context,
+                        //         barrierDismissible: false,
+                        //         useRootNavigator: true,
+                        //         builder: (context) {
+                        //           return WillPopScope(
+                        //             onWillPop: () async => false,
+                        //             child: Center(
+                        //               child: SizedBox(
+                        //                 height:
+                        //                     DynamicSize.width(0.45, context),
+                        //                 width: DynamicSize.width(0.45, context),
+                        //                 child: Lottie.asset(
+                        //                     "assets/lottie/loader.json"),
+                        //               ),
+                        //             ),
+                        //           );
+                        //         })
+                        //     : SizedBox();
+                        await model.createBooking(body);
+                      },
                       text: LocaleKeys.next,
                       textStyle: AppStyles.mediumBold16.copyWith(
                         color: AppColors.whiteColor,

@@ -48,12 +48,12 @@ class AddFamilyMembers extends StatelessWidget {
                   ),
                   Column(
                     children: List.generate(
-                      model.familyMembersList.length,
+                      familyMembersList.length,
                       (index) => ListTile(
                         minVerticalPadding: 0.0,
                         contentPadding: EdgeInsets.zero,
                         title: GenericText(
-                          "${model.familyMembersList[index]['member']}",
+                          "${familyMembersList[index]['member']}",
                           style: AppStyles.medium20.copyWith(
                             color: AppColors.lightBlackColor,
                           ),
@@ -76,7 +76,7 @@ class AddFamilyMembers extends StatelessWidget {
                                 width: 40.w,
                               ),
                               GenericText(
-                                "${model.familyMembersList[index]['numberOfMembers']}",
+                                "${familyMembersList[index]['numberOfMembers']}",
                                 style: AppStyles.medium20.copyWith(
                                   color: AppColors.blackColor,
                                   fontWeight: FontWeight.w500,

@@ -5,24 +5,6 @@ import 'package:safe/constants/keys.dart';
 import 'package:safe/widgets/dialogBoxAddNewPerson.dart';
 
 class AddFamilyMembersViewModel extends ChangeNotifier {
-  List<Map<String, dynamic>> familyMembersList = [
-    {
-      "member": "Adults",
-      "isChecked": false,
-      "numberOfMembers": 1,
-    },
-    {
-      "member": "Children",
-      "isChecked": false,
-      "numberOfMembers": 0,
-    },
-    {
-      "member": "New Born",
-      "isChecked": false,
-      "numberOfMembers": 0,
-    },
-  ];
-
   static AddFamilyMembersViewModel of({required bool listen}) {
     return Provider.of(Keys.mainNavigatorKey.currentState!.context,
         listen: listen);
@@ -40,7 +22,7 @@ class AddFamilyMembersViewModel extends ChangeNotifier {
           proceedCallBack: () {
             familyMembersList[index]["numberOfMembers"] += 1;
             notifyListeners();
-            int count = 2;
+            int count = 3;
             Navigator.of(context).popUntil((_) => count-- <= 0);
 
             // AppUtil.pushRoute(
@@ -72,3 +54,21 @@ class AddFamilyMembersViewModel extends ChangeNotifier {
     notifyListeners();
   }
 }
+
+List<Map<String, dynamic>> familyMembersList = [
+  {
+    "member": "Adults",
+    "isChecked": false,
+    "numberOfMembers": 1,
+  },
+  {
+    "member": "Children",
+    "isChecked": false,
+    "numberOfMembers": 0,
+  },
+  {
+    "member": "New Born",
+    "isChecked": false,
+    "numberOfMembers": 0,
+  },
+];
