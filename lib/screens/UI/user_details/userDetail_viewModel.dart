@@ -4,6 +4,7 @@ import 'dart:ffi';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -446,7 +447,8 @@ class UserDetailsViewModel extends ChangeNotifier
   }
 
   Future<void> makePostRequest() async {
-    final url = Uri.parse('http://staysafema.com/api/create-booking');
+    // final url = Uri.parse('http://staysafema.com/api/create-booking');
+    final String valueUrl = "http://staysafema.com/api/create-booking";
 
     final data = {
       "emergency_contact": {"name": "", "phone": "", "notes": ""},
@@ -477,21 +479,28 @@ class UserDetailsViewModel extends ChangeNotifier
       'Authorization': 'Bearer $bearerToken!',
     };
     log("beatere $bearerToken!");
-    final response = await http.post(
-      url,
-      headers: headers,
-      body: jsonEncode(data),
-    );
+    // final response = await http.post(
+    //   url,
+    //   headers: headers,
+    //   body: FormData.fromMap(body),
+    // );
 
-    if (response.statusCode == 200) {
-      // Successful request
-      print('Request successful!');
-      print('Response body: ${response.body}');
-    } else {
-      // Request failed
-      print('Request failed with status: ${response.statusCode}');
-    }
+    final dio = Dio();
+    dio.options.headers['Accept'] = 'application/json';
+    dio.options.headers["Authorization"] = "Bearer $bearerToken";
+    // print(formData.toString());
+    dio.post(valueUrl, data: data).then((value) {
+      if (value.statusCode == 200) {
+        // Successful request
+        print('Request successful!');
+        print('Response body: ${value.data}');
+      } else {
+        // Request failed
+        print('Request failed with status: ${value.statusCode}');
+      }
+    });
   }
+
 
   createBookingFunc(
       {required BuildContext context,
@@ -510,20 +519,23 @@ class UserDetailsViewModel extends ChangeNotifier
           if (json != null) {
             debugPrint("Response of booking $json");
 
-            if (json["status"] == 0) {
-              AppUtil.showWarning(
-                context: context,
-                bodyText: json["message"] ?? "",
-                title: "Retry",
-                barrierDismissible: false,
-                handler: (action) {
-                  completion(
-                    false,
-                  );
-                  Navigator.of(context, rootNavigator: true).pop();
-                },
-              );
-            } else {}
+            // if (json["status"] == 0) {
+            //   AppUtil.showWarning(
+            //     context: context,
+            //     bodyText: json["message"] ?? "",
+            //     title: "Retry",
+            //     barrierDismissible: false,
+            //     handler: (action) {
+            //       completion(
+            //         false,
+            //       );
+            //       Navigator.of(context, rootNavigator: true).pop();
+            //     },
+            //   );
+            // } else {}
+            // completion(
+            //   success,
+            // );
             completion(
               success,
             );

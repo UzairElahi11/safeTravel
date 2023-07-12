@@ -63,6 +63,7 @@ dependencies:
   image_picker: ^0.8.9
   #Localization of the whole application
   easy_localization:
+  dio: ^5.2.1+1
 
   #Storing the data locally encrypted
   flutter_secure_storage: ^8.0.0
