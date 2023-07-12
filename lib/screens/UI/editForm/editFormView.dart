@@ -231,17 +231,19 @@ class ProfileView extends StatelessWidget {
                             SizedBox(
                               height: 20.h,
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 50.w),
-                              child: const Text(
-                                "Health Reports",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
+                            model.getEditProfileData.isEmpty
+                                ? SizedBox()
+                                : Padding(
+                                    padding: EdgeInsets.only(left: 50.w),
+                                    child: const Text(
+                                      "Health Reports",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
                             SizedBox(
                               height: 10.h,
                             ),
@@ -281,16 +283,18 @@ class ProfileView extends StatelessWidget {
                       SizedBox(
                         height: 30.h,
                       ),
-                      GenericButton(
-                        height: 80.h,
-                        radius: 12.r,
-                        onPressed: () => model.updateProfile(),
-                        color: AppColors.baseColor,
-                        child: const GenericText(
-                          "Update",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
+                      model.getEditProfileData.isEmpty
+                          ? SizedBox()
+                          : GenericButton(
+                              height: 80.h,
+                              radius: 12.r,
+                              onPressed: () => model.updateProfile(),
+                              color: AppColors.baseColor,
+                              child: const GenericText(
+                                "Update",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
                       SizedBox(
                         height: 30.h,
                       ),
