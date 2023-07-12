@@ -143,7 +143,7 @@ class Calendar extends StatelessWidget {
                         //           );
                         //         })
                         //     : SizedBox();
-                        await model.createBooking(body);
+                        await model.createBooking(body,context);
                       },
                       text: LocaleKeys.next,
                       textStyle: AppStyles.mediumBold16.copyWith(

@@ -100,9 +100,8 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
       {required String email,
       required BuildContext context,
       required String password,
-      required void Function(
-        bool success, int formFillForm
-      ) completion}) {
+      required void Function(bool success, int formFillForm, int isPaymenDone)
+          completion}) {
     loginApiCalling(
         pasword: password,
         email: email,
@@ -121,9 +120,7 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
                 title: "Retry",
                 barrierDismissible: false,
                 handler: (action) {
-                  completion(
-                    false,0
-                  );
+                  completion(false, 0, 0);
                   Navigator.of(context, rootNavigator: true).pop();
                 },
               );
@@ -136,15 +133,14 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
                     loginModel?.data?.name ?? "",
                     loginModel?.data?.email ?? "");
                 if (loginModel?.data?.onTrip == 1) {
-                   completion(
-                success,1
-              );
+                  if (loginModel?.data?.payment == 1) {
+                    completion(success, 1, 1);
+                    return;
                   }
-                    
+                  completion(success, 1, 0);
+                }
               }
-              completion(
-                success,1
-              );
+              completion(success, 0, 0);
 
               log("Token coming from the application ${loginModel!.token}");
 
@@ -156,9 +152,7 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
               title: "Retry",
               barrierDismissible: false,
               handler: (action) {
-                completion(
-                  false,0
-                );
+                completion(false, 0, 0);
                 Navigator.of(context, rootNavigator: true).pop();
               },
             );

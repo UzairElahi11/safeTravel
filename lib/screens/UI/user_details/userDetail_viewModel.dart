@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/extensions/string.extension.dart';
 import 'package:safe/Utils/url_constants.dart';
+import 'package:safe/Utils/user_defaults.dart';
 import 'package:safe/Utils/validator/textformfield_model.dart';
 import 'package:safe/Utils/validator/textformfield_validator.dart';
 import 'package:safe/constants/keys.dart';
@@ -22,6 +23,7 @@ import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/locator.dart';
 import 'package:safe/screens/UI/calendar/calendar_viewmodel.dart';
 import 'package:safe/screens/UI/disablity/disability_viewmodel.dart';
+import 'package:safe/screens/UI/user_details/user_data_manager.dart';
 
 import '../../../dynamic_size.dart';
 import '../../../model/get_labels.dart';
@@ -420,7 +422,8 @@ class UserDetailsViewModel extends ChangeNotifier
 
   bool isLoading = false;
 
-  Future<void> makePostRequest(Map<String, dynamic> json) async {
+  Future<void> makePostRequest(
+      Map<String, dynamic> json, BuildContext context) async {
     // final url = Uri.parse('http://staysafema.com/api/create-booking');
     final String valueUrl = "http://staysafema.com/api/create-booking";
 
@@ -438,14 +441,34 @@ class UserDetailsViewModel extends ChangeNotifier
           debugPrint('Request successful!');
           debugPrint('Response body: ${value.data}');
 
-          value.data['status'] == 1
-              ? Navigator.of(Keys.mainNavigatorKey.currentState!.context)
-                  .pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => const PaymentView(),
-                  ),
-                )
-              : null;
+          if (value.data['status'] == 1) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text("Police"),
+                  content: const Text(
+                      "Police is on way at you current location please wait and and be safe"),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        AppUtil.pop(context: context);
+                      },
+                      child: Text('Cancel'),
+                    ),
+                  ],
+                );
+              },
+            );
+
+            UserDefaults.setIsFormPosted("1");
+            Navigator.of(Keys.mainNavigatorKey.currentState!.context)
+                .pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => const PaymentView(),
+              ),
+            );
+          }
         } else {
           // Request failed
           debugPrint('Request failed with status: ${value.statusCode}');
@@ -469,8 +492,7 @@ class UserDetailsViewModel extends ChangeNotifier
       required Map<String, dynamic> body,
       required void Function(
         bool success,
-      )
-          completion}) {
+      ) completion}) {
     // log
     createBooking(
         context: context,

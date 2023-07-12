@@ -8,6 +8,7 @@ import 'package:safe/Utils/app_text_styles.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/extensions/string.extension.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
+import 'package:safe/screens/UI/dashboard/dashboard.dart';
 import 'package:safe/screens/UI/payment/payment_view.dart';
 import 'package:safe/screens/UI/registration/registration_view.dart';
 import 'package:safe/screens/UI/user_details/userDetails.dart';
@@ -177,21 +178,27 @@ class Login extends StatelessWidget {
                                 email: model.emailController.text,
                                 context: context,
                                 password: model.passwordController.text,
-                                completion: (check, form) {
+                                completion: (check, form, isPayment) {
                                   model.showToaster(context);
-                                  if (form == 1) {
-                                    AppUtil.pushRoute(
-                                      context: context,
-                                      route: const PaymentView(),
-                                    );
-                                  }
                                   if (check) {
-                                    AppUtil.pushRoute(
-                                      context: context,
-                                      route: const UserDetailsView(
-                                        isFromLogin: true,
-                                      ),
-                                    );
+                                    if (form == 1 && isPayment == 1) {
+                                      AppUtil.pushRoute(
+                                        context: context,
+                                        route: const DashboardView(),
+                                      );
+                                    } else if (form == 1 && isPayment == 0) {
+                                      AppUtil.pushRoute(
+                                        context: context,
+                                        route: const PaymentView(),
+                                      );
+                                    } else {
+                                      AppUtil.pushRoute(
+                                        context: context,
+                                        route: const UserDetailsView(
+                                          isFromLogin: true,
+                                        ),
+                                      );
+                                    }
                                   }
                                 });
                           }

@@ -60,7 +60,7 @@ class CalendarViewModel extends ChangeNotifier implements TickerProvider {
         listen: listen);
   }
 
-  createBooking(Map<String, dynamic> body) {
-    UserDetailsViewModel.of(listen: false).makePostRequest(body);
+  createBooking(Map<String, dynamic> body, BuildContext context) {
+    UserDetailsViewModel.of(listen: false).makePostRequest(body, context);
   }
 }
