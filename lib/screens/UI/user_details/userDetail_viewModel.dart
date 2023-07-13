@@ -422,7 +422,7 @@ class UserDetailsViewModel extends ChangeNotifier
   bool isLoading = false;
 
   Future<void> makePostRequest(
-      Map<String, dynamic> json, BuildContext context) async {
+      Map<String, dynamic> json) async {
     // final url = Uri.parse('http://staysafema.com/api/create-booking');
     final String valueUrl = "http://staysafema.com/api/create-booking";
 
@@ -442,7 +442,7 @@ class UserDetailsViewModel extends ChangeNotifier
 
           if (value.data['status'] == 1) {
             showDialog(
-              context: context,
+              context: Keys.mainNavigatorKey.currentState!.context,
               builder: (BuildContext context) {
                 return AlertDialog(
                   title: const Text("Police"),
