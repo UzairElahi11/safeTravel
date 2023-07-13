@@ -22,106 +22,109 @@ class AddFamilyMembers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: ViewModelBuilder<AddFamilyMembersViewModel>.nonReactive(
-          viewModelBuilder: () => AddFamilyMembersViewModel(),
-          builder: (context, model, _) {
-            return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 70.w),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 50.h,
-                  ),
-                  headerWidgetTop(context),
-                  SizedBox(
-                    height: 30.h,
-                  ),
-                  GenericText(LocaleKeys.addFamilyMembers,
-                      style: AppStyles.medium24.copyWith(
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: SafeArea(
+          child: ViewModelBuilder<AddFamilyMembersViewModel>.nonReactive(
+            viewModelBuilder: () => AddFamilyMembersViewModel(),
+            builder: (context, model, _) {
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 70.w),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 50.h,
+                    ),
+                    // headerWidgetTop(context),
+                    SizedBox(
+                      height: 30.h,
+                    ),
+                    GenericText(LocaleKeys.addFamilyMembers,
+                        style: AppStyles.medium24.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                        textAlign: TextAlign.center),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Column(
+                      children: List.generate(
+                        familyMembersList.length,
+                        (index) => ListTile(
+                          minVerticalPadding: 0.0,
+                          contentPadding: EdgeInsets.zero,
+                          title: GenericText(
+                            "${familyMembersList[index]['member']}",
+                            style: AppStyles.medium20.copyWith(
+                              color: AppColors.lightBlackColor,
+                            ),
+                          ),
+                          trailing: SizedBox(
+                            width: 400.w,
+                            child: Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () => model.removeMembers(index),
+                                  child: Container(
+                                    height: 40.h,
+                                    width: 100.w,
+                                    color: AppColors.iconBgColor,
+                                    child:
+                                        const Center(child: Icon(Icons.remove)),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 40.w,
+                                ),
+                                GenericText(
+                                  "${familyMembersList[index]['numberOfMembers']}",
+                                  style: AppStyles.medium20.copyWith(
+                                    color: AppColors.blackColor,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 40.w,
+                                ),
+                                GestureDetector(
+                                  onTap: () => model.addMembers(index, context),
+                                  child: Container(
+                                    height: 40.h,
+                                    width: 100.w,
+                                    color: AppColors.iconBgColor,
+                                    child: const Center(child: Icon(Icons.add)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Spacer(
+                      flex: 4,
+                    ),
+                    GenericButton(
+                      height: 70.h,
+                      onPressed: () {
+                        AppUtil.pushRoute(
+                          context: context,
+                          route: Calendar(body: body),
+                        );
+                      },
+                      text: LocaleKeys.next.translatedString(),
+                      textStyle: AppStyles.mediumBold16.copyWith(
+                        color: AppColors.whiteColor,
                         fontWeight: FontWeight.w600,
                       ),
-                      textAlign: TextAlign.center),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  Column(
-                    children: List.generate(
-                      familyMembersList.length,
-                      (index) => ListTile(
-                        minVerticalPadding: 0.0,
-                        contentPadding: EdgeInsets.zero,
-                        title: GenericText(
-                          "${familyMembersList[index]['member']}",
-                          style: AppStyles.medium20.copyWith(
-                            color: AppColors.lightBlackColor,
-                          ),
-                        ),
-                        trailing: SizedBox(
-                          width: 400.w,
-                          child: Row(
-                            children: [
-                              GestureDetector(
-                                onTap: () => model.removeMembers(index),
-                                child: Container(
-                                  height: 40.h,
-                                  width: 100.w,
-                                  color: AppColors.iconBgColor,
-                                  child:
-                                      const Center(child: Icon(Icons.remove)),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 40.w,
-                              ),
-                              GenericText(
-                                "${familyMembersList[index]['numberOfMembers']}",
-                                style: AppStyles.medium20.copyWith(
-                                  color: AppColors.blackColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 40.w,
-                              ),
-                              GestureDetector(
-                                onTap: () => model.addMembers(index, context),
-                                child: Container(
-                                  height: 40.h,
-                                  width: 100.w,
-                                  color: AppColors.iconBgColor,
-                                  child: const Center(child: Icon(Icons.add)),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
                     ),
-                  ),
-                  const Spacer(
-                    flex: 4,
-                  ),
-                  GenericButton(
-                    height: 70.h,
-                    onPressed: () {
-                      AppUtil.pushRoute(
-                        context: context,
-                        route: Calendar(body: body),
-                      );
-                    },
-                    text: LocaleKeys.next.translatedString(),
-                    textStyle: AppStyles.mediumBold16.copyWith(
-                      color: AppColors.whiteColor,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const Spacer(),
-                ],
-              ),
-            );
-          },
+                    const Spacer(),
+                  ],
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

@@ -201,18 +201,17 @@ class UserDetailsViewModel extends ChangeNotifier
       Map<String, dynamic> bodyToBePosted = {
         "emergency_contact": {
           "name":
-              DisabilityViewModel.of(listen: false).nameController.text.trim(),
-          "phone": DisabilityViewModel.of(listen: false)
-              .phoneNumberController
+             nameController.text.trim(),
+          "phone": 
+              phoneNumberController
               .text
               .trim(),
           "notes":
-              DisabilityViewModel.of(listen: false).notesController.text.trim()
+             notesController.text.trim()
         },
         "booking": {
-          "arrival": CalendarViewModel.of(listen: false).formateArrivalDate(),
-          "departure":
-              CalendarViewModel.of(listen: false).formateDepartureDate()
+          "arrival": CalendarViewModel.of(listen: false).arrivalfocusDay,
+          "departure": CalendarViewModel.of(listen: false).departureFocusDay
         },
         "family_members": {
           "adults": familyMembersList[0]['numberOfMembers'],
@@ -231,7 +230,7 @@ class UserDetailsViewModel extends ChangeNotifier
         context: context,
         route: Disability(
           isFromLogin: isFromLogin,
-          body: bodyToBePosted,
+          body: memberDetails,
         ),
       );
     }
@@ -440,11 +439,11 @@ class UserDetailsViewModel extends ChangeNotifier
 
           value.data['status'] == 1
               ? Navigator.of(Keys.mainNavigatorKey.currentState!.context)
-                  .pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => const PaymentView(),
-                  ),
-                )
+                  .pushAndRemoveUntil(
+                      MaterialPageRoute(
+                        builder: (context) => const PaymentView(),
+                      ),
+                      (Route<dynamic> route) => false)
               : null;
         } else {
           // Request failed
