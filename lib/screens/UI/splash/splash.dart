@@ -11,7 +11,9 @@ import 'package:safe/Utils/permission_handler_helper_model.dart';
 import 'package:safe/Utils/user_defaults.dart';
 import 'package:safe/locator.dart';
 import 'package:safe/screens/UI/Welcome/welcome.dart';
+import 'package:safe/screens/UI/dashboard/dashboard.dart';
 import 'package:safe/screens/UI/login/login.dart';
+import 'package:safe/screens/UI/payment/payment_view.dart';
 import 'package:safe/screens/UI/user_details/user_data_manager.dart';
 
 import '../user_details/userDetails.dart';
@@ -72,6 +74,8 @@ class _SplashState extends State<Splash> {
                 .readSecureStorage(AppUtil.isTermsAndConditionsAccepted);
 
             final val = await UserDefaults.getToken();
+            final payment = await UserDefaults.getPayment();
+            final isForm = await UserDefaults.getIsForm();
             if (val != null) {
               bearerToken = val;
             }
@@ -79,19 +83,35 @@ class _SplashState extends State<Splash> {
             log("value is $val");
 
             if (mounted) {
-              val == null
-                  ? AppUtil.pushRoute(
-                      pushReplacement: true,
-                      context: context,
-                      route: const Login(),
-                    )
-                  : AppUtil.pushRoute(
-                      pushReplacement: true,
-                      context: context,
-                      route: const UserDetailsView(
-                        isFromLogin: true,
-                      ),
-                    );
+              if (val == null) {
+                AppUtil.pushRoute(
+                  pushReplacement: true,
+                  context: context,
+                  route: const Welcome(),
+                );
+              } else {
+                if (isForm == null && payment == null) {
+                  AppUtil.pushRoute(
+                    pushReplacement: true,
+                    context: context,
+                    route: const UserDetailsView(
+                      isFromLogin: true,
+                    ),
+                  );
+                } else if (isForm != null) {
+                  AppUtil.pushRoute(
+                    pushReplacement: true,
+                    context: context,
+                    route: const PaymentView(),
+                  );
+                } else {
+                  AppUtil.pushRoute(
+                    pushReplacement: true,
+                    context: context,
+                    route: const DashboardView(),
+                  );
+                }
+              }
             }
           },
         );

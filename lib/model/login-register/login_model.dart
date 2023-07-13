@@ -37,6 +37,7 @@ class Data {
   int? onTrip;
   String? createdAt;
   String? updatedAt;
+  int? payment;
 
   Data(
       {this.id,
@@ -49,6 +50,7 @@ class Data {
       this.google,
       this.onTrip,
       this.createdAt,
+      this.payment,
       this.updatedAt});
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -63,6 +65,7 @@ class Data {
     onTrip = json['on_trip'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    payment = json["payment"];
   }
 
   Map<String, dynamic> toJson() {

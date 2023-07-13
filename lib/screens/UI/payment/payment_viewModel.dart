@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:safe/Utils/app_util.dart';
+import 'package:safe/Utils/user_defaults.dart';
 import 'package:safe/screens/UI/dashboard/dashboard.dart';
 import 'package:safe/screens/UI/payment/carValidation.dart';
 import 'package:safe/server_manager/server_manager.dart';
@@ -26,6 +27,7 @@ class PaymentViewModel with ChangeNotifier, paymentApiCallingClass {
           context: context,
           completion: (success) {
             if (success) {
+              UserDefaults.setPayment("1");
               showToaster(context);
               AppUtil.pushRoute(
                   pushReplacement: true,
@@ -48,8 +50,7 @@ class PaymentViewModel with ChangeNotifier, paymentApiCallingClass {
       {required BuildContext context,
       required void Function(
         bool success,
-      )
-          completion}) {
+      ) completion}) {
     paymentApiCalling(
         cardNumber: cardNumberController.text,
         cvv: cvvController.text,
@@ -137,6 +138,8 @@ mixin paymentApiCallingClass {
             }
             callBack(false, null);
           }
+        } else {
+          AppUtil.pushRoute(context: context, route: DashboardView());
         }
       });
     }

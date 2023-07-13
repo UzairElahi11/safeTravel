@@ -413,7 +413,7 @@ class ServerManager {
   static void payment(String cardNumber, String cvv, String expDate,
       ResponseCompletion completion) {
     Map<String, dynamic> json = {
-      "card_number": cardNumber,
+      "card_number": cardNumber.replaceAll("  ", ""),
       "cvv": cvv,
       "expiry": expDate,
     };

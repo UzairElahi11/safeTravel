@@ -11,7 +11,22 @@ class UserDefaults {
     bearerToken = token;
     return token;
   }
-
+    static setPayment(String payment) async {
+    SharedPreferences sharedPreferencesSet =
+        await SharedPreferences.getInstance();
+    sharedPreferencesSet.setString(isPayment, payment);
+    bearerToken = payment;
+    return payment;
+  }
+  
+    static setIsFormPosted(String payment) async {
+    SharedPreferences sharedPreferencesSet =
+        await SharedPreferences.getInstance();
+    sharedPreferencesSet.setString(isFormPosted, payment);
+    bearerToken = payment;
+    return payment;
+  }
+  
   //SAVE THE User Name and email
   static setEmailAndUserName(String name, String emaill) async {
     SharedPreferences sharedPreferencesSet =
@@ -30,6 +45,20 @@ class UserDefaults {
     final getToken = sharedPreferencesGet.getString(loginTokenKey);
     return getToken;
   }
+    //GET THE TOKEN FROM THE LOCAL STORAGE
+  static getPayment<String>() async {
+    SharedPreferences sharedPreferencesGet =
+        await SharedPreferences.getInstance();
+    final getToken = sharedPreferencesGet.getString(isPayment);
+    return getToken;
+  }
+   static getIsForm<String>() async {
+    SharedPreferences sharedPreferencesGet =
+        await SharedPreferences.getInstance();
+    final getToken = sharedPreferencesGet.getString(isFormPosted);
+    return getToken;
+  }
+
 
   //GET THE email FROM THE LOCAL STORAGE
   static getEmail<String>() async {
