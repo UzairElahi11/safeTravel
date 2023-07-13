@@ -12,7 +12,7 @@ class ProfileViewModel with ChangeNotifier, ApiCalling, UpdateBooking {
   List<List<bool>> checkboxStates = [];
   List<dynamic> savingTheListsDataFromDataObject = [];
 
-  List<String> listOfKeys = [];
+  List<dynamic> listOfKeys = [];
 
   List<dynamic> updatedHealthConditionsList = [];
   List<String> updatedFoodConditionsList = [];
@@ -187,15 +187,16 @@ class ProfileViewModel with ChangeNotifier, ApiCalling, UpdateBooking {
 
               List<dynamic> dataList = getEditProfileData['data'];
 
-              for (var i in dataList) {
-                if (i is Map<String, dynamic>) {
-                  i.forEach((key, value) {
-                    if (value is List) {
-                      savingTheListsDataFromDataObject.add(value);
-                      listOfKeys.add(key);
-                    }
-                  });
-                }
+              if (dataList[0] is Map<String, dynamic>) {
+                dataList[0].forEach((key, value) {
+                  if (value is List) {
+                    savingTheListsDataFromDataObject.add(value);
+
+                    listOfKeys.add(key);
+
+                    log("memebers are $savingTheListsDataFromDataObject");
+                  }
+                });
               }
 
               for (int i = 0;
@@ -223,6 +224,10 @@ class ProfileViewModel with ChangeNotifier, ApiCalling, UpdateBooking {
             );
           }
         });
+
+    savingTheListsDataFromDataObject
+        .removeAt(savingTheListsDataFromDataObject.last);
+    listOfKeys.removeAt(listOfKeys.last);
   }
 
   addItem(

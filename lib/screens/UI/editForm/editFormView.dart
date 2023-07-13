@@ -65,157 +65,198 @@ class ProfileView extends StatelessWidget {
                         height: 20.h,
                       ),
                       ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount:
-                              model.savingTheListsDataFromDataObject.length,
-                          itemBuilder: (context, index) => SizedBox(
-                                child: Card(
-                                  elevation: 0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  color: AppColors.containerBgColor,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        height: 20.h,
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 50.w),
-                                        child: Text(
-                                          model.firstLetterUpperCase(index),
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 16,
-                                          ),
+                        physics: const ClampingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: 1,
+                        itemBuilder: (context, index) => Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 30.h,
+                            ),
+                            GenericText(
+                              "Member Name: ${model.getEditProfileData['data'][0]['first_name']} ${model.getEditProfileData['data'][0]['last_name']}",
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18),
+                            ),
+                            SizedBox(
+                              height: 20.h,
+                            ),
+                            ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: model
+                                    .savingTheListsDataFromDataObject.length-1,
+                                itemBuilder: (context, index) => SizedBox(
+                                      child: Card(
+                                        elevation: 0,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                         ),
-                                      ),
-                                      GridView.builder(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 30.w),
-                                          physics:
-                                              const ClampingScrollPhysics(),
-                                          shrinkWrap: true,
-                                          itemCount: model
-                                              .savingTheListsDataFromDataObject[
-                                                  index]
-                                              .length,
-                                          gridDelegate:
-                                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                                  childAspectRatio: 16 / 4,
-                                                  crossAxisCount: 2),
-                                          itemBuilder: (context, innerIndex) {
-                                            return Row(
-                                              children: [
-                                                GenericCheckBox(
-                                                  visualDensity:
-                                                      VisualDensity.compact,
-                                                  value: model
-                                                          .checkboxStates[index]
-                                                      [innerIndex],
-                                                  onChanged: (value) {
-                                                    model.updateCheckboxState(
-                                                        index,
-                                                        innerIndex,
-                                                        value!);
-                                                  },
-                                                ),
-                                                SizedBox(width: 10.w),
-                                                Text(model
-                                                        .savingTheListsDataFromDataObject[
-                                                    index][innerIndex]),
-                                              ],
-                                            );
-                                          }),
-                                      SizedBox(
-                                        height: 20.h,
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 50.w),
-                                        child: GenericButton(
-                                          width: 400.w,
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 20.w),
-                                          onPressed: () {
-                                            showDialog(
-                                              context: context,
-                                              builder: (context) => Dialog(
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          12.r),
-                                                ),
-                                                child: ClipRRect(
-                                                  child: Container(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 40.w),
-                                                    height: 200.h,
-                                                    width: 400.w,
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        GenericTextField(
-                                                            hintText:
-                                                                "Add new items",
-                                                            filled: true,
-                                                            fillColor: AppColors
-                                                                .containerBgColor,
-                                                            controller: model
-                                                                .addItemsController),
-                                                        SizedBox(
-                                                          height: 20.h,
-                                                        ),
-                                                        GenericButton(
-                                                          height: 80.h,
-                                                          radius: 12.r,
-                                                          onPressed: () => model
-                                                              .addItem(index),
-                                                          color: AppColors
-                                                              .baseColor,
-                                                          child:
-                                                              const GenericText(
-                                                            "Add",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
+                                        color: AppColors.containerBgColor,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              height: 20.h,
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  EdgeInsets.only(left: 50.w),
+                                              child: Text(
+                                                model.firstLetterUpperCase(
+                                                    index),
+                                                style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 16,
                                                 ),
                                               ),
-                                            );
-                                          },
-                                          leading: GenericIcon(
-                                            icon: Icons.add,
-                                            color: AppColors.whiteColor,
-                                          ),
-                                          text: LocaleKeys.add,
-                                          borderRadius: 8,
-                                          textStyle:
-                                              AppStyles.medium14.copyWith(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 14,
-                                            color: AppColors.whiteColor,
-                                          ),
+                                            ),
+                                            GridView.builder(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 30.w),
+                                                physics:
+                                                    const ClampingScrollPhysics(),
+                                                shrinkWrap: true,
+                                                itemCount: model
+                                                    .savingTheListsDataFromDataObject[
+                                                        index]
+                                                    .length,
+                                                gridDelegate:
+                                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                                        childAspectRatio:
+                                                            16 / 9,
+                                                        crossAxisCount: 2),
+                                                itemBuilder:
+                                                    (context, innerIndex) {
+                                                  return Row(
+                                                    children: [
+                                                      GenericCheckBox(
+                                                        visualDensity:
+                                                            VisualDensity
+                                                                .compact,
+                                                        value: model
+                                                                .checkboxStates[
+                                                            index][innerIndex],
+                                                        onChanged: (value) {
+                                                          model
+                                                              .updateCheckboxState(
+                                                                  index,
+                                                                  innerIndex,
+                                                                  value!);
+                                                        },
+                                                      ),
+                                                      SizedBox(width: 10.w),
+                                                      Expanded(
+                                                        child: Text(
+                                                          model.savingTheListsDataFromDataObject[
+                                                                  index]
+                                                              [innerIndex],
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  );
+                                                }),
+                                            SizedBox(
+                                              height: 20.h,
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 50.w),
+                                              child: GenericButton(
+                                                width: 400.w,
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 20.w),
+                                                onPressed: () {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        Dialog(
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12.r),
+                                                      ),
+                                                      child: ClipRRect(
+                                                        child: Container(
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                                  horizontal:
+                                                                      40.w),
+                                                          height: 200.h,
+                                                          width: 400.w,
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              GenericTextField(
+                                                                  hintText:
+                                                                      "Add new items",
+                                                                  filled: true,
+                                                                  fillColor:
+                                                                      AppColors
+                                                                          .containerBgColor,
+                                                                  controller: model
+                                                                      .addItemsController),
+                                                              SizedBox(
+                                                                height: 20.h,
+                                                              ),
+                                                              GenericButton(
+                                                                height: 80.h,
+                                                                radius: 12.r,
+                                                                onPressed: () =>
+                                                                    model.addItem(
+                                                                        index),
+                                                                color: AppColors
+                                                                    .baseColor,
+                                                                child:
+                                                                    const GenericText(
+                                                                  "Add",
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white),
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                                leading: GenericIcon(
+                                                  icon: Icons.add,
+                                                  color: AppColors.whiteColor,
+                                                ),
+                                                text: LocaleKeys.add,
+                                                borderRadius: 8,
+                                                textStyle:
+                                                    AppStyles.medium14.copyWith(
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 14,
+                                                  color: AppColors.whiteColor,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 20.h,
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      SizedBox(
-                                        height: 20.h,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              )),
+                                    )),
+                          ],
+                        ),
+                      ),
                       SizedBox(
                         height: 30.h,
                       ),
@@ -232,7 +273,7 @@ class ProfileView extends StatelessWidget {
                               height: 20.h,
                             ),
                             model.getEditProfileData.isEmpty
-                                ? SizedBox()
+                                ? const SizedBox()
                                 : Padding(
                                     padding: EdgeInsets.only(left: 50.w),
                                     child: const Text(
