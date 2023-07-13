@@ -21,9 +21,7 @@ class DisabilityViewModel extends ChangeNotifier {
   ];
 
   //Textediting controllers
-  TextEditingController nameController = TextEditingController();
-  TextEditingController phoneNumberController = TextEditingController();
-  TextEditingController notesController = TextEditingController();
+
 
   //Error text for the fields
   String? nameError;
@@ -83,6 +81,9 @@ class DisabilityViewModel extends ChangeNotifier {
 
   navigate(BuildContext context , Map<String , dynamic> body) {
     if (validate()) {
+
+
+      
       AppUtil.pushRoute(
         context: context,
         route:  AddFamilyMembers(body :body ),
@@ -95,3 +96,8 @@ class DisabilityViewModel extends ChangeNotifier {
         listen: listen);
   }
 }
+
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController notesController = TextEditingController();

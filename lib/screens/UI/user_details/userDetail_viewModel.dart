@@ -203,18 +203,17 @@ class UserDetailsViewModel extends ChangeNotifier
       Map<String, dynamic> bodyToBePosted = {
         "emergency_contact": {
           "name":
-              DisabilityViewModel.of(listen: false).nameController.text.trim(),
-          "phone": DisabilityViewModel.of(listen: false)
-              .phoneNumberController
+             nameController.text.trim(),
+          "phone": 
+              phoneNumberController
               .text
               .trim(),
           "notes":
-              DisabilityViewModel.of(listen: false).notesController.text.trim()
+             notesController.text.trim()
         },
         "booking": {
-          "arrival": CalendarViewModel.of(listen: false).formateArrivalDate(),
-          "departure":
-              CalendarViewModel.of(listen: false).formateDepartureDate()
+          "arrival": CalendarViewModel.of(listen: false).arrivalfocusDay,
+          "departure": CalendarViewModel.of(listen: false).departureFocusDay
         },
         "family_members": {
           "adults": familyMembersList[0]['numberOfMembers'],
@@ -233,7 +232,7 @@ class UserDetailsViewModel extends ChangeNotifier
         context: context,
         route: Disability(
           isFromLogin: isFromLogin,
-          body: bodyToBePosted,
+          body: memberDetails,
         ),
       );
     }
@@ -423,7 +422,7 @@ class UserDetailsViewModel extends ChangeNotifier
   bool isLoading = false;
 
   Future<void> makePostRequest(
-      Map<String, dynamic> json, BuildContext context) async {
+      Map<String, dynamic> json) async {
     // final url = Uri.parse('http://staysafema.com/api/create-booking');
     final String valueUrl = "http://staysafema.com/api/create-booking";
 
@@ -443,7 +442,7 @@ class UserDetailsViewModel extends ChangeNotifier
 
           if (value.data['status'] == 1) {
             showDialog(
-              context: context,
+              context: Keys.mainNavigatorKey.currentState!.context,
               builder: (BuildContext context) {
                 return AlertDialog(
                   title: const Text("Police"),
