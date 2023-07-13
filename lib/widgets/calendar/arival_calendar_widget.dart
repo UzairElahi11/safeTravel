@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safe/Utils/app_colors.dart';
 import 'package:safe/Utils/app_text_styles.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -32,6 +33,7 @@ class _ArrivalCalendarState extends State<ArrivalCalendar> {
           ),
           titleCentered: true),
       calendarStyle: CalendarStyle(
+
         outsideDecoration: BoxDecoration(color: AppColors.blackColor),
         weekendTextStyle: AppStyles.small12.copyWith(
           color: AppColors.redColor,
@@ -57,7 +59,7 @@ class _ArrivalCalendarState extends State<ArrivalCalendar> {
       lastDay: DateTime(2050),
       calendarFormat: CalendarFormat.month,
       startingDayOfWeek: StartingDayOfWeek.sunday,
-      rowHeight: 60.0,
+    rowHeight: 45.0,
       onDaySelected: (selectedDay, focusedDay) {
         setState(() {
           widget.focusDay = focusedDay;

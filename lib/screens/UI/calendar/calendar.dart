@@ -67,7 +67,8 @@ class Calendar extends StatelessWidget {
                             Card(
                               shadowColor:
                                   AppColors.blackColor.withOpacity(0.25),
-                              margin: const EdgeInsets.all(8.0),
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 2),
                               elevation: 5.0,
                               shape: const RoundedRectangleBorder(
                                 borderRadius: BorderRadius.all(
@@ -155,9 +156,9 @@ class Calendar extends StatelessWidget {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      // SizedBox(
-                      //   height: 60.h,
-                      // ),
+                      SizedBox(
+                        height: 60.h,
+                      ),
                     ],
                   );
                 }),
