@@ -77,7 +77,7 @@ class _SplashState extends State<Splash> {
             final payment = await UserDefaults.getPayment();
             final isForm = await UserDefaults.getIsForm();
 
-            log("is form $payment");
+            log("is form $isForm");
             if (val != null) {
               bearerToken = val;
             }
@@ -91,8 +91,9 @@ class _SplashState extends State<Splash> {
                   context: context,
                   route: const Welcome(),
                 );
-              } else {
-                if (isForm == null && payment == null && val !=null) {
+              }
+              if (val != null) {
+                if (isForm == null && payment == null) {
                   AppUtil.pushRoute(
                     pushReplacement: true,
                     context: context,
@@ -100,18 +101,20 @@ class _SplashState extends State<Splash> {
                       isFromLogin: true,
                     ),
                   );
-                } else if (isForm == 1 && payment != 1 && val !=null ) {
+                } else if (isForm == '1' && payment == null) {
                   AppUtil.pushRoute(
                     pushReplacement: true,
                     context: context,
                     route: const PaymentView(),
                   );
-                } else {
+                } else if (payment == '1') {
                   AppUtil.pushRoute(
                     pushReplacement: true,
                     context: context,
                     route: const DashboardView(),
                   );
+                } else {
+                  log("where??");
                 }
               }
             }

@@ -202,14 +202,9 @@ class UserDetailsViewModel extends ChangeNotifier
 
       Map<String, dynamic> bodyToBePosted = {
         "emergency_contact": {
-          "name":
-             nameController.text.trim(),
-          "phone": 
-              phoneNumberController
-              .text
-              .trim(),
-          "notes":
-             notesController.text.trim()
+          "name": nameController.text.trim(),
+          "phone": phoneNumberController.text.trim(),
+          "notes": notesController.text.trim()
         },
         "booking": {
           "arrival": CalendarViewModel.of(listen: false).arrivalfocusDay,
@@ -421,8 +416,7 @@ class UserDetailsViewModel extends ChangeNotifier
 
   bool isLoading = false;
 
-  Future<void> makePostRequest(
-      Map<String, dynamic> json) async {
+  Future<void> makePostRequest(Map<String, dynamic> json) async {
     // final url = Uri.parse('http://staysafema.com/api/create-booking');
     final String valueUrl = "http://staysafema.com/api/create-booking";
 
@@ -430,7 +424,7 @@ class UserDetailsViewModel extends ChangeNotifier
     dio.options.headers['Accept'] = 'application/json';
     dio.options.headers["Authorization"] = "Bearer $bearerToken";
     // print(formData.toString());
-    dio.post(valueUrl, data: json).then((value) {
+    dio.post(valueUrl, data: json).then((value) async {
       try {
         isLoading = true;
         notifyListeners();
@@ -460,7 +454,7 @@ class UserDetailsViewModel extends ChangeNotifier
               },
             );
 
-            UserDefaults.setIsFormPosted("1");
+            await UserDefaults.setIsFormPosted("1");
             Navigator.of(Keys.mainNavigatorKey.currentState!.context)
                 .pushReplacement(
               MaterialPageRoute(
@@ -491,7 +485,8 @@ class UserDetailsViewModel extends ChangeNotifier
       required Map<String, dynamic> body,
       required void Function(
         bool success,
-      ) completion}) {
+      )
+          completion}) {
     // log
     createBooking(
         context: context,
