@@ -15,7 +15,7 @@ class UserDefaults {
     SharedPreferences sharedPreferencesSet =
         await SharedPreferences.getInstance();
     sharedPreferencesSet.setString(isPayment, payment);
-    bearerToken = payment;
+    // bearerToken = payment;
     return payment;
   }
   
@@ -23,7 +23,7 @@ class UserDefaults {
     SharedPreferences sharedPreferencesSet =
         await SharedPreferences.getInstance();
     sharedPreferencesSet.setString(isFormPosted, payment);
-    bearerToken = payment;
+    // bearerToken = payment;
     return payment;
   }
   
