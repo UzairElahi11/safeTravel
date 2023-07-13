@@ -75,7 +75,9 @@ class ProfileView extends StatelessWidget {
                               height: 30.h,
                             ),
                             GenericText(
-                              "Member Name: ${model.getEditProfileData['data'][0]['first_name']} ${model.getEditProfileData['data'][0]['last_name']}",
+                              model.getEditProfileData.isNotEmpty
+                                  ? "Member Name: ${model.getEditProfileData['data'][0]['first_name']} ${model.getEditProfileData['data'][0]['last_name']}"
+                                  : "",
                               style: const TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w500,
@@ -88,7 +90,12 @@ class ProfileView extends StatelessWidget {
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: model
-                                    .savingTheListsDataFromDataObject.length-1,
+                                        .savingTheListsDataFromDataObject
+                                        .isEmpty
+                                    ? 0
+                                    : model.savingTheListsDataFromDataObject
+                                            .length -
+                                        1,
                                 itemBuilder: (context, index) => SizedBox(
                                       child: Card(
                                         elevation: 0,

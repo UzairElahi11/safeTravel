@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/user_defaults.dart';
@@ -13,28 +15,35 @@ class PaymentViewModel with ChangeNotifier, paymentApiCallingClass {
   String? cvvValidator;
   String? expValidator;
 
-  validator(BuildContext context) {
+  validator(BuildContext context) async {
     expValidator = CardUtils.validateDate(expController.text);
     cardNumberValidator = CardUtils.validateCardNum(cardNumberController.text);
     cvvValidator = CardUtils.validateCVV(cvvController.text);
-    if (!(expValidator != null &&
-        expValidator!.isNotEmpty &&
-        cvvValidator != null &&
-        expValidator!.isNotEmpty &&
-        expValidator != null &&
-        expValidator!.isNotEmpty)) {
+    if (expValidator != 'This field is required' &&
+        expValidator != 'Expiry month is invalid' &&
+        expValidator != 'Expiry year is invalid' &&
+        expValidator != 'Card has expired' &&
+        cvvValidator != 'CVV is invalid' &&
+        cvvValidator != 'This field is required' &&
+        cardNumberValidator != 'This field is required' &&
+        cardNumberValidator != 'Card is invalid') {
+      log("message is $expValidator");
       payment(
           context: context,
-          completion: (success) {
+          completion: (success) async {
             if (success) {
-              UserDefaults.setPayment("1");
+              await UserDefaults.setPayment("1");
+              // ignore: use_build_context_synchronously
               showToaster(context);
+              // ignore: use_build_context_synchronously
               AppUtil.pushRoute(
                   pushReplacement: true,
                   context: context,
                   route: const DashboardView());
             }
           });
+    } else {
+      log("no valid");
     }
 
     notifyListeners();
@@ -50,7 +59,8 @@ class PaymentViewModel with ChangeNotifier, paymentApiCallingClass {
       {required BuildContext context,
       required void Function(
         bool success,
-      ) completion}) {
+      )
+          completion}) {
     paymentApiCalling(
         cardNumber: cardNumberController.text,
         cvv: cvvController.text,

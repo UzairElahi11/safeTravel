@@ -76,6 +76,8 @@ class _SplashState extends State<Splash> {
             final val = await UserDefaults.getToken();
             final payment = await UserDefaults.getPayment();
             final isForm = await UserDefaults.getIsForm();
+
+            log("is form $payment");
             if (val != null) {
               bearerToken = val;
             }
@@ -90,7 +92,7 @@ class _SplashState extends State<Splash> {
                   route: const Welcome(),
                 );
               } else {
-                if (isForm == null && payment == null) {
+                if (isForm == null && payment == null && val !=null) {
                   AppUtil.pushRoute(
                     pushReplacement: true,
                     context: context,
@@ -98,7 +100,7 @@ class _SplashState extends State<Splash> {
                       isFromLogin: true,
                     ),
                   );
-                } else if (isForm != null) {
+                } else if (isForm == 1 && payment != 1 && val !=null ) {
                   AppUtil.pushRoute(
                     pushReplacement: true,
                     context: context,
