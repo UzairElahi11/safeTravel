@@ -51,7 +51,7 @@ class PaymentViewModel with ChangeNotifier, paymentApiCallingClass {
 
   void showToaster(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text("Payment Successful}"),
+      content: Text("Payment Successful"),
     ));
   }
 

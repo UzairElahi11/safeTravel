@@ -205,7 +205,7 @@ class PaymentView extends StatelessWidget {
                                       
                                       FilteringTextInputFormatter.digitsOnly,
                                       // Limit the input
-                                      LengthLimitingTextInputFormatter(4),
+                                      LengthLimitingTextInputFormatter(3),
                                     ],
                                     // contentPadding: EdgeInsets.symmetric(vertical: 20.h),
                                   ),

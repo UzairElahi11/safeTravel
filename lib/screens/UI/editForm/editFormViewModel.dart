@@ -90,6 +90,7 @@ class ProfileViewModel with ChangeNotifier, ApiCalling, UpdateBooking {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       getProfileForm(context: context, completion: (success) {});
     });
+
   }
 
   void showToasterPolice(BuildContext context) {
@@ -187,16 +188,18 @@ class ProfileViewModel with ChangeNotifier, ApiCalling, UpdateBooking {
 
               List<dynamic> dataList = getEditProfileData['data'];
 
-              if (dataList[0] is Map<String, dynamic>) {
-                dataList[0].forEach((key, value) {
-                  if (value is List) {
-                    savingTheListsDataFromDataObject.add(value);
+              if (dataList.isNotEmpty) {
+                if (dataList[0] is Map<String, dynamic>) {
+                  dataList[0].forEach((key, value) {
+                    if (value is List) {
+                      savingTheListsDataFromDataObject.add(value);
 
-                    listOfKeys.add(key);
+                      listOfKeys.add(key);
 
-                    log("memebers are $savingTheListsDataFromDataObject");
-                  }
-                });
+                      log("memebers are $savingTheListsDataFromDataObject");
+                    }
+                  });
+                }
               }
 
               for (int i = 0;
@@ -225,9 +228,11 @@ class ProfileViewModel with ChangeNotifier, ApiCalling, UpdateBooking {
           }
         });
 
-    savingTheListsDataFromDataObject
-        .removeAt(savingTheListsDataFromDataObject.last);
-    listOfKeys.removeAt(listOfKeys.last);
+    if (savingTheListsDataFromDataObject.isNotEmpty) {
+      savingTheListsDataFromDataObject
+          .removeAt(savingTheListsDataFromDataObject.last);
+      listOfKeys.removeAt(listOfKeys.last);
+    }
   }
 
   addItem(
@@ -258,7 +263,7 @@ class ProfileViewModel with ChangeNotifier, ApiCalling, UpdateBooking {
   }
 
   void updateCheckboxState(int index, int innerIndex, bool value) {
-    checkboxStates[index][innerIndex] = value!;
+    checkboxStates[index][innerIndex] = value;
 
     notifyListeners();
   }
