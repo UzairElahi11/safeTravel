@@ -1,20 +1,26 @@
 import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:safe/constants/keys.dart';
-import 'package:safe/screens/UI/user_details/userDetail_viewModel.dart';
 
+import '../../../Utils/app_util.dart';
+import '../../../Utils/user_defaults.dart';
 import '../add_family_members/add_family_members_viewmodel.dart';
 import '../disablity/disability_viewmodel.dart';
+import '../payment/payment_view.dart';
+import '../user_details/userDetail_viewModel.dart';
 
 class CalendarViewModel extends ChangeNotifier implements TickerProvider {
   DateTime arrivalfocusDay = DateTime.now();
   DateTime departureFocusDay = DateTime.now().add(
     const Duration(days: 1),
   );
+
+  bool isloading = false;
 
   late TabController _tabController;
   bool switchValue = false;
@@ -59,16 +65,14 @@ class CalendarViewModel extends ChangeNotifier implements TickerProvider {
         listen: listen);
   }
 
-  createBooking(Map<String, dynamic> body) {
+  createBooking(Map<String, dynamic> body) async {
+    isloading = true;
+    notifyListeners();
     Map<String, dynamic> bodyToBePosted = {
       "emergency_contact": {
-        "name":
-          nameController.text.trim(),
-        "phone":phoneNumberController
-            .text
-            .trim(),
-        "notes":
-           notesController.text.trim()
+        "name": nameController.text.trim(),
+        "phone": phoneNumberController.text.trim(),
+        "notes": notesController.text.trim()
       },
       "booking": {
         "arrival": DateFormat('yyyy/MM/dd').format(arrivalfocusDay),
@@ -82,6 +86,63 @@ class CalendarViewModel extends ChangeNotifier implements TickerProvider {
       }
     };
     log("body to be posted is $bodyToBePosted");
-    UserDetailsViewModel.of(listen: false).makePostRequest(bodyToBePosted);
+
+    const String valueUrl = "http://staysafema.com/api/create-booking";
+
+    final dio = Dio();
+    dio.options.headers['Accept'] = 'application/json';
+    dio.options.headers["Authorization"] = "Bearer $bearerToken";
+    // print(formData.toString());
+    dio.post(valueUrl, data: bodyToBePosted).then((value) async {
+      try {
+        if (value.statusCode == 200) {
+          // Successful request
+          debugPrint('Request successful!');
+          debugPrint('Response body: ${value.data}');
+
+          if (value.data['status'] == 1) {
+            showDialog(
+              context: Keys.mainNavigatorKey.currentState!.context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text("Police"),
+                  content: const Text(
+                      "Police is on way at you current location please wait and and be safe"),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        AppUtil.pop(context: context);
+                      },
+                      child: const Text('Cancel'),
+                    ),
+                  ],
+                );
+              },
+            );
+
+            await UserDefaults.setIsFormPosted("1");
+            Navigator.of(Keys.mainNavigatorKey.currentState!.context)
+                .pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => const PaymentView(),
+              ),
+            );
+          }
+        } else {
+          // Request failed
+          debugPrint('Request failed with status: ${value.statusCode}');
+
+          isloading = false;
+          notifyListeners();
+        }
+      } catch (e) {
+        debugPrint(e.toString());
+        isloading = false;
+        notifyListeners();
+      } finally {
+        isloading = false;
+        notifyListeners();
+      }
+    });
   }
 }

@@ -1,20 +1,15 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:ffi';
 import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
-import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/extensions/string.extension.dart';
-import 'package:safe/Utils/url_constants.dart';
 import 'package:safe/Utils/user_defaults.dart';
 import 'package:safe/Utils/validator/textformfield_model.dart';
 import 'package:safe/Utils/validator/textformfield_validator.dart';
@@ -23,9 +18,7 @@ import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/locator.dart';
 import 'package:safe/screens/UI/calendar/calendar_viewmodel.dart';
 import 'package:safe/screens/UI/disablity/disability_viewmodel.dart';
-import 'package:safe/screens/UI/user_details/user_data_manager.dart';
 
-import '../../../dynamic_size.dart';
 import '../../../model/get_labels.dart';
 import '../../../server_manager/server_manager.dart';
 import '../add_family_members/add_family_members_viewmodel.dart';
@@ -198,7 +191,7 @@ class UserDetailsViewModel extends ChangeNotifier
         "food_allergies": selectedFoodIssuesList
       };
 
-      maintingUserDetails!.add(memberDetails);
+      maintingUserDetails.add(memberDetails);
 
       Map<String, dynamic> bodyToBePosted = {
         "emergency_contact": {
@@ -290,22 +283,31 @@ class UserDetailsViewModel extends ChangeNotifier
 
   Future<void> selectImageReport() async {
     try {
-      final ImagePicker picker = ImagePicker();
-      final List<XFile> imagesList = await picker.pickMultiImage();
-      for (var element in imagesList) {
-        reports.add(File(element.path));
+      if (base64Images.length > 3) {
+        ScaffoldMessenger.maybeOf(Keys.mainNavigatorKey.currentState!.context)!
+            .showSnackBar(
+          const SnackBar(
+            content: Text("Can not select more than 3 pictures"),
+          ),
+        );
+      } else {
+        final ImagePicker picker = ImagePicker();
+        final List<XFile> imagesList = await picker.pickMultiImage();
+        for (var element in imagesList) {
+          reports.add(File(element.path));
+        }
+
+        base64Images = reports.map((file) {
+          List<int> bytes = file!.readAsBytesSync();
+          String base64Image = base64Encode(bytes);
+          return base64Image;
+        }).toList();
+
+        //  reports.addAll(File(imagesList!.path))
+
+        // image = File(imagee!.path);
+        notifyListeners();
       }
-
-      base64Images = reports.map((file) {
-        List<int> bytes = file!.readAsBytesSync();
-        String base64Image = base64Encode(bytes);
-        return base64Image;
-      }).toList();
-
-      //  reports.addAll(File(imagesList!.path))
-
-      // image = File(imagee!.path);
-      notifyListeners();
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -418,7 +420,7 @@ class UserDetailsViewModel extends ChangeNotifier
 
   Future<void> makePostRequest(Map<String, dynamic> json) async {
     // final url = Uri.parse('http://staysafema.com/api/create-booking');
-    final String valueUrl = "http://staysafema.com/api/create-booking";
+    const String valueUrl = "http://staysafema.com/api/create-booking";
 
     final dio = Dio();
     dio.options.headers['Accept'] = 'application/json';
@@ -447,7 +449,7 @@ class UserDetailsViewModel extends ChangeNotifier
                       onPressed: () {
                         AppUtil.pop(context: context);
                       },
-                      child: Text('Cancel'),
+                      child: const Text('Cancel'),
                     ),
                   ],
                 );

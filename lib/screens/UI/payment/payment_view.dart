@@ -202,6 +202,7 @@ class PaymentView extends StatelessWidget {
                                     errorText: model.cvvValidator,
                                     textAlign: TextAlign.center,
                                     inputFormatters: [
+                                      
                                       FilteringTextInputFormatter.digitsOnly,
                                       // Limit the input
                                       LengthLimitingTextInputFormatter(4),
