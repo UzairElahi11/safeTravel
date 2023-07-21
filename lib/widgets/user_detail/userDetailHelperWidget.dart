@@ -34,7 +34,9 @@ class UserDetailHeathCondition extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    model.listNames.isNotEmpty ? model.listNames[index1] : "",
+                    model.listNames.isNotEmpty
+                        ? model.firstLetterUpperCase(index1)
+                        : "",
                     style: AppStyles.medium14
                         .copyWith(color: AppColors.blackColor),
                   ),

@@ -262,9 +262,23 @@ class UserDetailsViewModel extends ChangeNotifier
     image = File(pickedImage!.path);
     Uint8List bytes = image!.readAsBytesSync();
     String base64Image = base64Encode(bytes);
-    print(base64Image);
+    debugPrint(base64Image);
 
     notifyListeners();
+  }
+
+    //replace the underscore from the keys and we are changing it into our text
+  String removeUnderScore(int index) {
+    return listNames[index].replaceAll('_', ' ');
+  }
+
+  // make the every sentence of the word upper case
+  String firstLetterUpperCase(int index) {
+    List<String> words = removeUnderScore(index).split(' ');
+
+    return words.map((word) {
+      return '${word[0].toUpperCase()}${word.substring(1)}';
+    }).join(' ');
   }
 
   Future<void> selectImage() async {
