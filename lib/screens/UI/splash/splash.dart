@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geolocator/geolocator.dart' as locatorr;
 import 'package:safe/Utils/app_util.dart';
@@ -16,6 +17,8 @@ import 'package:safe/screens/UI/login/login.dart';
 import 'package:safe/screens/UI/payment/payment_view.dart';
 import 'package:safe/screens/UI/user_details/user_data_manager.dart';
 
+import '../../../Utils/app_images_path.dart';
+import '../../../Utils/generics/generic_svg_image.dart';
 import '../user_details/userDetails.dart';
 
 class Splash extends StatefulWidget {
@@ -46,8 +49,13 @@ class _SplashState extends State<Splash> {
 
     return Scaffold(
       // backgroundColor: PawaColor.instance.backgroundColor,
-      body: Container(
-        color: Colors.red,
+      body: SizedBox(
+        height: MediaQuery.of(context).size.height,
+        child: Center(
+            child: GenericSvgImage(
+          height: 250.h,
+          svgPath: AppImages.logoSvgImage,
+        )),
       ),
     );
   }

@@ -88,10 +88,10 @@ flutter_launcher_icons:
   remove_alpha_ios: true
   min_sdk_android: 21 
 flutter_native_splash:
-  color: "#000000"
-  image: assets/images/black.png
+  color: "#FFFFFF"
+  image: assets/app_logo.png
   android_12:
-    image: assets/images/black.png
+    image: assets/app_logo.png
   android: true
   ios: true
 

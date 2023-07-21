@@ -6,7 +6,9 @@ class AppImages {
   static String baseCommonPath = "assets/icons/common/";
   static String baseImagePath = "assets/images/";
   //SVG IMAGES PATHS
-  static String logoSvgImage = "${baseSvgImagePath}Logo.svg";
+    static String logoSvgImage = "assets/app_logo.svg";
+
+  
   static String facebookPngIcon = "${baseCommonPath}facebook.png";
   static String applePngIcon = "${baseCommonPath}apple.png";
 

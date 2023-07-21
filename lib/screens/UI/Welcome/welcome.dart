@@ -34,11 +34,9 @@ class Welcome extends StatelessWidget {
               children: [
                 Center(
                     child: GenericSvgImage(
+                  height: 250.h,
                   svgPath: AppImages.logoSvgImage,
                 )),
-                SizedBox(
-                  height: 80.h,
-                ),
                 GenericText(
                   LocaleKeys.welcomeMessage,
                   style: AppStyles.bold28,
