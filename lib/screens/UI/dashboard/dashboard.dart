@@ -20,109 +20,131 @@ class DashboardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
     return SafeArea(
       child: WillPopScope(
         onWillPop: () async => false,
-        child: Scaffold(
-          body: ViewModelBuilder<DashboardViewModel>.reactive(
-            onViewModelReady: (model) {
-              // model.checkingEmailText();
-              model.init();
-            },
-            viewModelBuilder: () => DashboardViewModel(),
-            builder: (context, model, _) {
-              return Scaffold(
-                appBar: AppBar(
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  title: GenericText(LocaleKeys.staySafeText,
-                      style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.blackColor)),
-                  leading: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: GestureDetector(
+        child: ViewModelBuilder<DashboardViewModel>.reactive(
+          onViewModelReady: (model) {
+            // model.checkingEmailText();
+            model.init();
+          },
+          viewModelBuilder: () => DashboardViewModel(),
+          builder: (context, model, _) {
+            return Scaffold(
+              key: _scaffoldKey,
+              drawer: Drawer(
+                backgroundColor: Colors.white,
+                child: ListView(
+                  children: [
+                    ListTile(
+                      title: const Text("Terms and Conditons"),
                       onTap: () {},
-                      child: GenericSvgImage(
-                        svgPath: AppImages.menu,
-                      ),
                     ),
-                  ),
-                  actions: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 15),
-                      child: GestureDetector(
-                        onTap: () {
-                          AppUtil.pushRoute(
-                            context: context,
-                            route: const ProfileView(),
-                          );
-                        },
-                        child: GenericSvgImage(
-                          svgPath: AppImages.user,
-                        ),
-                      ),
+                    ListTile(
+                      title: const Text("Privacy policy"),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      title: const Text("Logout"),
+                      onTap: () {},
                     )
                   ],
                 ),
-                body: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 100.w),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        SizedBox(
-                          height: 100.h,
-                        ),
-                        servicesList(model, context),
-                        SizedBox(
-                          height: 100.h,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: GenericButton(
-                                height: 70.h,
-                                onPressed: () {
-                                  AppUtil.pushRoute(
-                                      context: context,
-                                      route: const CrispScreen());
-                                },
-                                text: "Chat",
-                                textStyle: AppStyles.mediumBold16.copyWith(
-                                  color: AppColors.whiteColor,
-                                  fontWeight: FontWeight.w600,
-                                ),
+              ),
+              appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                title: GenericText(LocaleKeys.staySafeText,
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.blackColor)),
+                leading: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: GestureDetector(
+                    onTap: () {
+                      _scaffoldKey.currentState?.openDrawer();
+                    },
+                    child: GenericSvgImage(
+                      svgPath: AppImages.menu,
+                    ),
+                  ),
+                ),
+                actions: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 15),
+                    child: GestureDetector(
+                      onTap: () {
+                        AppUtil.pushRoute(
+                          context: context,
+                          route: const ProfileView(),
+                        );
+                      },
+                      child: GenericSvgImage(
+                        svgPath: AppImages.user,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              body: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 100.w),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      SizedBox(
+                        height: 100.h,
+                      ),
+                      servicesList(model, context),
+                      SizedBox(
+                        height: 100.h,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: GenericButton(
+                              height: 70.h,
+                              onPressed: () {
+                                AppUtil.pushRoute(
+                                    context: context,
+                                    route: const CrispScreen());
+                              },
+                              text: "Chat",
+                              textStyle: AppStyles.mediumBold16.copyWith(
+                                color: AppColors.whiteColor,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            InkWell(
-                              onTap: () async {
-                                try {
-                                  String phoneNumberCode =
-                                      countryCode.replaceAll('+', '');
-                                  //launchUrlString is method of url_launcher package and //phoneNoController.text is the number from phone number textfield
-                                  await launchUrlString(
-                                      'whatsapp://send?phone=${phoneNumberCode + helplineNumber}&text=${Uri.encodeFull("Stay Safe")}');
-                                } catch (e) {
-                                  debugPrint('Error Launching WhatsApp');
-                                }
-                              },
-                              child: SizedBox(
-                                  height: 70.h,
-                                  child: Image.asset(AppImages.whatsApp)),
-                            )
-                          ],
-                        )
-                      ]),
-                ),
-              );
-            },
-          ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          InkWell(
+                            onTap: () async {
+                              try {
+                                String phoneNumberCode =
+                                    countryCode.replaceAll('+', '');
+                                //launchUrlString is method of url_launcher package and //phoneNoController.text is the number from phone number textfield
+                                await launchUrlString(
+                                    'whatsapp://send?phone=${phoneNumberCode + helplineNumber}&text=${Uri.encodeFull("Stay Safe")}');
+                              } catch (e) {
+                                debugPrint('Error Launching WhatsApp');
+                              }
+                            },
+                            child: SizedBox(
+                                height: 70.h,
+                                child: Image.asset(AppImages.whatsApp)),
+                          )
+                        ],
+                      )
+                    ]),
+              ),
+            );
+          },
         ),
       ),
     );
@@ -139,56 +161,99 @@ class DashboardView extends StatelessWidget {
             InkWell(
               onTap: () {
                 if (index == 0) {
-                  model.callPolice(
+                  showDialog(
                       context: context,
-                      completion: (success) {
-                        if (success) {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text("Police"),
-                                content: const Text(
-                                    "Police is on way at you current location please wait and and be safe"),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      AppUtil.pop(context: context);
-                                    },
-                                    child: GenericText('Cancel'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        }
-                      });
+                      builder: (context) => AlertDialog(
+                            title: const GenericText(
+                                "Do you want to call the police?"),
+                            actions: [
+                              MaterialButton(
+                                onPressed: () {
+                                  model.callPolice(
+                                      context: context,
+                                      completion: (success) {
+                                        if (success) {
+                                          Navigator.pop(context);
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: const Text("Police"),
+                                                content: const Text(
+                                                    "Police is on way at you current location please wait and and be safe"),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      AppUtil.pop(
+                                                          context: context);
+                                                    },
+                                                    child: const GenericText(
+                                                        'Cancel'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        }
+                                      });
+                                },
+                                child: const GenericText("Yes"),
+                              ),
+                              MaterialButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const GenericText("No"),
+                              )
+                            ],
+                          ));
                 }
                 if (index == 1) {
-                  model.callHealth(
+                  showDialog(
                       context: context,
-                      completion: (success) {
-                        if (success) {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text("Health"),
-                                content: const Text(
-                                    "Health is on way at you current location please wait and and be safe"),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      AppUtil.pop(context: context);
-                                    },
-                                    child: const GenericText('Cancel'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        }
-                      });
+                      builder: (context) => AlertDialog(
+                            title: const GenericText(
+                                "Do you want to call the Medical Health?"),
+                            actions: [
+                              MaterialButton(
+                                onPressed: () {
+                                  model.callHealth(
+                                      context: context,
+                                      completion: (success) {
+                                        if (success) {
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: const Text("Health"),
+                                                content: const Text(
+                                                    "Health is on way at you current location please wait and and be safe"),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      AppUtil.pop(
+                                                          context: context);
+                                                    },
+                                                    child: const GenericText(
+                                                        'Cancel'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        }
+                                      });
+                                },
+                                child: const GenericText("Yes"),
+                              ),
+                              MaterialButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const GenericText("No"),
+                              )
+                            ],
+                          ));
                 }
                 if (index == 2) {
                   model.getPharmacyList(
