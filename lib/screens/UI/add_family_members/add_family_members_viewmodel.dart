@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/constants/keys.dart';
+import 'package:safe/screens/UI/user_details/userDetail_viewModel.dart';
 import 'package:safe/widgets/dialogBoxAddNewPerson.dart';
 
 class AddFamilyMembersViewModel extends ChangeNotifier {
@@ -23,13 +26,8 @@ class AddFamilyMembersViewModel extends ChangeNotifier {
             familyMembersList[index]["numberOfMembers"] += 1;
             notifyListeners();
             int count = 3;
+
             Navigator.of(context).popUntil((_) => count-- <= 0);
-
-            // AppUtil.pushRoute(
-            //     context: context,
-            //     route: const UserDetailsView(isFromLogin: false)
-
-            // );
           },
         );
       },

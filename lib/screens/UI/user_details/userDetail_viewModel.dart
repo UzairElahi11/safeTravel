@@ -137,9 +137,9 @@ class UserDetailsViewModel extends ChangeNotifier
           .where((entry) {
             int index = entry.key;
             bool value = entry.value;
-            return value && index < listData![0].length;
+            return value && index < listData![3].length;
           })
-          .map((entry) => listData![0][entry.key])
+          .map((entry) => listData![3][entry.key])
           .toList();
       selectedHealthIssueList = healthCheckList
           .asMap()
@@ -147,11 +147,21 @@ class UserDetailsViewModel extends ChangeNotifier
           .where((entry) {
             int index = entry.key;
             bool value = entry.value;
-            return value && index < listData!.length;
+            return value && index < listData![0]!.length;
+          })
+          .map((entry) => listData![0][entry.key])
+          .toList();
+      selectedMediacalIssuesList = medicalCheckList
+          .asMap()
+          .entries
+          .where((entry) {
+            int index = entry.key;
+            bool value = entry.value;
+            return value && index < listData![1].length;
           })
           .map((entry) => listData![1][entry.key])
           .toList();
-      selectedMediacalIssuesList = medicalCheckList
+      selectedFoodIssuesList = foodAlergiesList
           .asMap()
           .entries
           .where((entry) {
@@ -161,23 +171,6 @@ class UserDetailsViewModel extends ChangeNotifier
           })
           .map((entry) => listData![2][entry.key])
           .toList();
-      selectedFoodIssuesList = foodAlergiesList
-          .asMap()
-          .entries
-          .where((entry) {
-            int index = entry.key;
-            bool value = entry.value;
-            return value && index < listData![3].length;
-          })
-          .map((entry) => listData![3][entry.key])
-          .toList();
-
-      log("selected is $selectedDisablitiesIssueList");
-      log("selected is $selectedFoodIssuesList");
-
-      log("selected is $selectedMediacalIssuesList");
-
-      log("selected is $selectedHealthIssueList");
 
       Map<String, dynamic> memberDetails = {
         "first_name": firstNameController.text.trim(),
@@ -193,29 +186,12 @@ class UserDetailsViewModel extends ChangeNotifier
 
       maintingUserDetails.add(memberDetails);
 
-      Map<String, dynamic> bodyToBePosted = {
-        "emergency_contact": {
-          "name": nameController.text.trim(),
-          "phone": phoneNumberController.text.trim(),
-          "notes": notesController.text.trim()
-        },
-        "booking": {
-          "arrival": CalendarViewModel.of(listen: false).arrivalfocusDay,
-          "departure": CalendarViewModel.of(listen: false).departureFocusDay
-        },
-        "family_members": {
-          "adults": familyMembersList[0]['numberOfMembers'],
-          "childrens": familyMembersList[1]['numberOfMembers'],
-          "new_borns": familyMembersList[2]['numberOfMembers'],
-          "members": maintingUserDetails
-        }
-      };
-
-      log("here is th $bodyToBePosted");
-
       notifyListeners();
 
-      log("body to be [osted] :$bodyToBePosted");
+      resetFields();
+
+      log("data is $maintingUserDetails");
+
       AppUtil.pushRoute(
         context: context,
         route: Disability(
@@ -224,6 +200,28 @@ class UserDetailsViewModel extends ChangeNotifier
         ),
       );
     }
+  }
+
+  /// Reset the fields when navigate to the next screen
+  void resetFields() {
+    firstNameController.clear();
+    lastNameController.clear();
+    dateOfBirthController.clear();
+
+    healthCheckList = List<bool>.generate(
+        getLabelsModel.data?.healthConditions?.length ?? 0, (index) => false);
+    medicalCheckList = List<bool>.generate(
+        getLabelsModel.data?.healthConditions?.length ?? 0, (index) => false);
+    foodAlergiesList = List<bool>.generate(
+        getLabelsModel.data?.healthConditions?.length ?? 0, (index) => false);
+    disablitiesList = List<bool>.generate(
+        getLabelsModel.data?.healthConditions?.length ?? 0, (index) => false);
+    image = null;
+    reports.clear();
+    base64Image = "";
+    base64Images.clear();
+    firstnameError = null;
+    lastNameLastError = null;
   }
 
   fillTheListWhereSelected() async {
@@ -267,7 +265,7 @@ class UserDetailsViewModel extends ChangeNotifier
     notifyListeners();
   }
 
-    //replace the underscore from the keys and we are changing it into our text
+  //replace the underscore from the keys and we are changing it into our text
   String removeUnderScore(int index) {
     return listNames[index].replaceAll('_', ' ');
   }
