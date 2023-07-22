@@ -183,16 +183,19 @@ class Login extends StatelessWidget {
                                   if (check) {
                                     if (form == 1 && isPayment == 1) {
                                       AppUtil.pushRoute(
+                                        pushReplacement: true,
                                         context: context,
                                         route: const DashboardView(),
                                       );
                                     } else if (form == 1 && isPayment == 0) {
                                       AppUtil.pushRoute(
+                                        pushReplacement: true,
                                         context: context,
                                         route: const PaymentView(),
                                       );
                                     } else {
                                       AppUtil.pushRoute(
+                                        pushReplacement: true,
                                         context: context,
                                         route: const UserDetailsView(
                                           isFromLogin: true,
