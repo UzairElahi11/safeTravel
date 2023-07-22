@@ -14,4 +14,5 @@ class UrlConstants {
   static String createBooking = "${baseUrl}create-booking";
 
   static String updateBooking = "${baseUrl}update-booking-details";
+  static String logOut = "{baseUrl}user/logout";
 }

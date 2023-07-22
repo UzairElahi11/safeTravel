@@ -7,11 +7,13 @@ import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/generics/generic_button.dart';
 import 'package:safe/Utils/generics/generic_svg_image.dart';
 import 'package:safe/Utils/generics/generic_text.dart';
+import 'package:safe/Utils/user_defaults.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/screens/UI/dashboard/crips.dart';
 import 'package:safe/screens/UI/dashboard/dashboard_viewModel.dart';
 import 'package:safe/screens/UI/dashboard/pharmacyListView.dart';
 import 'package:safe/screens/UI/editForm/editFormView.dart';
+import 'package:safe/screens/UI/login/login.dart';
 import 'package:stacked/stacked.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -48,7 +50,20 @@ class DashboardView extends StatelessWidget {
                     ),
                     ListTile(
                       title: const Text("Logout"),
-                      onTap: () {},
+                      onTap: () {
+                        model.logOut(
+                            context: context,
+                            completion: (success) {
+                              if (success) {
+                                UserDefaults.clearLoginToken();
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) => const Login(),
+                                  ),
+                                );
+                              }
+                            });
+                      },
                     )
                   ],
                 ),
@@ -165,10 +180,48 @@ class DashboardView extends StatelessWidget {
                       context: context,
                       builder: (context) => AlertDialog(
                             title: const GenericText(
-                                "Do you want to call the police?"),
+                                "Are you sure you want government help?"),
                             actions: [
-                              MaterialButton(
-                                onPressed: () {
+                              // MaterialButton(
+                              //   onPressed: () {
+                              //     model.callPolice(
+                              //         context: context,
+                              //         completion: (success) {
+                              //           if (success) {
+                              //             Navigator.pop(context);
+                              //             showDialog(
+                              //               context: context,
+                              //               builder: (BuildContext context) {
+                              //                 return AlertDialog(
+                              //                   title: const Text("Police"),
+                              //                   content: const Text(
+                              //                       "Police is on way at you current location please wait and and be safe"),
+                              //                   actions: <Widget>[
+                              //                     TextButton(
+                              //                       onPressed: () {
+                              //                         AppUtil.pop(
+                              //                             context: context);
+                              //                       },
+                              //                       child: const GenericText(
+                              //                           'Cancel'),
+                              //                     ),
+                              //                   ],
+                              //                 );
+                              //               },
+                              //             );
+                              //           }
+                              //         });
+                              //   },
+                              //   child: const GenericText("Yes"),
+                              // ),
+                              // MaterialButton(
+                              //   onPressed: () {
+                              //     Navigator.pop(context);
+                              //   },
+                              //   child: const GenericText("No"),
+                              // )
+                              InkWell(
+                                onTap: () {
                                   model.callPolice(
                                       context: context,
                                       completion: (success) {
@@ -197,13 +250,24 @@ class DashboardView extends StatelessWidget {
                                         }
                                       });
                                 },
-                                child: const GenericText("Yes"),
-                              ),
-                              MaterialButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const GenericText("No"),
+                                child: Center(
+                                  child: Container(
+                                    padding: EdgeInsetsDirectional.symmetric(
+                                        vertical: 30, horizontal: 30),
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.red),
+                                    child: Center(
+                                      child: Text(
+                                        "Police",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               )
                             ],
                           ));
@@ -215,8 +279,45 @@ class DashboardView extends StatelessWidget {
                             title: const GenericText(
                                 "Do you want to call the Medical Health?"),
                             actions: [
-                              MaterialButton(
-                                onPressed: () {
+                              // MaterialButton(
+                              //   onPressed: () {
+                              //     model.callHealth(
+                              //         context: context,
+                              //         completion: (success) {
+                              //           if (success) {
+                              //             showDialog(
+                              //               context: context,
+                              //               builder: (BuildContext context) {
+                              //                 return AlertDialog(
+                              //                   title: const Text("Health"),
+                              //                   content: const Text(
+                              //                       "Health is on way at you current location please wait and and be safe"),
+                              //                   actions: <Widget>[
+                              //                     TextButton(
+                              //                       onPressed: () {
+                              //                         AppUtil.pop(
+                              //                             context: context);
+                              //                       },
+                              //                       child: const GenericText(
+                              //                           'Cancel'),
+                              //                     ),
+                              //                   ],
+                              //                 );
+                              //               },
+                              //             );
+                              //           }
+                              //         });
+                              //   },
+                              //   child: const GenericText("Yes"),
+                              // ),
+                              // MaterialButton(
+                              //   onPressed: () {
+                              //     Navigator.pop(context);
+                              //   },
+                              //   child: const GenericText("No"),
+                              // )
+                              InkWell(
+                                onTap: () {
                                   model.callHealth(
                                       context: context,
                                       completion: (success) {
@@ -244,13 +345,25 @@ class DashboardView extends StatelessWidget {
                                         }
                                       });
                                 },
-                                child: const GenericText("Yes"),
-                              ),
-                              MaterialButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const GenericText("No"),
+                                child: Center(
+                                  child: Container(
+                                    padding:
+                                        const EdgeInsetsDirectional.symmetric(
+                                            vertical: 40, horizontal: 40),
+                                    decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.red),
+                                    child: const Center(
+                                      child: Text(
+                                        "Ambulance",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               )
                             ],
                           ));

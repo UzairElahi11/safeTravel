@@ -444,7 +444,7 @@ class ServerManager {
       String lat, String long, ResponseCompletion completion) {
     Map<String, dynamic> json = {"lat": lat, "long": long, "radius": "5"};
     callPostApi(
-        UrlConstants.callHealth, _defaultHeader(), json, completion, false);
+        UrlConstants.getPharmacy, _defaultHeader(), json, completion, false);
   }
 
   static void login(
