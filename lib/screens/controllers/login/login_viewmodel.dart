@@ -15,6 +15,8 @@ import 'package:safe/constants/keys.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/locator.dart';
 import 'package:safe/model/login-register/login_model.dart';
+import 'package:safe/screens/UI/dashboard/dashboard.dart';
+import 'package:safe/screens/UI/payment/payment_view.dart';
 // import 'package:safe/screens/UI/disablity/disablity.dart';
 import 'package:safe/screens/UI/user_details/userDetails.dart';
 import 'package:safe/screens/controllers/registration/registeration_viewmodel.dart';
@@ -231,16 +233,31 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
           token: user.credential!.accessToken.toString(),
           userName: user.user?.displayName ?? "",
           providerName: "facebook",
-          completion: (success) {
-            if (success) {
-              AppUtil.pushRoute(
-                  pushReplacement: true,
-                  context: Keys.mainNavigatorKey.currentState!.context,
-                  route: const UserDetailsView(
-                    isFromLogin: true,
-                  ));
-            }
-          });
+           completion: (check, form, isPayment) {
+                                  showToaster(context);
+                                  if (check) {
+                                    if (form == 1 && isPayment == 1) {
+                                      AppUtil.pushRoute(
+                                        context: context,
+                                        route: const DashboardView(),
+                                        pushReplacement: true
+                                      );
+                                    } else if (form == 1 && isPayment == 0) {
+                                      AppUtil.pushRoute(
+                                        context: context,
+                                        route: const PaymentView(),
+                                      );
+                                    } else {
+                                      AppUtil.pushRoute(
+                                        context: context,
+                                        pushReplacement: true,
+                                        route: const UserDetailsView(
+                                          isFromLogin: true,
+                                        ),
+                                      );
+                                    }
+                                  }
+                                });
     }
   }
 

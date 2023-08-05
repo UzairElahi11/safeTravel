@@ -9,6 +9,8 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/constants/keys.dart';
+import 'package:safe/screens/UI/dashboard/dashboard.dart';
+import 'package:safe/screens/UI/payment/payment_view.dart';
 import 'package:safe/screens/UI/user_details/userDetails.dart';
 import 'package:safe/screens/controllers/registration/registeration_viewmodel.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -25,13 +27,14 @@ class Authenticate {
   Future<bool> googleSignInMethod() async {
     // final firebaseAuth = FirebaseAuth.instance.currentUser;
     try {
-      GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      GoogleSignInAccount? googleUser = await  GoogleSignIn(scopes: ['profile', 'email']).signIn();
 
       if (googleUser == null) {
         return false;
       } else {
         _user = googleUser;
         final googleAuth = await googleUser.authentication;
+        
 
         final credential = GoogleAuthProvider.credential(
             accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
@@ -40,20 +43,51 @@ class Authenticate {
             .then((value) async {
           log.log("token of google i ${credential.accessToken}");
 
-          RegistrationViewModel().socialLogin(
-              email: firebaseAuth.currentUser?.email ?? "",
-              context: Keys.mainNavigatorKey.currentState!.context,
-              token: credential.accessToken.toString(),
-              userName: firebaseAuth.currentUser?.displayName ?? "",
-              providerName: "google",
-              completion: (success) {
-                if (success) {
-                  AppUtil.pushRoute(
-                      pushReplacement: true,
-                      context: Keys.mainNavigatorKey.currentState!.context,
-                      route: const UserDetailsView(isFromLogin: true,));
-                }
-              });
+          // RegistrationViewModel().socialLogin(
+          //     email: firebaseAuth.currentUser?.email ?? "",
+          //     context: Keys.mainNavigatorKey.currentState!.context,
+          //     token: credential.accessToken.toString(),
+          //     userName: firebaseAuth.currentUser?.displayName ?? "",
+          //     providerName: "google",
+          //     completion: (success) {
+          //       if (success) {
+          //         AppUtil.pushRoute(
+          //             pushReplacement: true,
+          //             context: Keys.mainNavigatorKey.currentState!.context,
+          //             route: const UserDetailsView(isFromLogin: true,));
+          //       }
+          //     });
+            RegistrationViewModel().socialLogin(
+          email: firebaseAuth.currentUser?.email ?? "",
+          context: Keys.mainNavigatorKey.currentState!.context,
+          token: credential.accessToken.toString(),
+          userName: firebaseAuth.currentUser?.displayName ?? "",
+          providerName: "google",
+           completion: (check, form, isPayment) {
+                                  // showToaster(context);
+                                  if (check) {
+                                    if (form == 1 && isPayment == 1) {
+                                      AppUtil.pushRoute(
+                                        context: Keys.mainNavigatorKey.currentState!.context,
+                                        route: const DashboardView(),
+                                        pushReplacement: true
+                                      );
+                                    } else if (form == 1 && isPayment == 0) {
+                                      AppUtil.pushRoute(
+                                        context: Keys.mainNavigatorKey.currentState!.context,
+                                        route: const PaymentView(),
+                                      );
+                                    } else {
+                                      AppUtil.pushRoute(
+                                        context: Keys.mainNavigatorKey.currentState!.context,
+                                        pushReplacement: true,
+                                        route: const UserDetailsView(
+                                          isFromLogin: true,
+                                        ),
+                                      );
+                                    }
+                                  }
+                                });
         });
 
         return true;

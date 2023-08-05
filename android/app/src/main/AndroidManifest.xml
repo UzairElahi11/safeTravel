@@ -28,7 +28,7 @@
    <application
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true"
-        android:label="Safe Travel"
+        android:label="Stay Safe"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
