@@ -7,6 +7,7 @@ abstract class LocaleKeys {
   static const btnNextText = 'btnNextText';
   static const introDetailsMessage = 'introDetailsMessage';
   static const next = 'next';
+  static const skip = 'skip';
   static const acceptTC = 'acceptTC';
   static const emailAddress = 'emailAddress';
   static const introductions = 'introductions';

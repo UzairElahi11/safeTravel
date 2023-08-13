@@ -202,7 +202,6 @@ class PaymentView extends StatelessWidget {
                                     errorText: model.cvvValidator,
                                     textAlign: TextAlign.center,
                                     inputFormatters: [
-                                      
                                       FilteringTextInputFormatter.digitsOnly,
                                       // Limit the input
                                       LengthLimitingTextInputFormatter(3),
@@ -259,6 +258,18 @@ class PaymentView extends StatelessWidget {
                             model.validator(context);
                           },
                           text: LocaleKeys.next,
+                          textStyle: AppStyles.mediumBold16.copyWith(
+                            color: AppColors.whiteColor,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        GenericButton(
+                          height: 70.h,
+                          onPressed: () async => model.skipSaveLocally(),
+                          text: LocaleKeys.skip,
                           textStyle: AppStyles.mediumBold16.copyWith(
                             color: AppColors.whiteColor,
                             fontWeight: FontWeight.w600,

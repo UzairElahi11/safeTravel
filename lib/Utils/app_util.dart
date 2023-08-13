@@ -278,6 +278,7 @@ String loginTokenKey = "LoginToken";
 String onBoardingKey = "onBoardingKey";
 String isPayment = "isPayment";
 String isFormPosted = "isFormPosted";
+String skip = "skip";
 String emailKey = "emailKey";
 String userNameKey = "UserNameKey";
 bool isFirstTime = true;

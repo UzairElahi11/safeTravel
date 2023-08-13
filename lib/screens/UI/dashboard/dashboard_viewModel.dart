@@ -2,16 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:safe/Utils/app_images_path.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/extensions/string.extension.dart';
+import 'package:safe/Utils/local_storage.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/model/helper/services_helperModel.dart';
 import 'package:safe/model/pharmacy/pharmacyListModel.dart';
 import 'package:safe/screens/UI/user_details/user_data_manager.dart';
 import 'package:safe/server_manager/server_manager.dart';
 
+import '../../../Utils/user_defaults.dart';
+
 class DashboardViewModel with ChangeNotifier, ApiCalling {
   List<ServicesHelperModel> services = [];
   PharmacyListModel? pharmacyListModel;
+  LocalSecureStorage localSecureStorage = LocalSecureStorage();
   List<Datum> pharmacyList = [];
+  String skipvalue = "";
   Datum? list;
   init() {
     services.add(ServicesHelperModel(
@@ -34,11 +39,24 @@ class DashboardViewModel with ChangeNotifier, ApiCalling {
     ));
   }
 
+  /// Read the skip local key from the local storage,
+  /// if the key is 1 then you can show the pop up and
+  /// navigate to payment screen else if 0 then you
+  /// can directly call the api
+
+  Future<String> readSkipValueLocally() async {
+    skipvalue = await UserDefaults.getSkipPaymentFromLocalStorage();
+
+
+    return skipvalue;
+  }
+
   callPolice(
       {required BuildContext context,
       required void Function(
         bool success,
-      ) completion}) {
+      )
+          completion}) {
     callPoliceApiCalling(
         lat: UserDataManager.getInstance().lat,
         long: UserDataManager.getInstance().long,
@@ -95,7 +113,8 @@ class DashboardViewModel with ChangeNotifier, ApiCalling {
       {required BuildContext context,
       required void Function(
         bool success,
-      ) completion}) {
+      )
+          completion}) {
     callHealthApiCalling(
         lat: UserDataManager.getInstance().lat,
         long: UserDataManager.getInstance().long,
@@ -147,11 +166,13 @@ class DashboardViewModel with ChangeNotifier, ApiCalling {
           }
         });
   }
+
   logOut(
       {required BuildContext context,
       required void Function(
         bool success,
-      ) completion}) {
+      )
+          completion}) {
     logoutApiCaaling(
         context: context,
         onForeground: true,
@@ -206,7 +227,8 @@ class DashboardViewModel with ChangeNotifier, ApiCalling {
       {required BuildContext context,
       required void Function(
         bool success,
-      ) completion}) {
+      )
+          completion}) {
     getPharmacyApiCalling(
         lat: UserDataManager.getInstance().lat,
         long: UserDataManager.getInstance().long,
@@ -331,9 +353,9 @@ mixin ApiCalling {
       });
     }
   }
-   logoutApiCaaling(
+
+  logoutApiCaaling(
       {required BuildContext context,
-      
       bool onForeground = false,
       required void Function(bool success, Map? json) callBack}) async {
     if (apiCallingProgress) return;

@@ -2,10 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:safe/Utils/app_util.dart';
+import 'package:safe/Utils/local_storage.dart';
 import 'package:safe/Utils/user_defaults.dart';
 import 'package:safe/screens/UI/dashboard/dashboard.dart';
 import 'package:safe/screens/UI/payment/carValidation.dart';
 import 'package:safe/server_manager/server_manager.dart';
+
+import '../../../constants/keys.dart';
 
 class PaymentViewModel with ChangeNotifier, paymentApiCallingClass {
   TextEditingController cardNumberController = TextEditingController();
@@ -14,6 +17,7 @@ class PaymentViewModel with ChangeNotifier, paymentApiCallingClass {
   String? cardNumberValidator;
   String? cvvValidator;
   String? expValidator;
+  LocalSecureStorage localSecureStorage = LocalSecureStorage();
 
   validator(BuildContext context) async {
     expValidator = CardUtils.validateDate(expController.text);
@@ -27,12 +31,12 @@ class PaymentViewModel with ChangeNotifier, paymentApiCallingClass {
         cvvValidator != 'This field is required' &&
         cardNumberValidator != 'This field is required' &&
         cardNumberValidator != 'Card is invalid') {
-      log("message is $expValidator");
       payment(
           context: context,
           completion: (success) async {
             if (success) {
               await UserDefaults.setPayment("1");
+              await UserDefaults.setPaymentSkip("0");
               // ignore: use_build_context_synchronously
               showToaster(context);
               // ignore: use_build_context_synchronously
@@ -113,6 +117,17 @@ class PaymentViewModel with ChangeNotifier, paymentApiCallingClass {
           }
         });
   }
+
+  /// Safe the skip in the local storage
+  skipSaveLocally() async {
+    await UserDefaults.setPaymentSkip('1');
+
+    AppUtil.pushRoute(
+      pushReplacement: true,
+      context: Keys.mainNavigatorKey.currentState!.context,
+      route: const DashboardView(),
+    );
+  }
 }
 
 mixin paymentApiCallingClass {
@@ -149,7 +164,7 @@ mixin paymentApiCallingClass {
             callBack(false, null);
           }
         } else {
-          AppUtil.pushRoute(context: context, route: DashboardView());
+          AppUtil.pushRoute(context: context, route: const DashboardView());
         }
       });
     }

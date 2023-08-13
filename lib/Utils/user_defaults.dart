@@ -11,22 +11,39 @@ class UserDefaults {
     bearerToken = token;
     return token;
   }
-    static setPayment(String payment) async {
+
+  static setPayment(String payment) async {
     SharedPreferences sharedPreferencesSet =
         await SharedPreferences.getInstance();
     sharedPreferencesSet.setString(isPayment, payment);
     // bearerToken = payment;
     return payment;
   }
-  
-    static setIsFormPosted(String payment) async {
+
+  static setIsFormPosted(String payment) async {
     SharedPreferences sharedPreferencesSet =
         await SharedPreferences.getInstance();
     sharedPreferencesSet.setString(isFormPosted, payment);
     // bearerToken = payment;
     return payment;
   }
-  
+
+  /// set the skip of the payment in the local storage
+  static setPaymentSkip(String skipValue) async {
+    SharedPreferences sharedPreferencesSet =
+        await SharedPreferences.getInstance();
+    sharedPreferencesSet.setString(skip, skipValue);
+    return skipValue;
+  }
+
+  /// get the payment skip from the local storage
+  static getSkipPaymentFromLocalStorage<String>() async {
+    SharedPreferences sharedPreferencesGet =
+        await SharedPreferences.getInstance();
+    final getLocalSkip = sharedPreferencesGet.getString(skip);
+    return getLocalSkip;
+  }
+
   //SAVE THE User Name and email
   static setEmailAndUserName(String name, String emaill) async {
     SharedPreferences sharedPreferencesSet =
@@ -45,20 +62,21 @@ class UserDefaults {
     final getToken = sharedPreferencesGet.getString(loginTokenKey);
     return getToken;
   }
-    //GET THE TOKEN FROM THE LOCAL STORAGE
+
+  //GET THE TOKEN FROM THE LOCAL STORAGE
   static getPayment<String>() async {
     SharedPreferences sharedPreferencesGet =
         await SharedPreferences.getInstance();
     final getToken = sharedPreferencesGet.getString(isPayment);
     return getToken;
   }
-   static getIsForm<String>() async {
+
+  static getIsForm<String>() async {
     SharedPreferences sharedPreferencesGet =
         await SharedPreferences.getInstance();
     final getToken = sharedPreferencesGet.getString(isFormPosted);
     return getToken;
   }
-
 
   //GET THE email FROM THE LOCAL STORAGE
   static getEmail<String>() async {
@@ -81,11 +99,11 @@ class UserDefaults {
     SharedPreferences sharedPreferencesGet =
         await SharedPreferences.getInstance();
     sharedPreferencesGet.remove(loginTokenKey);
-   // sharedPreferencesGet.remove(key)
-    
+    // sharedPreferencesGet.remove(key)
   }
-  static clearUserNameAndEmail() async{
-     SharedPreferences sharedPreferencesGet =
+
+  static clearUserNameAndEmail() async {
+    SharedPreferences sharedPreferencesGet =
         await SharedPreferences.getInstance();
     sharedPreferencesGet.remove(emailKey);
     sharedPreferencesGet.remove(userNameKey);

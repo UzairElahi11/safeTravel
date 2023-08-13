@@ -17,25 +17,27 @@ import 'package:safe/screens/UI/login/login.dart';
 import 'package:stacked/stacked.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+import '../payment/payment_view.dart';
+
 class DashboardView extends StatelessWidget {
   const DashboardView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
     return SafeArea(
       child: WillPopScope(
         onWillPop: () async => false,
         child: ViewModelBuilder<DashboardViewModel>.reactive(
           onViewModelReady: (model) {
-            // model.checkingEmailText();
             model.init();
+            model.readSkipValueLocally();
           },
           viewModelBuilder: () => DashboardViewModel(),
           builder: (context, model, _) {
             return Scaffold(
-              key: _scaffoldKey,
+              key: scaffoldKey,
               drawer: Drawer(
                 backgroundColor: Colors.white,
                 child: ListView(
@@ -52,17 +54,18 @@ class DashboardView extends StatelessWidget {
                       title: const Text("Logout"),
                       onTap: () {
                         model.logOut(
-                            context: context,
-                            completion: (success) {
-                              if (success) {
-                                UserDefaults.clearLoginToken();
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (context) => const Login(),
-                                  ),
-                                );
-                              }
-                            });
+                          context: context,
+                          completion: (success) {
+                            if (success) {
+                              UserDefaults.clearLoginToken();
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => const Login(),
+                                ),
+                              );
+                            }
+                          },
+                        );
                       },
                     )
                   ],
@@ -80,7 +83,7 @@ class DashboardView extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   child: GestureDetector(
                     onTap: () {
-                      _scaffoldKey.currentState?.openDrawer();
+                      scaffoldKey.currentState?.openDrawer();
                     },
                     child: GenericSvgImage(
                       svgPath: AppImages.menu,
@@ -175,210 +178,235 @@ class DashboardView extends StatelessWidget {
           children: [
             InkWell(
               onTap: () {
-                if (index == 0) {
+                if (model.skipvalue == "1") {
                   showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
-                            title: const GenericText(
-                                "Are you sure you want government help?"),
+                            title: const GenericText("Proceed to payment"),
                             actions: [
-                              // MaterialButton(
-                              //   onPressed: () {
-                              //     model.callPolice(
-                              //         context: context,
-                              //         completion: (success) {
-                              //           if (success) {
-                              //             Navigator.pop(context);
-                              //             showDialog(
-                              //               context: context,
-                              //               builder: (BuildContext context) {
-                              //                 return AlertDialog(
-                              //                   title: const Text("Police"),
-                              //                   content: const Text(
-                              //                       "Police is on way at you current location please wait and and be safe"),
-                              //                   actions: <Widget>[
-                              //                     TextButton(
-                              //                       onPressed: () {
-                              //                         AppUtil.pop(
-                              //                             context: context);
-                              //                       },
-                              //                       child: const GenericText(
-                              //                           'Cancel'),
-                              //                     ),
-                              //                   ],
-                              //                 );
-                              //               },
-                              //             );
-                              //           }
-                              //         });
-                              //   },
-                              //   child: const GenericText("Yes"),
-                              // ),
-                              // MaterialButton(
-                              //   onPressed: () {
-                              //     Navigator.pop(context);
-                              //   },
-                              //   child: const GenericText("No"),
-                              // )
-                              InkWell(
-                                onTap: () {
-                                  model.callPolice(
-                                      context: context,
-                                      completion: (success) {
-                                        if (success) {
-                                          Navigator.pop(context);
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                title: const Text("Police"),
-                                                content: const Text(
-                                                    "Police is on way at you current location please wait and and be safe"),
-                                                actions: <Widget>[
-                                                  TextButton(
-                                                    onPressed: () {
-                                                      AppUtil.pop(
-                                                          context: context);
-                                                    },
-                                                    child: const GenericText(
-                                                        'Cancel'),
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
-                                        }
-                                      });
-                                },
-                                child: Center(
-                                  child: Container(
-                                    padding: EdgeInsetsDirectional.symmetric(
-                                        vertical: 30, horizontal: 30),
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.red),
-                                    child: Center(
-                                      child: Text(
-                                        "Police",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ),
+                              MaterialButton(
+                                onPressed: () => AppUtil.pushRoute(
+                                  pushReplacement: true,
+                                  context: context,
+                                  route: const PaymentView(),
                                 ),
+                                child: const GenericText("Yes"),
+                              ),
+                              MaterialButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const GenericText("No"),
                               )
                             ],
                           ));
-                }
-                if (index == 1) {
-                  showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                            title: const GenericText(
-                                "Do you want to call the Medical Health?"),
-                            actions: [
-                              // MaterialButton(
-                              //   onPressed: () {
-                              //     model.callHealth(
-                              //         context: context,
-                              //         completion: (success) {
-                              //           if (success) {
-                              //             showDialog(
-                              //               context: context,
-                              //               builder: (BuildContext context) {
-                              //                 return AlertDialog(
-                              //                   title: const Text("Health"),
-                              //                   content: const Text(
-                              //                       "Health is on way at you current location please wait and and be safe"),
-                              //                   actions: <Widget>[
-                              //                     TextButton(
-                              //                       onPressed: () {
-                              //                         AppUtil.pop(
-                              //                             context: context);
-                              //                       },
-                              //                       child: const GenericText(
-                              //                           'Cancel'),
-                              //                     ),
-                              //                   ],
-                              //                 );
-                              //               },
-                              //             );
-                              //           }
-                              //         });
-                              //   },
-                              //   child: const GenericText("Yes"),
-                              // ),
-                              // MaterialButton(
-                              //   onPressed: () {
-                              //     Navigator.pop(context);
-                              //   },
-                              //   child: const GenericText("No"),
-                              // )
-                              InkWell(
-                                onTap: () {
-                                  model.callHealth(
-                                      context: context,
-                                      completion: (success) {
-                                        if (success) {
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                title: const Text("Health"),
-                                                content: const Text(
-                                                    "Health is on way at you current location please wait and and be safe"),
-                                                actions: <Widget>[
-                                                  TextButton(
-                                                    onPressed: () {
-                                                      AppUtil.pop(
-                                                          context: context);
-                                                    },
-                                                    child: const GenericText(
-                                                        'Cancel'),
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
-                                        }
-                                      });
-                                },
-                                child: Center(
-                                  child: Container(
-                                    padding:
-                                        const EdgeInsetsDirectional.symmetric(
-                                            vertical: 40, horizontal: 40),
-                                    decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.red),
-                                    child: const Center(
-                                      child: Text(
-                                        "Ambulance",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
+                } else {
+                  if (index == 0) {
+                    showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                              title: const GenericText(
+                                  "Are you sure you want government help?"),
+                              actions: [
+                                // MaterialButton(
+                                //   onPressed: () {
+                                //     model.callPolice(
+                                //         context: context,
+                                //         completion: (success) {
+                                //           if (success) {
+                                //             Navigator.pop(context);
+                                //             showDialog(
+                                //               context: context,
+                                //               builder: (BuildContext context) {
+                                //                 return AlertDialog(
+                                //                   title: const Text("Police"),
+                                //                   content: const Text(
+                                //                       "Police is on way at you current location please wait and and be safe"),
+                                //                   actions: <Widget>[
+                                //                     TextButton(
+                                //                       onPressed: () {
+                                //                         AppUtil.pop(
+                                //                             context: context);
+                                //                       },
+                                //                       child: const GenericText(
+                                //                           'Cancel'),
+                                //                     ),
+                                //                   ],
+                                //                 );
+                                //               },
+                                //             );
+                                //           }
+                                //         });
+                                //   },
+                                //   child: const GenericText("Yes"),
+                                // ),
+                                // MaterialButton(
+                                //   onPressed: () {
+                                //     Navigator.pop(context);
+                                //   },
+                                //   child: const GenericText("No"),
+                                // )
+                                InkWell(
+                                  onTap: () {
+                                    model.callPolice(
+                                        context: context,
+                                        completion: (success) {
+                                          if (success) {
+                                            Navigator.pop(context);
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  title: const Text("Police"),
+                                                  content: const Text(
+                                                      "Police is on way at you current location please wait and and be safe"),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        AppUtil.pop(
+                                                            context: context);
+                                                      },
+                                                      child: const GenericText(
+                                                          'Cancel'),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                          }
+                                        });
+                                  },
+                                  child: Center(
+                                    child: Container(
+                                      padding:
+                                          const EdgeInsetsDirectional.symmetric(
+                                              vertical: 30, horizontal: 30),
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.red),
+                                      child: const Center(
+                                        child: Text(
+                                          "Police",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              )
-                            ],
-                          ));
-                }
-                if (index == 2) {
-                  model.getPharmacyList(
-                      context: context,
-                      completion: (success) {
-                        if (success) {
-                          AppUtil.pushRoute(
-                              context: context,
-                              route: PharmacyListView(
-                                  pharmacyList: model.pharmacyList));
-                        }
-                      });
+                                )
+                              ],
+                            ));
+                  }
+                  if (index == 1) {
+                    showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                              title: const GenericText(
+                                  "Do you want to call the Medical Health?"),
+                              actions: [
+                                // MaterialButton(
+                                //   onPressed: () {
+                                //     model.callHealth(
+                                //         context: context,
+                                //         completion: (success) {
+                                //           if (success) {
+                                //             showDialog(
+                                //               context: context,
+                                //               builder: (BuildContext context) {
+                                //                 return AlertDialog(
+                                //                   title: const Text("Health"),
+                                //                   content: const Text(
+                                //                       "Health is on way at you current location please wait and and be safe"),
+                                //                   actions: <Widget>[
+                                //                     TextButton(
+                                //                       onPressed: () {
+                                //                         AppUtil.pop(
+                                //                             context: context);
+                                //                       },
+                                //                       child: const GenericText(
+                                //                           'Cancel'),
+                                //                     ),
+                                //                   ],
+                                //                 );
+                                //               },
+                                //             );
+                                //           }
+                                //         });
+                                //   },
+                                //   child: const GenericText("Yes"),
+                                // ),
+                                // MaterialButton(
+                                //   onPressed: () {
+                                //     Navigator.pop(context);
+                                //   },
+                                //   child: const GenericText("No"),
+                                // )
+                                InkWell(
+                                  onTap: () {
+                                    model.callHealth(
+                                        context: context,
+                                        completion: (success) {
+                                          if (success) {
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  title: const Text("Health"),
+                                                  content: const Text(
+                                                      "Health is on way at you current location please wait and and be safe"),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        AppUtil.pop(
+                                                            context: context);
+                                                      },
+                                                      child: const GenericText(
+                                                          'Cancel'),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                          }
+                                        });
+                                  },
+                                  child: Center(
+                                    child: Container(
+                                      padding:
+                                          const EdgeInsetsDirectional.symmetric(
+                                              vertical: 40, horizontal: 40),
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.red),
+                                      child: const Center(
+                                        child: Text(
+                                          "Ambulance",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ));
+                  }
+                  if (index == 2) {
+                    model.getPharmacyList(
+                        context: context,
+                        completion: (success) {
+                          if (success) {
+                            AppUtil.pushRoute(
+                                context: context,
+                                route: PharmacyListView(
+                                    pharmacyList: model.pharmacyList));
+                          }
+                        });
+                  }
                 }
               },
               child: Container(
