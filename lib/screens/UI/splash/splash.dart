@@ -52,10 +52,11 @@ class _SplashState extends State<Splash> {
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: Center(
-            child: GenericSvgImage(
-          height: 250.h,
-          svgPath: AppImages.logoSvgImage,
-        )),
+          child: Image.asset(
+            "assets/logo.png",
+            height: 250.h,
+          ),
+        ),
       ),
     );
   }

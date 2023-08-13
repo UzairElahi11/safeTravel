@@ -5,12 +5,10 @@ import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/screens/UI/introduction/intro.dart';
 import 'package:safe/screens/controllers/introduction/into_viewmodel.dart';
 import 'package:safe/Utils/generics/generic_drop_down.dart';
-import 'package:safe/Utils/generics/generic_svg_image.dart';
 import 'package:safe/Utils/generics/generic_text.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:safe/Utils/app_colors.dart';
-import 'package:safe/Utils/app_images_path.dart';
 import 'package:safe/Utils/app_text_styles.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/locale.dart';
@@ -33,10 +31,11 @@ class Welcome extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Center(
-                    child: GenericSvgImage(
-                  height: 250.h,
-                  svgPath: AppImages.logoSvgImage,
-                )),
+                  child: Image.asset(
+                    "assets/logo.png",
+                    height: 250.h,
+                  ),
+                ),
                 GenericText(
                   LocaleKeys.welcomeMessage,
                   style: AppStyles.bold28,
