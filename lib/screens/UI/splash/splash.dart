@@ -82,6 +82,7 @@ class _SplashState extends State<Splash> {
                 .readSecureStorage(AppUtil.isTermsAndConditionsAccepted);
 
             final val = await UserDefaults.getToken();
+            final skipVal = await UserDefaults.getSkipPaymentFromLocalStorage();
             final payment = await UserDefaults.getPayment();
             final isForm = await UserDefaults.getIsForm();
 
@@ -115,14 +116,24 @@ class _SplashState extends State<Splash> {
                     context: context,
                     route: const PaymentView(),
                   );
-                } else if (payment == '1') {
+                } else if (skipVal == "1") {
+                  AppUtil.pushRoute(
+                    pushReplacement: true,
+                    context: context,
+                    route: const DashboardView(),
+                  );
+                } else if (payment == '1' && skipVal == "0") {
                   AppUtil.pushRoute(
                     pushReplacement: true,
                     context: context,
                     route: const DashboardView(),
                   );
                 } else {
-                  log("where??");
+                  AppUtil.pushRoute(
+                    pushReplacement: true,
+                    context: context,
+                    route: const Welcome(),
+                  );
                 }
               }
             }
