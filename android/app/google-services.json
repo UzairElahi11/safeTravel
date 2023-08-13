@@ -7,22 +7,22 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1088170553068:android:7f7bad270375195bd47fc9",
+        "mobilesdk_app_id": "1:1088170553068:android:a75a8ab2c8414db1d47fc9",
         "android_client_info": {
-          "package_name": "com.example.safe_travel"
+          "package_name": "com.staysafe.ma"
         }
       },
       "oauth_client": [
         {
-          "client_cid": "1088170553068-11bis5tloboop1ou76ni97sio01n3a3o.apps.googleusercontent.com",
+          "client_id": "1088170553068-911funr4k4jsuj1ei74dptloo4na0s1u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.safe_travel",
-            "certificate_hash": "e437f3ec57e71bac74133c1e4bf6108f22e75d7b"
+            "package_name": "com.staysafe.ma",
+            "certificate_hash": "bad73be3f2416fa1bb287325d431446e4c33184a"
           }
         },
         {
-          "client_id": "1088170553068-o6uq2evf8fdfgi53b0a2hahod6k8n88k.apps.googleusercontent.com",
+          "client_id": "1088170553068-56m2ar6rmr8gtshndam7jsovdh654f5o.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -35,8 +35,15 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1088170553068-o6uq2evf8fdfgi53b0a2hahod6k8n88k.apps.googleusercontent.com",
+              "client_id": "1088170553068-56m2ar6rmr8gtshndam7jsovdh654f5o.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1088170553068-0bg51u3572ohu49b91vpr5kqp8uk7vos.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.safe"
+              }
             }
           ]
         }
