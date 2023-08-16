@@ -58,6 +58,10 @@ class DashboardView extends StatelessWidget {
                           completion: (success) {
                             if (success) {
                               UserDefaults.clearLoginToken();
+                              UserDefaults.clearUserNameAndEmail();
+                              UserDefaults.clearform();
+                              UserDefaults.clearPayment();
+
                               Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                   builder: (context) => const Login(),

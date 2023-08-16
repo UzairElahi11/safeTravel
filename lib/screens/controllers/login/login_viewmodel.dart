@@ -7,7 +7,6 @@ import 'package:safe/Utils/app_text_styles.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/extensions/string.extension.dart';
 import 'package:safe/Utils/generics/generic_text.dart';
-import 'package:safe/Utils/local_storage.dart';
 import 'package:safe/Utils/user_defaults.dart';
 import 'package:safe/Utils/validator/textformfield_model.dart';
 import 'package:safe/Utils/validator/textformfield_validator.dart';
@@ -23,6 +22,8 @@ import 'package:safe/screens/controllers/registration/registeration_viewmodel.da
 import 'package:safe/server_manager/server_manager.dart';
 import 'package:safe/service/social_auth_services.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../UI/user_details/user_data_manager.dart';
 
 class LoginViewModel with ChangeNotifier, loginApiCallingClass {
   //initializing the text editing controllers
@@ -105,6 +106,8 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
       required void Function(bool success, int formFillForm, int isPaymenDone)
           completion}) {
     loginApiCalling(
+      lat: UserDataManager.getInstance().lat,
+      long: UserDataManager.getInstance().long,
         pasword: password,
         email: email,
         context: context,
@@ -233,31 +236,30 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
           token: user.credential!.accessToken.toString(),
           userName: user.user?.displayName ?? "",
           providerName: "facebook",
-           completion: (check, form, isPayment) {
-                                  showToaster(context);
-                                  if (check) {
-                                    if (form == 1 && isPayment == 1) {
-                                      AppUtil.pushRoute(
-                                        context: context,
-                                        route: const DashboardView(),
-                                        pushReplacement: true
-                                      );
-                                    } else if (form == 1 && isPayment == 0) {
-                                      AppUtil.pushRoute(
-                                        context: context,
-                                        route: const PaymentView(),
-                                      );
-                                    } else {
-                                      AppUtil.pushRoute(
-                                        context: context,
-                                        pushReplacement: true,
-                                        route: const UserDetailsView(
-                                          isFromLogin: true,
-                                        ),
-                                      );
-                                    }
-                                  }
-                                });
+          completion: (check, form, isPayment) {
+            showToaster(context);
+            if (check) {
+              if (form == 1 && isPayment == 1) {
+                AppUtil.pushRoute(
+                    context: context,
+                    route: const DashboardView(),
+                    pushReplacement: true);
+              } else if (form == 1 && isPayment == 0) {
+                AppUtil.pushRoute(
+                  context: context,
+                  route: const PaymentView(),
+                );
+              } else {
+                AppUtil.pushRoute(
+                  context: context,
+                  pushReplacement: true,
+                  route: const UserDetailsView(
+                    isFromLogin: true,
+                  ),
+                );
+              }
+            }
+          });
     }
   }
 
@@ -294,6 +296,8 @@ mixin loginApiCallingClass {
   loginApiCalling(
       {required String email,
       required String pasword,
+      required String lat,
+      required String long,
       required BuildContext context,
       bool onForeground = false,
       required void Function(bool success, Map? json) callBack}) async {
@@ -301,7 +305,7 @@ mixin loginApiCallingClass {
     apiCallingProgress = true;
     if (onForeground) {
       AppUtil.showLoader(context: context);
-      ServerManager.login(email, pasword, (responseBody, success) {
+      ServerManager.login(email, pasword, lat, long, (responseBody, success) {
         apiCallingProgress = false;
         if (onForeground) {
           AppUtil.dismissLoader(context: context);

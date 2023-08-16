@@ -5,13 +5,12 @@ import 'package:safe/Utils/extensions/string.extension.dart';
 import 'package:safe/Utils/user_defaults.dart';
 import 'package:safe/Utils/validator/textformfield_model.dart';
 import 'package:safe/Utils/validator/textformfield_validator.dart';
-import 'package:safe/constants/keys.dart';
+import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/locator.dart';
 import 'package:safe/model/login-register/register_model.dart';
 import 'package:safe/model/login-register/social_model.dart';
 import 'package:safe/screens/UI/user_details/user_data_manager.dart';
 import 'package:safe/server_manager/server_manager.dart';
-import 'package:safe/l10n/locale_keys.g.dart';
 
 class RegistrationViewModel with ChangeNotifier, ApiCalling {
   bool isHidden = false;
@@ -27,10 +26,9 @@ class RegistrationViewModel with ChangeNotifier, ApiCalling {
   String? confirmPasswordErrorValidator;
   final textFieldValidator = locator<TextFieldValidator>();
   SocialModel? socialModel;
-    bool isloading = false;
+  bool isloading = false;
 
-   RegisterModel? registerModel;
-
+  RegisterModel? registerModel;
 
   void init() {}
 
@@ -38,25 +36,23 @@ class RegistrationViewModel with ChangeNotifier, ApiCalling {
     checkBox = check;
     notifyListeners();
   }
-  socialLogin( {required BuildContext context,
+
+  socialLogin(
+      {required BuildContext context,
       required String token,
       required String userName,
       required String email,
       required void Function(bool success, int formFillForm, int isPaymenDone)
           completion,
       required String providerName}) async {
-   
-
     const String valueUrl = "http://staysafema.com/api/social/login";
-    FormData formData = FormData.fromMap(
-      {
-         "email": email,
+    FormData formData = FormData.fromMap({
+      "email": email,
       "token": token,
       "provider_name": providerName,
       "fcm_token": UserDataManager.getInstance().fcmToken,
       "device": UserDataManager.getInstance().deviceType
-      }
-    );
+    });
 
     final dio = Dio();
     dio.options.headers['Accept'] = 'application/json';
@@ -68,12 +64,12 @@ class RegistrationViewModel with ChangeNotifier, ApiCalling {
           // Successful request
           debugPrint('Request successful!');
           debugPrint('Response body: ${value.data}');
-                  if (value.data != null && value.data is Map) {
+          if (value.data != null && value.data is Map) {
             // response model adding data
             socialModel = SocialModel.fromJson(value.data);
             if (socialModel?.token != null && socialModel?.data != null) {
               // UserDefaults.setToken(registerModel.token!);
-             if (socialModel?.token != null) {
+              if (socialModel?.token != null) {
                 await UserDefaults.setToken(socialModel!.token!);
                 // locator<LocalSecureStorage>().writeIntoSecureStorage(value, key)
                 await UserDefaults.setEmailAndUserName(
@@ -85,29 +81,28 @@ class RegistrationViewModel with ChangeNotifier, ApiCalling {
                     return;
                   }
                   completion(true, 1, 0);
-                }else{
-                   completion(true, 0, 0);
+                } else {
+                  completion(true, 0, 0);
                 }
               }
-              completion(false, 0, 0);              
+              completion(false, 0, 0);
             }
-        } else {
-          // Request failed
-          completion(false, 0, 0);  
-          debugPrint('Request failed with status: ${value.statusCode}');
+          } else {
+            // Request failed
+            completion(false, 0, 0);
+            debugPrint('Request failed with status: ${value.statusCode}');
 
-          isloading = false;
-          notifyListeners();
-        
+            isloading = false;
+            notifyListeners();
+          }
         }
-        
-      }} catch (e) {
+      } catch (e) {
         debugPrint(e.toString());
         isloading = false;
-        completion(false, 0, 0);  
+        completion(false, 0, 0);
         notifyListeners();
       } finally {
-        completion(false, 0, 0);  
+        completion(false, 0, 0);
         isloading = false;
         notifyListeners();
       }
@@ -177,8 +172,11 @@ class RegistrationViewModel with ChangeNotifier, ApiCalling {
       required fullName,
       required void Function(
         bool success,
-      ) completion}) {
+      )
+          completion}) {
     registerApiCalling(
+        lat: UserDataManager.getInstance().lat,
+        long: UserDataManager.getInstance().long,
         fullName: fullName,
         pasword: password,
         email: email,
@@ -212,7 +210,6 @@ class RegistrationViewModel with ChangeNotifier, ApiCalling {
           }
         });
   }
-  
 
   // socialLogin(
   //     {required String email,
@@ -240,7 +237,7 @@ class RegistrationViewModel with ChangeNotifier, ApiCalling {
   //             await UserDefaults.setEmailAndUserName(
   //                 registerModel?.data?.name ?? "",
   //                 registerModel?.data?.email ?? "");
-                  
+
   //             debugPrint(registerModel?.token);
   //           }
   //           //  debugPrint("Response of login " + json.toString());
@@ -270,6 +267,8 @@ mixin ApiCalling {
       {required String email,
       required String pasword,
       required String fullName,
+      required String lat,
+      required String long,
       required BuildContext context,
       bool onForeground = false,
       required void Function(bool success, Map? json) callBack}) async {
@@ -277,7 +276,8 @@ mixin ApiCalling {
     apiCallingProgress = true;
     if (onForeground) {
       AppUtil.showLoader(context: context);
-      ServerManager.register(email, pasword, fullName, (responseBody, success) {
+      ServerManager.register(email, pasword, fullName, lat, long,
+          (responseBody, success) {
         apiCallingProgress = false;
         if (onForeground) {
           AppUtil.dismissLoader(context: context);
@@ -306,6 +306,8 @@ mixin ApiCalling {
       {required String email,
       required String token,
       required providerName,
+      required String lat,
+      required String long,
       required BuildContext context,
       bool onForeground = false,
       required void Function(bool success, Map? json) callBack}) async {
@@ -313,7 +315,7 @@ mixin ApiCalling {
     apiCallingProgress = true;
     if (onForeground) {
       AppUtil.showLoader(context: context);
-      ServerManager.socialLogin(email, token, providerName,
+      ServerManager.socialLogin(email, token, providerName, lat, long,
           (responseBody, success) {
         debugPrint(responseBody.toString());
         apiCallingProgress = false;

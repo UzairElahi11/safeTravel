@@ -49,100 +49,104 @@ class PharmacyListView extends StatelessWidget {
   }
 
   Widget listpharmacies(BuildContext context) {
-    return ListView.builder(
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          return Column(
-            children: [
-              InkWell(
-                onTap: () {
-                  AppUtil.launchUrls(
-                      "google.navigation:q=${pharmacyList[index].lat},${pharmacyList[index].long}&mode=d");
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      color: AppColors.containerBgColor,
-                      borderRadius: BorderRadius.circular(12)),
-                  child: Row(
-                    children: [
-                      Column(
-                        // mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+    return pharmacyList.isEmpty
+        ? const Center(child: Text("No Data Found!"))
+        : ListView.builder(
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      AppUtil.launchUrls(
+                          "google.navigation:q=${pharmacyList[index].lat},${pharmacyList[index].long}&mode=d");
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          color: AppColors.containerBgColor,
+                          borderRadius: BorderRadius.circular(12)),
+                      child: Row(
                         children: [
-                          RichText(
-                              text: TextSpan(
-                                  style: DefaultTextStyle.of(context).style,
-                                  children: <TextSpan>[
-                                const TextSpan(
-                                  text: "Name : ",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                                TextSpan(
-                                  text: pharmacyList[index].name,
-                                  style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500),
-                                )
-                              ])),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                          RichText(
-                              text: TextSpan(
-                                  style: DefaultTextStyle.of(context).style,
-                                  children: <TextSpan>[
-                                const TextSpan(
-                                  text: "Distance : ",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                                TextSpan(
-                                  text: pharmacyList[index].distance.toString(),
-                                  style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500),
-                                )
-                              ])),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                          RichText(
-                              text: TextSpan(
-                                  style: DefaultTextStyle.of(context).style,
-                                  children: <TextSpan>[
-                                const TextSpan(
-                                  text: "Address : ",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                                TextSpan(
-                                  text: pharmacyList[index].streetAddress,
-                                  style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500),
-                                )
-                              ])),
-                          SizedBox(
-                            height: 10.h,
+                          Column(
+                            // mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              RichText(
+                                  text: TextSpan(
+                                      style: DefaultTextStyle.of(context).style,
+                                      children: <TextSpan>[
+                                    const TextSpan(
+                                      text: "Name : ",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    TextSpan(
+                                      text: pharmacyList[index].name,
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500),
+                                    )
+                                  ])),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              RichText(
+                                  text: TextSpan(
+                                      style: DefaultTextStyle.of(context).style,
+                                      children: <TextSpan>[
+                                    const TextSpan(
+                                      text: "Distance : ",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    TextSpan(
+                                      text: pharmacyList[index]
+                                          .distance
+                                          .toString(),
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500),
+                                    )
+                                  ])),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              RichText(
+                                  text: TextSpan(
+                                      style: DefaultTextStyle.of(context).style,
+                                      children: <TextSpan>[
+                                    const TextSpan(
+                                      text: "Address : ",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    TextSpan(
+                                      text: pharmacyList[index].streetAddress,
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500),
+                                    )
+                                  ])),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-              SizedBox(
-                height: 40.h,
-              )
-            ],
-          );
-        },
-        itemCount: pharmacyList.length);
+                  SizedBox(
+                    height: 40.h,
+                  )
+                ],
+              );
+            },
+            itemCount: pharmacyList.length);
   }
 
   Widget headerWidgetTop(BuildContext context) {

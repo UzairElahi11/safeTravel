@@ -20,21 +20,20 @@ class ServerManager {
       String url,
       Map<String, String> headers,
       Map<String, dynamic> body,
-      completion(String responseBody, bool success),
+      Function(String responseBody, bool success) completion,
       bool isform,
       {int timeout = timeOutSeconds}) {
     bool onCallDone = false;
     if (!url.startsWith("http")) {
-      HttpClient httpClient = new HttpClient();
+      HttpClient httpClient = HttpClient();
       httpClient.badCertificateCallback =
           ((X509Certificate cert, String host, int port) => true);
 //      httpClient.idleTimeout = Duration(seconds: timeout);
 //      httpClient.connectionTimeout = Duration(seconds: timeout);
 
-      debugPrint(
-          "url: " + url + " \nBody:" + (body == null ? "" : body.toString()));
+      debugPrint("url: $url \nBody:${body == null ? "" : body.toString()}");
       //TODO REMOVE THIS LATTER
-      print("url: " + url + " \nBody:" + (body == null ? "" : body.toString()));
+      print("url: $url \nBody:${body == null ? "" : body.toString()}");
       try {
         httpClient.postUrl(Uri.parse(url)).then((request) {
           // if (headers != null) {
@@ -62,12 +61,10 @@ class ServerManager {
             response.transform(utf8.decoder).join().then((responseBody) {
               logResponse(url, {}, headers, responseBody, response.statusCode);
 
-              if (response != null &&
-                  response.statusCode == 200 &&
-                  responseBody != null) {
-                debugPrint("responce from server ${responseBody}");
+              if (response.statusCode == 200) {
+                debugPrint("responce from server $responseBody");
                 //TODO REMOVE THIS LATTER
-                print("responce from server ${responseBody}");
+                print("responce from server $responseBody");
                 callCompletion(responseBody, true, completion);
                 //   if (isResponseCodeForReLoginFromResponse(responseBody)) {
                 //     if (Keys.mainNavigatorKey.currentContext != null &&
@@ -107,7 +104,6 @@ class ServerManager {
           }
         });
       } catch (e) {
-        if (e != null) {}
         callCompletion(null, false, completion);
         debugPrint('catch callback');
       } finally {
@@ -137,9 +133,9 @@ class ServerManager {
             .then((http.Response response) {
           onCallDone = true;
           debugPrint("internal reach");
-          log('Response Success $url ${body?.toString()} Header: ${headers?.toString() ?? ""}');
-          if (response != null && response.statusCode == 200) {
-            log("-------" + response.body.toString());
+          log('Response Success $url ${body.toString()} Header: ${headers.toString() ?? ""}');
+          if (response.statusCode == 200) {
+            log("-------${response.body}");
             callCompletion(response.body, true, completion);
           } else {
             debugPrint(
@@ -148,9 +144,9 @@ class ServerManager {
           }
         }).catchError((Object? error) {
           if (error != null && error.runtimeType == String) {
-            debugPrint("response: error " + error.toString());
+            debugPrint("response: error $error");
           }
-          print('error callback catch ' + error.toString());
+          print('error callback catch $error');
           if (onCallDone == false) {
             onCallDone = true;
             callCompletion(null, false, completion);
@@ -161,9 +157,8 @@ class ServerManager {
           client.close;
         });
       } on Function catch (e, _) {
-        if (e != null) {}
         callCompletion(null, false, completion);
-        debugPrint('catch callback' + e.toString());
+        debugPrint('catch callback$e');
       }
     }
   }
@@ -340,13 +335,15 @@ class ServerManager {
     return null;
   }
 
-  static void register(String email, String password, String name,
-      ResponseCompletion completion) {
+  static void register(String email, String password, String name, String lat,
+      String long, ResponseCompletion completion) {
     Map<String, dynamic> json = {
       "email": email,
       "password": password,
       "name": name,
-      "device": UserDataManager.getInstance().deviceType
+      "device": UserDataManager.getInstance().deviceType,
+      "lat": lat,
+      "long": long,
     };
     callPostApi(
         UrlConstants.registration, _defaultHeader(), json, completion, false);
@@ -354,13 +351,15 @@ class ServerManager {
 
   // social login
   static void socialLogin(String email, String token, String providerName,
-      ResponseCompletion completion) {
+      String lat, String long, ResponseCompletion completion) {
     Map<String, dynamic> json = {
       "email": email,
       "token": token,
       "provider_name": providerName,
       "fcm_token": UserDataManager.getInstance().fcmToken,
-      "device": UserDataManager.getInstance().deviceType
+      "device": UserDataManager.getInstance().deviceType,
+      "lat": lat,
+      "long": long,
     };
     callPostApi(
         UrlConstants.socialLogin, _defaultHeader(), json, completion, true);
@@ -409,12 +408,14 @@ class ServerManager {
   }
 
   //payment api
-  static void payment(String cardNumber, String cvv, String expDate,
-      ResponseCompletion completion) {
+  static void payment(String cardNumber, String cvv, String expDate, String lat,
+      String long, ResponseCompletion completion) {
     Map<String, dynamic> json = {
       "card_number": cardNumber.replaceAll("  ", ""),
       "cvv": cvv,
       "expiry": expDate,
+      "lat": lat,
+      "long": long,
     };
     callPostApi(
         UrlConstants.paymentApi, _defaultHeader(), json, completion, false);
@@ -447,141 +448,48 @@ class ServerManager {
         UrlConstants.getPharmacy, _defaultHeader(), json, completion, false);
   }
 
-  static void login(
-      String email, String password, ResponseCompletion completion) {
+  static void login(String email, String password, String lat, String long,
+      ResponseCompletion completion) {
     Map<String, dynamic> json = {
       "email": email,
       "password": password,
       "fcm_token": UserDataManager.getInstance().fcmToken,
-      "device": UserDataManager.getInstance().deviceType
+      "device": UserDataManager.getInstance().deviceType,
+      "lat": lat,
+      "long": long,
     };
     callPostApi(UrlConstants.login, _defaultHeader(), json, completion, false);
   }
 
   static void getLabels(ResponseCompletion completion) {
-    Map<String, dynamic> json = {};
+    Map<String, dynamic> json = {
+      "lat": UserDataManager.getInstance().lat,
+      "long": UserDataManager.getInstance().long,
+    };
     getApiCalling(
         UrlConstants.healthLabels, _defaultHeader(), json, completion);
   }
 
   static void getProfileForm(ResponseCompletion completion) {
-    Map<String, dynamic> json = {};
+    Map<String, dynamic> json = {
+      "lat": UserDataManager.getInstance().lat,
+      "long": UserDataManager.getInstance().long,
+    };
     getApiCalling(
         UrlConstants.profileGetForm, _defaultHeader(), json, completion);
   }
 
-  static void checkuser(String email, ResponseCompletion completion) {
-    Map<String, dynamic> json = {"email": email};
-    // callPostApi(UrlConstants.checkLogin, _defaultHeader(), json, completion);
-  }
-
   static void logout(ResponseCompletion completion) {
-    Map<String, dynamic> json = {};
+    Map<String, dynamic> json = {
+      "lat": UserDataManager.getInstance().lat,
+      "long": UserDataManager.getInstance().long,
+    };
     getApiCalling(UrlConstants.logout, _defaultHeader(), json, completion);
-  }
-
-  static void getAllStation(ResponseCompletion completion) {
-    Map<String, dynamic> json = {};
-    // getApiCalling(
-    //     UrlConstants.getAllStations, _defaultHeader(), json, completion
-    //     );
-  }
-
-  static void getRequestStation(
-    String stationId,
-    ResponseCompletion completion,
-  ) {
-    Map<String, dynamic> json = {};
-    // getApiCalling("${UrlConstants.powerBankRequest}?station_id=$stationId",
-    //     _defaultHeader(), json, completion);
-  }
-
-  static void getUserInfo(
-    ResponseCompletion completion,
-  ) {
-    Map<String, dynamic> json = {};
-    // getApiCalling(UrlConstants.getUserInfo, _defaultHeader(), json, completion);
-  }
-
-  static void getSearch(
-    String text,
-    ResponseCompletion completion,
-  ) {
-    Map<String, dynamic> json = {};
-    // getApiCalling("${UrlConstants.search}?search=$text", _defaultHeader(), json,
-    //     completion);
-  }
-
-  static void updateProfile(
-      String email, String name, String phone, ResponseCompletion completion) {
-    Map<String, dynamic> json = {"email": email, "phone": phone, "name": name};
-    // callPostApi(UrlConstants.updateProfile, _defaultHeader(), json, completion);
-  }
-
-  static void reportIssue(
-      String deviceId, String message, ResponseCompletion completion) {
-    Map<String, dynamic> json = {"device_id": deviceId, "error": message};
-    // callPostApi(UrlConstants.reportProblem, _defaultHeader(), json, completion);
   }
 
   static _defaultHeader() {
     Map<String, String> requestHeaders = {};
 
     return requestHeaders;
-  }
-
-  static void getRentalAcitivity(
-    ResponseCompletion completion,
-  ) {
-    Map<String, dynamic> json = {};
-    // getApiCalling(
-    //     UrlConstants.rentalActivity, _defaultHeader(), json, completion);
-  }
-
-  static void getWalletInfo(
-    ResponseCompletion completion,
-  ) {
-    Map<String, dynamic> json = {};
-    // getApiCalling(UrlConstants.getWallet, _defaultHeader(), json, completion);
-  }
-
-  static void deleteAccount(
-    ResponseCompletion completion,
-  ) {
-    Map<String, dynamic> json = {};
-    // getApiCalling(
-    //     UrlConstants.deleteAccount, _defaultHeader(), json, completion);
-  }
-
-  static void getSubscription(
-    ResponseCompletion completion,
-  ) {
-    Map<String, dynamic> json = {};
-    // getApiCalling(
-    //     UrlConstants.getSubscription, _defaultHeader(), json, completion);
-  }
-
-  static void setSubScription(
-      String paymentMethodId, String planId, ResponseCompletion completion) {
-    Map<String, dynamic> json = {
-      "payment_method_id": paymentMethodId,
-      "price_id": planId
-    };
-    // callPostApi(
-    //     UrlConstants.setSubScription, _defaultHeader(), json, completion);
-  }
-
-  static void getPromoCode(
-    ResponseCompletion completion,
-  ) {
-    Map<String, dynamic> json = {};
-    // getApiCalling(
-    //     UrlConstants.getReferalCode, _defaultHeader(), json, completion);
-  }
-
-  static void activateReferalCode(String code, ResponseCompletion completion) {
-    Map<String, dynamic> json = {"code": code};
-    // callPostApi(
-    //     UrlConstants.activateReferalCode, _defaultHeader(), json, completion);
   }
 }

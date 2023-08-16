@@ -36,6 +36,13 @@ class UserDefaults {
     return skipValue;
   }
 
+  static clearAllData() async {
+    SharedPreferences sharedPreferencesGet =
+        await SharedPreferences.getInstance();
+
+    sharedPreferencesGet.clear();
+  }
+
   /// get the payment skip from the local storage
   static getSkipPaymentFromLocalStorage<String>() async {
     SharedPreferences sharedPreferencesGet =
@@ -71,11 +78,23 @@ class UserDefaults {
     return getToken;
   }
 
+  static clearPayment() async {
+    SharedPreferences sharedPreferencesGet =
+        await SharedPreferences.getInstance();
+    sharedPreferencesGet.remove(isPayment);
+  }
+
   static getIsForm<String>() async {
     SharedPreferences sharedPreferencesGet =
         await SharedPreferences.getInstance();
     final getToken = sharedPreferencesGet.getString(isFormPosted);
     return getToken;
+  }
+
+  static clearform() async {
+    SharedPreferences sharedPreferencesGet =
+        await SharedPreferences.getInstance();
+    sharedPreferencesGet.remove(isFormPosted);
   }
 
   //GET THE email FROM THE LOCAL STORAGE

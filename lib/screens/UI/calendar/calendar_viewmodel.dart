@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -6,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:safe/constants/keys.dart';
+import 'package:safe/screens/UI/user_details/user_data_manager.dart';
 
 import '../../../Utils/app_util.dart';
 import '../../../Utils/user_defaults.dart';
@@ -83,9 +83,10 @@ class CalendarViewModel extends ChangeNotifier implements TickerProvider {
         "childrens": familyMembersList[1]['numberOfMembers'],
         "new_borns": familyMembersList[2]['numberOfMembers'],
         "members": maintingUserDetails
-      }
+      },
+      "lat": UserDataManager.getInstance().lat,
+      "long": UserDataManager.getInstance().long,
     };
-    log("body to be posted is $bodyToBePosted");
 
     const String valueUrl = "http://staysafema.com/api/create-booking";
 

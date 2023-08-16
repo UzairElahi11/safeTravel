@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'dart:io' as io;
 import 'package:flutter/material.dart';
 import 'package:safe/Utils/app_util.dart';
+import 'package:safe/screens/UI/user_details/user_data_manager.dart';
 import 'package:safe/server_manager/server_manager.dart';
 
 import '../../../constants/keys.dart';
@@ -64,8 +65,10 @@ class ProfileViewModel with ChangeNotifier, ApiCalling, UpdateBooking {
           "disabilities": updatedDisabilityList,
           "old_health_reports": [],
           "health_reports": []
-        }
-      ]
+        },
+      ],
+      "lat": UserDataManager.getInstance().lat,
+      "long": UserDataManager.getInstance().long,
     };
 
     updateBookingFunc(
@@ -90,7 +93,6 @@ class ProfileViewModel with ChangeNotifier, ApiCalling, UpdateBooking {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       getProfileForm(context: context, completion: (success) {});
     });
-
   }
 
   void showToasterPolice(BuildContext context) {

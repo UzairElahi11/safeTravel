@@ -9,6 +9,7 @@ import 'package:safe/screens/UI/payment/carValidation.dart';
 import 'package:safe/server_manager/server_manager.dart';
 
 import '../../../constants/keys.dart';
+import '../user_details/user_data_manager.dart';
 
 class PaymentViewModel with ChangeNotifier, paymentApiCallingClass {
   TextEditingController cardNumberController = TextEditingController();
@@ -66,6 +67,8 @@ class PaymentViewModel with ChangeNotifier, paymentApiCallingClass {
       )
           completion}) {
     paymentApiCalling(
+      lat: UserDataManager.getInstance().lat,
+      long: UserDataManager.getInstance().long,
         cardNumber: cardNumberController.text,
         cvv: cvvController.text,
         expDate: expController.text,
@@ -136,6 +139,8 @@ mixin paymentApiCallingClass {
       {required String cardNumber,
       required String cvv,
       required String expDate,
+      required String lat,
+      required String long,
       required BuildContext context,
       bool onForeground = false,
       required void Function(bool success, Map? json) callBack}) async {
@@ -143,7 +148,8 @@ mixin paymentApiCallingClass {
     apiCallingProgress = true;
     if (onForeground) {
       AppUtil.showLoader(context: context);
-      ServerManager.payment(cardNumber, cvv, expDate, (responseBody, success) {
+      ServerManager.payment(cardNumber, cvv, expDate, lat, long,
+          (responseBody, success) {
         apiCallingProgress = false;
         if (onForeground) {
           AppUtil.dismissLoader(context: context);

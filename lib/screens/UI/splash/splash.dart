@@ -17,8 +17,6 @@ import 'package:safe/screens/UI/login/login.dart';
 import 'package:safe/screens/UI/payment/payment_view.dart';
 import 'package:safe/screens/UI/user_details/user_data_manager.dart';
 
-import '../../../Utils/app_images_path.dart';
-import '../../../Utils/generics/generic_svg_image.dart';
 import '../user_details/userDetails.dart';
 
 class Splash extends StatefulWidget {
@@ -77,7 +75,7 @@ class _SplashState extends State<Splash> {
                 ? currentLocation!.latitude.toString()
                 : "";
             UserDataManager.getInstance().long = currentLocation != null
-                ? currentLocation!.latitude.toString()
+                ? currentLocation!.longitude.toString()
                 : "";
             await locator<LocalSecureStorage>()
                 .readSecureStorage(AppUtil.isTermsAndConditionsAccepted);
