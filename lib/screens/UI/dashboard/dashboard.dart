@@ -15,6 +15,7 @@ import 'package:safe/screens/UI/dashboard/pharmacyListView.dart';
 import 'package:safe/screens/UI/editForm/editFormView.dart';
 import 'package:safe/screens/UI/login/login.dart';
 import 'package:stacked/stacked.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../payment/payment_view.dart';
@@ -48,7 +49,20 @@ class DashboardView extends StatelessWidget {
                     ),
                     ListTile(
                       title: const Text("Privacy policy"),
-                      onTap: () {},
+                      onTap: () async {
+                        {
+                          const url =
+                              'https://staysafema.com/page/privacy-policy';
+                          if (await canLaunch(url)) {
+                            await launch(
+                              url,
+                              forceWebView: true,
+                            );
+                          } else {
+                            throw 'Could not launch $url';
+                          }
+                        }
+                      },
                     ),
                     ListTile(
                       title: const Text("Logout"),

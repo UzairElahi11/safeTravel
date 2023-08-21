@@ -1,5 +1,6 @@
 {
-  "welcomeMessage": "Bienvenido a \nMantenerse segura marruecos",
+  "welcomeMessage": "Bienvenido a \n mantente segura",
+  "staySafe" : "Mantente segura",
   "welcomeScreenDetailsText": "Explorar los paisajes encantadores y la cultura vibrante mientras prioriza su bienestar con medidas de seguridad sólidas",
   "drpLanguageHintText": "Seleccione el idioma",
   "btnNextText": "Próxima",
@@ -9,7 +10,7 @@
   "emailAddress": "info@staysafemorocco.com",
   "introductions": "Introducción",
   "welcomeText": "Bienvenida a",
-  "staySafeText": "Mantente segura marruecos",
+  "staySafeText": "Mantente Segura Marruecos",
   "loginText": "Acceso",
   "continueText": "O continuar con",
   "futhureAssistanceText": "Para obtener más ayuda y consultas, comuníquese con nosotros al +123456789 o envíenos un correo electrónico a info@staysafemorocco.com.",

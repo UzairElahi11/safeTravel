@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:safe/Utils/app_colors.dart';
+import 'package:safe/constants/keys.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/screens/controllers/introduction/into_viewmodel.dart';
 import 'package:safe/Utils/generics/generic_text.dart';
@@ -96,7 +97,7 @@ class IntroView extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 10.h),
         height: 70.h,
         decoration: BoxDecoration(
-          color: !model.checkBox ?  Colors.grey :  AppColors.baseColor,
+          color: !model.checkBox ? Colors.grey : AppColors.baseColor,
           borderRadius: BorderRadius.circular(25),
         ),
         child: const Center(
@@ -124,7 +125,10 @@ class IntroView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SvgPicture.asset(AppImages.backArrow),
+        GestureDetector(
+            onTap: () =>
+                Navigator.pop(Keys.mainNavigatorKey.currentState!.context),
+            child: SvgPicture.asset(AppImages.backArrow)),
         SizedBox(
           width: 100.h,
         ),

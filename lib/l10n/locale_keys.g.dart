@@ -2,6 +2,7 @@
 
 abstract class LocaleKeys {
   static const welcomeMessage = 'welcomeMessage';
+  static const staySafe = "staySafe";
   static const welcomeScreenDetailsText = 'welcomeScreenDetailsText';
   static const drpLanguageHintText = 'drpLanguageHintText';
   static const btnNextText = 'btnNextText';

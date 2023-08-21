@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:lottie/lottie.dart';
@@ -185,38 +185,38 @@ class AppUtil {
         });
   }
 
-  static void showFCMNotificationForIOS(
-      {required RemoteMessage remoteMessage}) {
-    // AppUtil.showLog(LoggerConstants.firebaseLoggerKey, "json:::${remoteMessage.notification.title}");
+  // static void showFCMNotificationForIOS(
+  //     {required RemoteMessage remoteMessage}) {
+  //   // AppUtil.showLog(LoggerConstants.firebaseLoggerKey, "json:::${remoteMessage.notification.title}");
 
-    // NotificationPayLoadResponseModel model = NotificationPayLoadResponseModel.fromNotification(remoteMessage);
+  //   // NotificationPayLoadResponseModel model = NotificationPayLoadResponseModel.fromNotification(remoteMessage);
 
-    ///insert into the local db
-    // LocalDbUtil.getInstance().insertFCMNotificationData(fcmTitle: remoteMessage?.notification?.title ?? "", fcmBody: remoteMessage?.notification?.body ?? "");
-    // if (model != null) {
-    // FlutterLocalNotificationsPlugin().show(
-    //   remoteMessage.notification.title.hashCode,
-    //   remoteMessage.notification.title,
-    //   remoteMessage.notification.body,
-    //   const NotificationDetails(
-    //       iOS: IOSNotificationDetails(
-    //         presentAlert: true,
-    //         presentBadge: true,
-    //         presentSound: true,
-    //       )), /*payload: AppUtil.getEncodedJSONString(model.toJson())*/
-    // );
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      //AppUtil.showLog(LoggerConstants.firebaseLoggerKey, 'A new onMessageOpenedApp event was published!');
-    });
-    // }
-    remoteMessage.data.clear();
-    //todo:: handle below
-    // if (UserDataManager.getInstance().isUserAlreadyLoggedIn()) {
-    //   ///user logged in
-    // } else {
-    //   ///user not logged in
-    // }
-  }
+  //   ///insert into the local db
+  //   // LocalDbUtil.getInstance().insertFCMNotificationData(fcmTitle: remoteMessage?.notification?.title ?? "", fcmBody: remoteMessage?.notification?.body ?? "");
+  //   // if (model != null) {
+  //   // FlutterLocalNotificationsPlugin().show(
+  //   //   remoteMessage.notification.title.hashCode,
+  //   //   remoteMessage.notification.title,
+  //   //   remoteMessage.notification.body,
+  //   //   const NotificationDetails(
+  //   //       iOS: IOSNotificationDetails(
+  //   //         presentAlert: true,
+  //   //         presentBadge: true,
+  //   //         presentSound: true,
+  //   //       )), /*payload: AppUtil.getEncodedJSONString(model.toJson())*/
+  //   // );
+  //   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+  //     //AppUtil.showLog(LoggerConstants.firebaseLoggerKey, 'A new onMessageOpenedApp event was published!');
+  //   });
+  //   // }
+  //   remoteMessage.data.clear();
+  //   //todo:: handle below
+  //   // if (UserDataManager.getInstance().isUserAlreadyLoggedIn()) {
+  //   //   ///user logged in
+  //   // } else {
+  //   //   ///user not logged in
+  //   // }
+  // }
 
   static void pop(
       {required BuildContext context,
