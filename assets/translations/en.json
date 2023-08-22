@@ -11,9 +11,10 @@
   "introductions": "Introduction",
   "welcomeText": "Welcome to",
   "staySafeText": "Stay Safe Morocco",
+  "privacyPolicy": "Privacy Policy",
   "loginText": "Log In",
   "continueText": "Or Continue with",
-  "futhureAssistanceText": "For further assistance and inquiries, please reach us at +123456789 or email us at info@staysafemorocco.com.",
+  "futhureAssistanceText": "For further assistance and inquiries, please reach us at +21266664076 or email us at info@staysafemorocco.com.",
   "contactInfoText": "Contact Info",
   "signUpButtonText": "Sign up",
   "emailValidatorErrorText": "Email Required",
@@ -56,9 +57,10 @@
   "police": "Government police",
   "pharmacy": "Pharmacy",
   "medical": "Medical Health",
-  "addPicture": "Add picture",
+  "addHealthReport": "Add Health Report",
   "upload": "Upload",
   "pharmacyList": "Pharmacy List",
   "profile": "Profile",
-  "skip": "Skip"
+  "skip": "Skip",
+  "noMoreImagesText" : "Can not select more than 3 pictures"
 }

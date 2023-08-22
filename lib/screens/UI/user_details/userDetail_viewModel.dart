@@ -10,18 +10,16 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/extensions/string.extension.dart';
+import 'package:safe/Utils/generics/generic_text.dart';
 import 'package:safe/Utils/user_defaults.dart';
 import 'package:safe/Utils/validator/textformfield_model.dart';
 import 'package:safe/Utils/validator/textformfield_validator.dart';
 import 'package:safe/constants/keys.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/locator.dart';
-import 'package:safe/screens/UI/calendar/calendar_viewmodel.dart';
-import 'package:safe/screens/UI/disablity/disability_viewmodel.dart';
 
 import '../../../model/get_labels.dart';
 import '../../../server_manager/server_manager.dart';
-import '../add_family_members/add_family_members_viewmodel.dart';
 import '../disablity/disablity.dart';
 import '../payment/payment_view.dart';
 
@@ -141,6 +139,8 @@ class UserDetailsViewModel extends ChangeNotifier
           })
           .map((entry) => listData![3][entry.key])
           .toList();
+
+      log("health list here $healthCheckList");
       selectedHealthIssueList = healthCheckList
           .asMap()
           .entries
@@ -157,6 +157,9 @@ class UserDetailsViewModel extends ChangeNotifier
           .where((entry) {
             int index = entry.key;
             bool value = entry.value;
+
+            log("index is $index");
+            log("data is ${listData![1].length}");
             return value && index < listData![1].length;
           })
           .map((entry) => listData![1][entry.key])
@@ -295,11 +298,11 @@ class UserDetailsViewModel extends ChangeNotifier
 
   Future<void> selectImageReport() async {
     try {
-      if (base64Images.length > 3) {
+      if (reports.length >= 3) {
         ScaffoldMessenger.maybeOf(Keys.mainNavigatorKey.currentState!.context)!
             .showSnackBar(
           const SnackBar(
-            content: Text("Can not select more than 3 pictures"),
+            content: GenericText("Can not select more than 3 pictures"),
           ),
         );
       } else {
@@ -380,6 +383,7 @@ class UserDetailsViewModel extends ChangeNotifier
   addItem(int index) {
     listData![index].add(addItemsController.text);
     addNewBoolToListWhenAddNewItem(index);
+
     notifyListeners();
 
     addItemsController.clear();
@@ -403,6 +407,8 @@ class UserDetailsViewModel extends ChangeNotifier
     if (mainIndex == 0) {
       return healthCheckList[index];
     } else if (mainIndex == 1) {
+      log("log data is $medicalCheckList");
+
       return medicalCheckList[index];
     } else if (mainIndex == 2) {
       return foodAlergiesList[index];
@@ -413,13 +419,14 @@ class UserDetailsViewModel extends ChangeNotifier
 
   addNewBoolToListWhenAddNewItem(int mainIndex) {
     if (mainIndex == 0) {
-      healthCheckList.add(false);
+      healthCheckList.add(true);
     } else if (mainIndex == 1) {
-      medicalCheckList.add(false);
+      log("log data is $medicalCheckList");
+      medicalCheckList.add(true);
     } else if (mainIndex == 2) {
-      foodAlergiesList.add(false);
+      foodAlergiesList.add(true);
     } else {
-      disablitiesList.add(false);
+      disablitiesList.add(true);
     }
   }
 

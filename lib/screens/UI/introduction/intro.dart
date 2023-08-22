@@ -8,6 +8,7 @@ import 'package:safe/screens/controllers/introduction/into_viewmodel.dart';
 import 'package:safe/Utils/generics/generic_text.dart';
 import 'package:stacked/stacked.dart';
 import 'package:safe/Utils/app_images_path.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class IntroView extends StatelessWidget {
   static const id = "/IntroView";
@@ -44,6 +45,34 @@ class IntroView extends StatelessWidget {
                         height: 50.h,
                       ),
                       checkBoxRow(model),
+                      GestureDetector(
+                        onTap: () async {
+                          {
+                            const url =
+                                'https://staysafema.com/page/privacy-policy';
+                            if (await canLaunch(url)) {
+                              await launch(
+                                url,
+                                forceWebView: true,
+                              );
+                            } else {
+                              throw 'Could not launch $url';
+                            }
+                          }
+                        },
+                        child: Center(
+                          child: GenericText(
+                            LocaleKeys.privacyPolicy,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                // decoration: TextDecoration.underline,
+                                color: AppColors.baseColor),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
                       emailContainer(),
                     ],
                   ),

@@ -167,6 +167,7 @@ class UserDetailHeathCondition extends StatelessWidget {
                     ),
                     child: Image.file(
                       model.reports[index]!,
+                      fit: BoxFit.cover,
                     ),
                   );
                 },
@@ -179,7 +180,7 @@ class UserDetailHeathCondition extends StatelessWidget {
           height: 70.h,
           width: double.infinity,
           padding: EdgeInsets.symmetric(horizontal: 450.w),
-          text: LocaleKeys.addPicture,
+          text: LocaleKeys.addHealthReport,
           leading: Icon(Icons.add, color: AppColors.whiteColor),
           textStyle: AppStyles.mediumBold16.copyWith(
             color: AppColors.whiteColor,

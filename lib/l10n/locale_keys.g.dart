@@ -10,6 +10,7 @@ abstract class LocaleKeys {
   static const next = 'next';
   static const skip = 'skip';
   static const acceptTC = 'acceptTC';
+  static const privacyPolicy = 'privacyPolicy';
   static const emailAddress = 'emailAddress';
   static const introductions = 'introductions';
   static const welcomeText = 'welcomeText';
@@ -58,8 +59,9 @@ abstract class LocaleKeys {
   static const medical = "medical";
   static const police = "police";
   static const pharmacy = "pharmacy";
-  static const addPicture = "addPicture";
+  static const addHealthReport = "addHealthReport";
   static const upload = "upload";
   static const pharmacyList = "pharmacyList";
   static const profile = "profile";
+  static const noMoreImagesText = "noMoreImagesText";
 }
