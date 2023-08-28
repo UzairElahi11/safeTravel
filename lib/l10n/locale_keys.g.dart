@@ -64,4 +64,5 @@ abstract class LocaleKeys {
   static const pharmacyList = "pharmacyList";
   static const profile = "profile";
   static const noMoreImagesText = "noMoreImagesText";
+  static const selectedDepartureDate = "selectedDepartureDate";
 }

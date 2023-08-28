@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +15,8 @@ import '../user_details/userDetail_viewModel.dart';
 
 class CalendarViewModel extends ChangeNotifier implements TickerProvider {
   DateTime arrivalfocusDay = DateTime.now();
-  DateTime departureFocusDay = DateTime.now().add(
-    const Duration(days: 1),
-  );
+  DateTime? departureFocusDay;
+
 
   bool isloading = false;
 
@@ -43,7 +41,7 @@ class CalendarViewModel extends ChangeNotifier implements TickerProvider {
   }
 
   String formateDepartureDate() {
-    return DateFormat('yyyy/MM/dd').format(departureFocusDay);
+    return DateFormat('yyyy/MM/dd').format(departureFocusDay!);
   }
 
   @override
@@ -76,7 +74,12 @@ class CalendarViewModel extends ChangeNotifier implements TickerProvider {
       },
       "booking": {
         "arrival": DateFormat('yyyy/MM/dd').format(arrivalfocusDay),
-        "departure": DateFormat('yyyy/MM/dd').format(departureFocusDay),
+        "departure": DateFormat('yyyy/MM/dd').format(
+          departureFocusDay ??
+              arrivalfocusDay.add(
+                const Duration(days: 1),
+              ),
+        ),
       },
       "family_members": {
         "adults": familyMembersList[0]['numberOfMembers'],

@@ -30,6 +30,8 @@ class _ArrivalCalendarState extends State<ArrivalCalendar> {
         },
         currentDay: model.arrivalfocusDay,
         headerStyle: HeaderStyle(
+            formatButtonShowsNext: false,
+            formatButtonVisible: false,
             decoration: BoxDecoration(
               color: AppColors.whiteColor,
             ),
@@ -96,6 +98,8 @@ class _DepartureCalendatState extends State<DepartureCalendat> {
         },
         currentDay: model.departureFocusDay,
         headerStyle: HeaderStyle(
+            formatButtonShowsNext: false,
+            formatButtonVisible: false,
             decoration: BoxDecoration(
               color: AppColors.whiteColor,
             ),
@@ -122,8 +126,12 @@ class _DepartureCalendatState extends State<DepartureCalendat> {
         daysOfWeekStyle: DaysOfWeekStyle(
           weekendStyle: TextStyle(color: AppColors.redColor),
         ),
-        focusedDay: model.departureFocusDay,
-        firstDay: DateTime.now(),
+        focusedDay: model.arrivalfocusDay.add(
+          Duration(days: 3),
+        ),
+        firstDay: model.arrivalfocusDay.add(
+          Duration(days: 1),
+        ),
         lastDay: DateTime(2050),
         calendarFormat: CalendarFormat.month,
         startingDayOfWeek: StartingDayOfWeek.sunday,

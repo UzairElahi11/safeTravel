@@ -62,5 +62,6 @@
   "pharmacyList": "Pharmacy List",
   "profile": "Profile",
   "skip": "Skip",
-  "noMoreImagesText" : "Can not select more than 3 pictures"
+  "noMoreImagesText" : "Can not select more than 3 pictures",
+  "selectedDepartureDate": "Please select the departure date"
 }

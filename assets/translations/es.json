@@ -62,6 +62,8 @@
   "pharmacyList": "Lista de farmacias",
   "profile": "Perfil",
   "skip": "saltar",
-  "noMoreImagesText" : "No se pueden seleccionar más de 3 imágenes."
+  "noMoreImagesText" : "No se pueden seleccionar más de 3 imágenes.",
+  "selectedDepartureDate": "Por favor seleccione la fecha de salida"
+
 
 }

@@ -86,35 +86,9 @@ class Calendar extends StatelessWidget {
                           ],
                         ),
                       ),
-                      // SizedBox(
-                      //   height: 30.h,
-                      // ),
-                      // Row(
-                      //   children: [
-                      //     Switch.adaptive(
-                      //       thumbColor:
-                      //           MaterialStateProperty.all(AppColors.whiteColor),
-                      //       activeColor: AppColors.baseColor,
-                      //       value: model.switchValue,
-                      //       onChanged: (value) {
-                      //         model.changeSwitchValue();
-                      //       },
-                      //     ),
-                      //     Expanded(
-                      //       child: GenericText(
-                      //         LocaleKeys.sendLocationInEmergency,
-                      //         style: AppStyles.medium14.copyWith(
-                      //           color: AppColors.blackColor,
-                      //           fontWeight: FontWeight.w400,
-                      //         ),
-                      //       ),
-                      //     )
-                      //   ],
-                      // ),
                       SizedBox(
                         height: 40.h,
                       ),
-
                       model.isloading
                           ? const Center(
                               child: CircularProgressIndicator.adaptive(),
@@ -122,28 +96,16 @@ class Calendar extends StatelessWidget {
                           : GenericButton(
                               height: 70.h,
                               onPressed: () async {
-                                // model.isLoading
-                                //     ? showDialog(
-                                //         context:
-                                //             Keys.mainNavigatorKey.currentState!.context,
-                                //         barrierDismissible: false,
-                                //         useRootNavigator: true,
-                                //         builder: (context) {
-                                //           return WillPopScope(
-                                //             onWillPop: () async => false,
-                                //             child: Center(
-                                //               child: SizedBox(
-                                //                 height:
-                                //                     DynamicSize.width(0.45, context),
-                                //                 width: DynamicSize.width(0.45, context),
-                                //                 child: Lottie.asset(
-                                //                     "assets/lottie/loader.json"),
-                                //               ),
-                                //             ),
-                                //           );
-                                //         })
-                                //     : SizedBox();
-                                await model.createBooking(body);
+                                model.departureFocusDay == null
+                                    ? ScaffoldMessenger.of(context)
+                                        .showSnackBar(
+                                        const SnackBar(
+                                          content: GenericText(
+                                            LocaleKeys.selectedDepartureDate,
+                                          ),
+                                        ),
+                                      )
+                                    : await model.createBooking(body);
                               },
                               text: LocaleKeys.next,
                               textStyle: AppStyles.mediumBold16.copyWith(
