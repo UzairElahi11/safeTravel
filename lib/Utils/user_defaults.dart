@@ -44,10 +44,10 @@ class UserDefaults {
   }
 
   /// get the payment skip from the local storage
-  static getSkipPaymentFromLocalStorage<String>() async {
+ static Future<String> getSkipPaymentFromLocalStorage() async {
     SharedPreferences sharedPreferencesGet =
         await SharedPreferences.getInstance();
-    final getLocalSkip = sharedPreferencesGet.getString(skip);
+    final getLocalSkip = sharedPreferencesGet.getString(skip) ?? "";
     return getLocalSkip;
   }
 
@@ -61,6 +61,10 @@ class UserDefaults {
     nameUser = name;
     return name;
   }
+
+
+
+
 
   //GET THE TOKEN FROM THE LOCAL STORAGE
   static getToken<String>() async {

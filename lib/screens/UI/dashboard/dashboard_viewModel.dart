@@ -45,8 +45,9 @@ class DashboardViewModel with ChangeNotifier, ApiCalling {
   /// can directly call the api
 
   Future<String> readSkipValueLocally() async {
-    skipvalue = await UserDefaults.getSkipPaymentFromLocalStorage();
-
+    await UserDefaults.getSkipPaymentFromLocalStorage().then(
+      (value) => skipvalue = value,
+    );
 
     return skipvalue;
   }
