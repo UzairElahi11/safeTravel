@@ -17,7 +17,6 @@ class CalendarViewModel extends ChangeNotifier implements TickerProvider {
   DateTime arrivalfocusDay = DateTime.now();
   DateTime? departureFocusDay;
 
-
   bool isloading = false;
 
   late TabController _tabController;
@@ -110,8 +109,7 @@ class CalendarViewModel extends ChangeNotifier implements TickerProvider {
               builder: (BuildContext context) {
                 return AlertDialog(
                   title: const Text("Police"),
-                  content: const Text(
-                      "Police is on way at you current location please wait and and be safe"),
+                  content: const Text("Error"),
                   actions: <Widget>[
                     TextButton(
                       onPressed: () {

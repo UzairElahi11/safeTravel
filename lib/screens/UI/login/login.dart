@@ -7,6 +7,7 @@ import 'package:safe/Utils/app_colors.dart';
 import 'package:safe/Utils/app_text_styles.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/extensions/string.extension.dart';
+import 'package:safe/Utils/user_defaults.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/screens/UI/dashboard/dashboard.dart';
 import 'package:safe/screens/UI/payment/payment_view.dart';
@@ -178,16 +179,18 @@ class Login extends StatelessWidget {
                                 email: model.emailController.text,
                                 context: context,
                                 password: model.passwordController.text,
-                                completion: (check, form, isPayment) {
+                                completion: (check, form, isPayment) async {
                                   model.showToaster(context);
                                   if (check) {
                                     if (form == 1 && isPayment == 1) {
+                                       await  UserDefaults.setIsFormPosted("1");
                                       AppUtil.pushRoute(
                                         pushReplacement: true,
                                         context: context,
                                         route: const DashboardView(),
                                       );
                                     } else if (form == 1 && isPayment == 0) {
+                                       await  UserDefaults.setIsFormPosted("1");
                                       AppUtil.pushRoute(
                                         pushReplacement: true,
                                         context: context,

@@ -91,8 +91,8 @@ class UserDefaults {
   static getIsForm<String>() async {
     SharedPreferences sharedPreferencesGet =
         await SharedPreferences.getInstance();
-    final getToken = sharedPreferencesGet.getString(isFormPosted);
-    return getToken;
+    final formValidation =  sharedPreferencesGet.getString(isFormPosted);
+    return formValidation;
   }
 
   static clearform() async {

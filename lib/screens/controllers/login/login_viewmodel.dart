@@ -106,8 +106,8 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
       required void Function(bool success, int formFillForm, int isPaymenDone)
           completion}) {
     loginApiCalling(
-      lat: UserDataManager.getInstance().lat,
-      long: UserDataManager.getInstance().long,
+        lat: UserDataManager.getInstance().lat,
+        long: UserDataManager.getInstance().long,
         pasword: password,
         email: email,
         context: context,
@@ -236,15 +236,19 @@ class LoginViewModel with ChangeNotifier, loginApiCallingClass {
           token: user.credential!.accessToken.toString(),
           userName: user.user?.displayName ?? "",
           providerName: "facebook",
-          completion: (check, form, isPayment) {
+          completion: (check, form, isPayment) async {
             showToaster(context);
             if (check) {
               if (form == 1 && isPayment == 1) {
+              await  UserDefaults.setIsFormPosted("1");
+                // ignore: use_build_context_synchronously
                 AppUtil.pushRoute(
                     context: context,
                     route: const DashboardView(),
                     pushReplacement: true);
               } else if (form == 1 && isPayment == 0) {
+                await UserDefaults.setIsFormPosted("1");
+                // ignore: use_build_context_synchronously
                 AppUtil.pushRoute(
                   context: context,
                   route: const PaymentView(),

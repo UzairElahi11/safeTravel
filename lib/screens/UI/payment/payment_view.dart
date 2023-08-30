@@ -25,7 +25,7 @@ class PaymentView extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 100.w),
           child: ViewModelBuilder<PaymentViewModel>.reactive(
             onViewModelReady: (model) {
-              // model.checkingEmailText();
+              model.init(context);
             },
             viewModelBuilder: () => PaymentViewModel(),
             builder: (context, model, _) {
@@ -79,7 +79,7 @@ class PaymentView extends StatelessWidget {
                                         fontWeight: FontWeight.w500),
                                   ),
                                   GenericText(
-                                    "\$344",
+                                    "\$${model.price}",
                                     style: TextStyle(
                                         color: AppColors.color5E5D5D,
                                         fontSize: 16,
@@ -102,7 +102,7 @@ class PaymentView extends StatelessWidget {
                                         fontWeight: FontWeight.w500),
                                   ),
                                   GenericText(
-                                    "\$4.00",
+                                    model.tax,
                                     style: TextStyle(
                                         color: AppColors.color5E5D5D,
                                         fontSize: 16,
@@ -125,7 +125,30 @@ class PaymentView extends StatelessWidget {
                                         fontWeight: FontWeight.w500),
                                   ),
                                   GenericText(
-                                    "\$344",
+                                    "\$${model.priceAfterText}",
+                                    style: TextStyle(
+                                        color: AppColors.color5E5D5D,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 20.h,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  GenericText(
+                                    LocaleKeys.discount,
+                                    style: TextStyle(
+                                        color: AppColors.color232323,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  GenericText(
+                                    "\$${model.discount}",
                                     style: TextStyle(
                                         color: AppColors.color5E5D5D,
                                         fontSize: 16,

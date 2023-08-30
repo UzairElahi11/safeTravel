@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:safe/Utils/app_util.dart';
+import 'package:safe/Utils/user_defaults.dart';
 import 'package:safe/constants/keys.dart';
 import 'package:safe/screens/UI/dashboard/dashboard.dart';
 import 'package:safe/screens/UI/payment/payment_view.dart';
@@ -63,16 +64,18 @@ class Authenticate {
           token: credential.accessToken.toString(),
           userName: firebaseAuth.currentUser?.displayName ?? "",
           providerName: "google",
-           completion: (check, form, isPayment) {
+           completion: (check, form, isPayment) async {
                                   // showToaster(context);
                                   if (check) {
                                     if (form == 1 && isPayment == 1) {
+                                       await  UserDefaults.setIsFormPosted("1");
                                       AppUtil.pushRoute(
                                         context: Keys.mainNavigatorKey.currentState!.context,
                                         route: const DashboardView(),
                                         pushReplacement: true
                                       );
                                     } else if (form == 1 && isPayment == 0) {
+                                       await  UserDefaults.setIsFormPosted("1");
                                       AppUtil.pushRoute(
                                         context: Keys.mainNavigatorKey.currentState!.context,
                                         route: const PaymentView(),

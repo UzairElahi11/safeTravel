@@ -210,7 +210,7 @@ class ProfileViewModel with ChangeNotifier, ApiCalling, UpdateBooking {
                 checkboxStates.add(
                   List.generate(
                     savingTheListsDataFromDataObject[i].length,
-                    (index) => false,
+                    (index) => true,
                   ),
                 );
               }
@@ -242,7 +242,7 @@ class ProfileViewModel with ChangeNotifier, ApiCalling, UpdateBooking {
   ) {
     savingTheListsDataFromDataObject[index].add(addItemsController.text);
 
-    checkboxStates[index].add(false);
+    checkboxStates[index].add(true);
 
     notifyListeners();
 

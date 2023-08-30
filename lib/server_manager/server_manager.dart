@@ -22,6 +22,7 @@ class ServerManager {
       Map<String, dynamic> body,
       Function(String responseBody, bool success) completion,
       bool isform,
+      bool isUpdateProfile,
       {int timeout = timeOutSeconds}) {
     bool onCallDone = false;
     if (!url.startsWith("http")) {
@@ -124,10 +125,18 @@ class ServerManager {
             .post(Uri.parse(url),
                 body: jsonString ?? body,
                 headers: bearerToken != null
-                    ? {
-                        // HttpHeaders.contentTypeHeader: "application/json",
-                        HttpHeaders.authorizationHeader: "Bearer $bearerToken"
-                      }
+                    ? isUpdateProfile
+                        ? {
+                            HttpHeaders.contentTypeHeader:
+                                isUpdateProfile ? "application/json" : "",
+                            HttpHeaders.authorizationHeader:
+                                "Bearer $bearerToken"
+                          }
+                        : {
+                            //  HttpHeaders.contentTypeHeader:isUpdateProfile?  "application/json":"",
+                            HttpHeaders.authorizationHeader:
+                                "Bearer $bearerToken"
+                          }
                     : null)
             .timeout(Duration(seconds: timeout))
             .then((http.Response response) {
@@ -345,8 +354,8 @@ class ServerManager {
       "lat": lat,
       "long": long,
     };
-    callPostApi(
-        UrlConstants.registration, _defaultHeader(), json, completion, false);
+    callPostApi(UrlConstants.registration, _defaultHeader(), json, completion,
+        false, false);
   }
 
   // social login
@@ -361,8 +370,8 @@ class ServerManager {
       "lat": lat,
       "long": long,
     };
-    callPostApi(
-        UrlConstants.socialLogin, _defaultHeader(), json, completion, true);
+    callPostApi(UrlConstants.socialLogin, _defaultHeader(), json, completion,
+        true, false);
   }
 
   static void createBooking(
@@ -395,16 +404,16 @@ class ServerManager {
       }
     };
 
-    callPostApi(
-        UrlConstants.createBooking, _defaultHeader(), json, completion, false);
+    callPostApi(UrlConstants.createBooking, _defaultHeader(), json, completion,
+        false, false);
   }
 
   static void updateBooking(
     Map<String, dynamic> json,
     ResponseCompletion completion,
   ) {
-    callPostApi(
-        UrlConstants.updateBooking, _defaultHeader(), json, completion, true);
+    callPostApi(UrlConstants.updateBooking, _defaultHeader(), json, completion,
+        true, true);
   }
 
   //payment api
@@ -417,8 +426,8 @@ class ServerManager {
       "lat": lat,
       "long": long,
     };
-    callPostApi(
-        UrlConstants.paymentApi, _defaultHeader(), json, completion, false);
+    callPostApi(UrlConstants.paymentApi, _defaultHeader(), json, completion,
+        false, false);
   }
 
   static void callPolice(
@@ -427,8 +436,8 @@ class ServerManager {
       "lat": lat,
       "long": long,
     };
-    callPostApi(
-        UrlConstants.callPolice, _defaultHeader(), json, completion, false);
+    callPostApi(UrlConstants.callPolice, _defaultHeader(), json, completion,
+        false, false);
   }
 
   static void callHealth(
@@ -437,15 +446,15 @@ class ServerManager {
       "lat": lat,
       "long": long,
     };
-    callPostApi(
-        UrlConstants.callHealth, _defaultHeader(), json, completion, false);
+    callPostApi(UrlConstants.callHealth, _defaultHeader(), json, completion,
+        false, false);
   }
 
   static void getPharmacy(
       String lat, String long, ResponseCompletion completion) {
     Map<String, dynamic> json = {"lat": lat, "long": long, "radius": "5"};
-    callPostApi(
-        UrlConstants.getPharmacy, _defaultHeader(), json, completion, false);
+    callPostApi(UrlConstants.getPharmacy, _defaultHeader(), json, completion,
+        false, false);
   }
 
   static void login(String email, String password, String lat, String long,
@@ -458,7 +467,8 @@ class ServerManager {
       "lat": lat,
       "long": long,
     };
-    callPostApi(UrlConstants.login, _defaultHeader(), json, completion, false);
+    callPostApi(
+        UrlConstants.login, _defaultHeader(), json, completion, false, false);
   }
 
   static void getLabels(ResponseCompletion completion) {
@@ -485,6 +495,14 @@ class ServerManager {
       "long": UserDataManager.getInstance().long,
     };
     getApiCalling(UrlConstants.logout, _defaultHeader(), json, completion);
+  }
+
+  static void priceCalculation(ResponseCompletion completion) {
+    Map<String, dynamic> json = {
+      // "lat": UserDataManager.getInstance().lat,
+      // "long": UserDataManager.getInstance().long,
+    };
+    getApiCalling(UrlConstants.getPricing, _defaultHeader(), json, completion);
   }
 
   static _defaultHeader() {
