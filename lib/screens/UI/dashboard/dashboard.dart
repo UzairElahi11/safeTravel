@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 import 'package:safe/Utils/app_colors.dart';
 import 'package:safe/Utils/app_images_path.dart';
 import 'package:safe/Utils/app_text_styles.dart';
@@ -41,14 +42,40 @@ class DashboardView extends StatelessWidget {
               key: scaffoldKey,
               drawer: Drawer(
                 backgroundColor: Colors.white,
-                child: ListView(
+                child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  // crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    ListTile(
-                      title: const Text("Terms and Conditons"),
-                      onTap: () {},
+                    SizedBox(
+                      height: 300.h,
                     ),
                     ListTile(
-                      title: const Text("Privacy policy"),
+                      title: const Text(
+                        "Terms and Conditons",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w500),
+                      ),
+                      trailing: Icon(Icons.arrow_forward_ios_sharp),
+                      onTap: () {},
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Divider(
+                      thickness: 2,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    // SizedBox.expand(),
+
+                    ListTile(
+                      title: const Text(
+                        "Privacy policy",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w500),
+                      ),
+                      trailing: Icon(Icons.arrow_forward_ios_sharp),
                       onTap: () async {
                         {
                           const url =
@@ -64,28 +91,41 @@ class DashboardView extends StatelessWidget {
                         }
                       },
                     ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Divider(
+                      thickness: 2,
+                    ),
+                    //  SizedBox(height: 10,),
+                    SizedBox(
+                      height: 350.h,
+                    ),
                     ListTile(
-                      title: const Text("Logout"),
+                      title: const Text(
+                        "Logout",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red),
+                      ),
+                      trailing: Icon(Icons.arrow_forward_ios_sharp),
                       onTap: () {
-                        model.logOut(
-                          context: context,
-                          completion: (success) {
-                            if (success) {
-                              UserDefaults.clearLoginToken();
-                              UserDefaults.clearUserNameAndEmail();
-                              UserDefaults.clearform();
-                              UserDefaults.clearPayment();
-
-                              Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                  builder: (context) => const Login(),
-                                ),
-                              );
-                            }
-                          },
-                        );
+                        showDialog(
+                            context: context,
+                            // barrierDismissible: false,
+                            // useRootNavigator: true,
+                            builder: (context) {
+                              return settingWidget(model, context);
+                            });
                       },
-                    )
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const Divider(
+                      thickness: 1,
+                    ),
                   ],
                 ),
               ),
@@ -466,6 +506,62 @@ class DashboardView extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+
+  Widget settingWidget(DashboardViewModel model, BuildContext context) {
+    return AlertDialog(
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text(
+            "Logout",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          const Text("Are you sure you want to logout"),
+          const SizedBox(
+            height: 10,
+          ),
+          InkWell(
+            onTap: () async {
+              model.logOut(
+                context: context,
+                completion: (success) {
+                  if (success) {
+                    UserDefaults.clearLoginToken();
+                    UserDefaults.clearUserNameAndEmail();
+                    UserDefaults.clearform();
+                    UserDefaults.clearPayment();
+
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => const Login(),
+                      ),
+                    );
+                  }
+                },
+              );
+            },
+            child: Center(
+                child: Container(
+              height: 30,
+              width: 150,
+              decoration: BoxDecoration(
+                color: AppColors.baseColor,
+              ),
+              child: const Center(
+                  child: Text(
+                "Proceed",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              )),
+            )),
+          )
+        ],
+      ),
     );
   }
 
