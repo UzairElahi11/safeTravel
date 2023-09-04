@@ -56,7 +56,20 @@ class DashboardView extends StatelessWidget {
                             fontSize: 16, fontWeight: FontWeight.w500),
                       ),
                       trailing: Icon(Icons.arrow_forward_ios_sharp),
-                      onTap: () {},
+                      onTap: () async {
+                         {
+                          const url =
+                              'https://staysafema.com/page/terms-and-conditions';
+                          if (await canLaunch(url)) {
+                            await launch(
+                              url,
+                              forceWebView: true,
+                            );
+                          } else {
+                            throw 'Could not launch $url';
+                          }
+                        }
+                      },
                     ),
                     const SizedBox(
                       height: 10,
