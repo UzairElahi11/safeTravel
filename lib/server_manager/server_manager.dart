@@ -25,7 +25,7 @@ class ServerManager {
       bool isUpdateProfile,
       {int timeout = timeOutSeconds}) {
     bool onCallDone = false;
-    if (!url.startsWith("http")) {
+    if (!url.startsWith("https")) {
       HttpClient httpClient = HttpClient();
       httpClient.badCertificateCallback =
           ((X509Certificate cert, String host, int port) => true);
