@@ -179,7 +179,7 @@ class UserDetailHeathCondition extends StatelessWidget {
         GenericButton(
           height: 70.h,
           width: double.infinity,
-          padding: EdgeInsets.symmetric(horizontal: 450.w),
+          // padding: EdgeInsets.symmetric(horizontal: 450.w),
           text: LocaleKeys.addHealthReport,
           leading: Icon(Icons.add, color: AppColors.whiteColor),
           textStyle: AppStyles.mediumBold16.copyWith(

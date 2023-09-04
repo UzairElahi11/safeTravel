@@ -57,14 +57,15 @@
   "police": "policía del gobierno",
   "pharmacy": "Farmacia",
   "medical": "Salud médica",
-  "addHealthReport": "Agregar informe de salud",
+  "addHealthReport": "Cargar informe de salud",
   "upload": "Upload",
   "pharmacyList": "Lista de farmacias",
   "profile": "Perfil",
   "skip": "saltar",
   "noMoreImagesText" : "No se pueden seleccionar más de 3 imágenes.",
   "selectedDepartureDate": "Por favor seleccione la fecha de salida",
-  "discount":"descuento"
+  "discount":"descuento", 
+  "pressFor" : "Presione para "
 
 
 

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
@@ -42,104 +43,106 @@ class DashboardView extends StatelessWidget {
               key: scaffoldKey,
               drawer: Drawer(
                 backgroundColor: Colors.white,
-                child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.center,
-                  // crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 300.h,
-                    ),
-                    ListTile(
-                      title: const Text(
-                        "Terms and Conditons",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
+                child: SingleChildScrollView(
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 300.h,
                       ),
-                      trailing: Icon(Icons.arrow_forward_ios_sharp),
-                      onTap: () async {
-                         {
-                          const url =
-                              'https://staysafema.com/page/terms-and-conditions';
-                          if (await canLaunch(url)) {
-                            await launch(
-                              url,
-                              forceWebView: true,
-                            );
-                          } else {
-                            throw 'Could not launch $url';
+                      ListTile(
+                        title: const Text(
+                          "Terms and Conditons",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500),
+                        ),
+                        trailing: Icon(Icons.arrow_forward_ios_sharp),
+                        onTap: () async {
+                          {
+                            const url =
+                                'https://staysafema.com/page/terms-and-conditions';
+                            if (await canLaunch(url)) {
+                              await launch(
+                                url,
+                                forceWebView: true,
+                              );
+                            } else {
+                              throw 'Could not launch $url';
+                            }
                           }
-                        }
-                      },
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const Divider(
-                      thickness: 2,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    // SizedBox.expand(),
+                        },
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Divider(
+                        thickness: 2,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      // SizedBox.expand(),
 
-                    ListTile(
-                      title: const Text(
-                        "Privacy policy",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
-                      ),
-                      trailing: Icon(Icons.arrow_forward_ios_sharp),
-                      onTap: () async {
-                        {
-                          const url =
-                              'https://staysafema.com/page/privacy-policy';
-                          if (await canLaunch(url)) {
-                            await launch(
-                              url,
-                              forceWebView: true,
-                            );
-                          } else {
-                            throw 'Could not launch $url';
+                      ListTile(
+                        title: const Text(
+                          "Privacy policy",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500),
+                        ),
+                        trailing: Icon(Icons.arrow_forward_ios_sharp),
+                        onTap: () async {
+                          {
+                            const url =
+                                'https://staysafema.com/page/privacy-policy';
+                            if (await canLaunch(url)) {
+                              await launch(
+                                url,
+                                forceWebView: true,
+                              );
+                            } else {
+                              throw 'Could not launch $url';
+                            }
                           }
-                        }
-                      },
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const Divider(
-                      thickness: 2,
-                    ),
-                    //  SizedBox(height: 10,),
-                    SizedBox(
-                      height: 350.h,
-                    ),
-                    ListTile(
-                      title: const Text(
-                        "Logout",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.red),
+                        },
                       ),
-                      trailing: Icon(Icons.arrow_forward_ios_sharp),
-                      onTap: () {
-                        showDialog(
-                            context: context,
-                            // barrierDismissible: false,
-                            // useRootNavigator: true,
-                            builder: (context) {
-                              return settingWidget(model, context);
-                            });
-                      },
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    const Divider(
-                      thickness: 1,
-                    ),
-                  ],
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Divider(
+                        thickness: 2,
+                      ),
+                      //  SizedBox(height: 10,),
+                      SizedBox(
+                        height: 350.h,
+                      ),
+                      ListTile(
+                        title: const Text(
+                          "Logout",
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red),
+                        ),
+                        trailing: Icon(Icons.arrow_forward_ios_sharp),
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              // barrierDismissible: false,
+                              // useRootNavigator: true,
+                              builder: (context) {
+                                return settingWidget(model, context);
+                              });
+                        },
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      const Divider(
+                        thickness: 1,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               appBar: AppBar(
@@ -190,7 +193,7 @@ class DashboardView extends StatelessWidget {
                       ),
                       servicesList(model, context),
                       SizedBox(
-                        height: 100.h,
+                        height: 180.h,
                       ),
                       Row(
                         children: [
@@ -483,7 +486,7 @@ class DashboardView extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    color: AppColors.containerBgColor,
+                    color: Color.fromARGB(255, 165, 190, 227),
                     borderRadius: BorderRadius.circular(12)),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -501,13 +504,36 @@ class DashboardView extends StatelessWidget {
                           width: 10,
                         ),
                         Expanded(
-                          child: Text(
-                            model.services[index].name!,
-                            textAlign: TextAlign.left,
-                            style: const TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w400),
-                          ),
+                          child: RichText(
+                              text: TextSpan(
+                                  style: DefaultTextStyle.of(context).style,
+                                  children: <TextSpan>[
+                                TextSpan(
+                                  text: LocaleKeys.pressFor.tr(),
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                TextSpan(
+                                  text: model.services[index].name!,
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),
+                                )
+                              ])),
                         ),
+                        // Expanded(
+                        //   child: RichText(
+
+                        //     child: Text(
+                        //       model.services[index].name!,
+                        //       textAlign: TextAlign.left,
+                        //       style: const TextStyle(
+                        //           fontSize: 18, fontWeight: FontWeight.w400),
+                        //     ),
+                        //   ),
+                        // ),
                         GenericSvgImage(svgPath: AppImages.warning)
                       ],
                     ),

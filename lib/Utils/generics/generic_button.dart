@@ -43,8 +43,8 @@ class GenericButton extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         margin: margin ?? const EdgeInsets.symmetric(horizontal: 0),
-        width: width ,
-        height: height ,
+        width: width,
+        height: height,
         decoration: BoxDecoration(
             border: Border.all(
                 color: borderColor ?? color ?? AppColors.baseColor,
@@ -59,7 +59,9 @@ class GenericButton extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     leading ?? const SizedBox.shrink(),
-                  SizedBox(width: 20.w,),
+                    SizedBox(
+                      width: 20.w,
+                    ),
                     Expanded(
                       child: GenericText(
                         text ?? "",

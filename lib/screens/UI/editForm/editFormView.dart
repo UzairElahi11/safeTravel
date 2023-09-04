@@ -275,82 +275,111 @@ class ProfileView extends StatelessWidget {
                                     fontWeight: FontWeight.w500,
                                   ),
                                 )
-                              : Card(
-                                  elevation: 0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  color: AppColors.containerBgColor,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        height: 20.h,
+                              : model.getEditProfileData.isEmpty &&
+                                      model
+                                          .getEditProfileData['data'].isEmpty &&
+                                      model.getEditProfileData.isNotEmpty &&
+                                      model.getEditProfileData['data'][0]
+                                              ['health_reports'] !=
+                                          null &&
+                                      model
+                                          .getEditProfileData['data'][0]
+                                              ['health_reports']
+                                          .isNotEmpty
+                                  ? Card(
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
                                       ),
-                                      model.getEditProfileData.isEmpty ||
-                                              model.getEditProfileData['data']
-                                                  .isEmpty
-                                          ? const SizedBox()
-                                          : Padding(
-                                              padding:
-                                                  EdgeInsets.only(left: 50.w),
-                                              child: const Text(
-                                                "Health Reports",
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 16,
-                                                ),
-                                              ),
-                                            ),
-                                      SizedBox(
-                                        height: 10.h,
-                                      ),
-                                      model.getEditProfileData.isEmpty
-                                          ? const SizedBox.shrink()
-                                          : ListView.separated(
-                                              shrinkWrap: true,
-                                              itemCount: model
-                                                      .getEditProfileData
-                                                      .isEmpty
-                                                  ? 1
-                                                  : model
-                                                          .getEditProfileData[
-                                                              'data']
-                                                          .isEmpty
-                                                      ? 0
-                                                      : model
-                                                          .getEditProfileData[
-                                                              'data'][0]
-                                                              ['health_reports']
-                                                          .length,
-                                              separatorBuilder:
-                                                  (context, index) => SizedBox(
-                                                height: 10.h,
-                                              ),
-                                              itemBuilder: (context, index) =>
-                                                  Center(
-                                                child: Image.network(
+                                      color: AppColors.containerBgColor,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            height: 20.h,
+                                          ),
+                                          model.getEditProfileData.isEmpty &&
+                                                  model
+                                                      .getEditProfileData[
+                                                          'data']
+                                                      .isEmpty &&
+                                                  model.getEditProfileData
+                                                      .isNotEmpty &&
                                                   model.getEditProfileData[
+                                                              'data'][0]
+                                                          ['health_reports'] !=
+                                                      null &&
+                                                  model
+                                                      .getEditProfileData[
                                                           'data'][0]
-                                                      ['health_reports']['10'],
-                                                  errorBuilder: (context,
-                                                          exception,
-                                                          stacTrace) =>
-                                                      const Icon(
-                                                    Icons.error,
-                                                    color: Colors.red,
+                                                          ['health_reports']
+                                                      .isNotEmpty
+                                              ? Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 50.w),
+                                                  child: const Text(
+                                                    "Health Reports",
+                                                    style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 16,
+                                                    ),
+                                                  ),
+                                                )
+                                              : const SizedBox.shrink(),
+                                          SizedBox(
+                                            height: 10.h,
+                                          ),
+                                          model.getEditProfileData.isEmpty
+                                              ? const SizedBox.shrink()
+                                              : ListView.separated(
+                                                  shrinkWrap: true,
+                                                  itemCount: model
+                                                          .getEditProfileData
+                                                          .isEmpty
+                                                      ? 1
+                                                      : model
+                                                              .getEditProfileData[
+                                                                  'data']
+                                                              .isEmpty
+                                                          ? 0
+                                                          : model
+                                                              .getEditProfileData[
+                                                                  'data'][0][
+                                                                  'health_reports']
+                                                              .length,
+                                                  separatorBuilder:
+                                                      (context, index) =>
+                                                          SizedBox(
+                                                    height: 10.h,
+                                                  ),
+                                                  itemBuilder:
+                                                      (context, index) =>
+                                                          Center(
+                                                    child: Image.network(
+                                                      model.getEditProfileData[
+                                                                  'data'][0]
+                                                              ['health_reports']
+                                                          ['10'],
+                                                      errorBuilder: (context,
+                                                              exception,
+                                                              stacTrace) =>
+                                                          const Icon(
+                                                        Icons.error,
+                                                        color: Colors.red,
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ),
-                                      SizedBox(
-                                        height: 20.h,
+                                          SizedBox(
+                                            height: 20.h,
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                ),
+                                    )
+                                  : const SizedBox.shrink(),
                       SizedBox(
                         height: 30.h,
                       ),

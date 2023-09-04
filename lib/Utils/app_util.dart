@@ -133,6 +133,7 @@ class AppUtil {
         await [Permission.location].request();
 
     ///location, ask for location for Android as well as iOS
+   
     if (statuses[Permission.location]!.isGranted) {
       permissionHandlerHelperModel = PermissionHandlerHelperModel(
           permissionsResult: PermissionsResult.granted,
@@ -146,6 +147,7 @@ class AppUtil {
           permissionsResult: PermissionsResult.permanentlyDenied,
           permissionName: "Permission.location");
     }
+      
 
     return permissionHandlerHelperModel;
   }

@@ -34,7 +34,7 @@ class ServerManager {
 
       debugPrint("url: $url \nBody:${body == null ? "" : body.toString()}");
       //TODO REMOVE THIS LATTER
-      print("url: $url \nBody:${body == null ? "" : body.toString()}");
+      debugPrint("url: $url \nBody:${body == null ? "" : body.toString()}");
       try {
         httpClient.postUrl(Uri.parse(url)).then((request) {
           // if (headers != null) {
@@ -57,7 +57,7 @@ class ServerManager {
           //   request.headers.set(keys[i], headers[keys[i]]!);
           // }
           request.add(utf8.encode(json.encode(body)));
-          print("---------${request.contentLength.toString()}");
+          debugPrint("---------${request.contentLength.toString()}");
           request.close().then((response) {
             response.transform(utf8.decoder).join().then((responseBody) {
               logResponse(url, {}, headers, responseBody, response.statusCode);
@@ -65,7 +65,7 @@ class ServerManager {
               if (response.statusCode == 200) {
                 debugPrint("responce from server $responseBody");
                 //TODO REMOVE THIS LATTER
-                print("responce from server $responseBody");
+                debugPrint("responce from server $responseBody");
                 callCompletion(responseBody, true, completion);
                 //   if (isResponseCodeForReLoginFromResponse(responseBody)) {
                 //     if (Keys.mainNavigatorKey.currentContext != null &&
@@ -81,24 +81,24 @@ class ServerManager {
             if (error != null && error.runtimeType == String) {
               debugPrint("response: " + error ?? "");
               //TODO REMOVE THIS LATTER
-              print("response: " + error ?? "");
+              debugPrint("response: " + error ?? "");
             }
-            print('error callback catch');
+            debugPrint('error callback catch');
             if (onCallDone == false) {
               onCallDone = true;
               callCompletion(null, false, completion);
             }
           }).whenComplete(() {
-            print("Api complete");
+            debugPrint("Api complete");
             // ignore: unnecessary_statements
           });
         }).catchError((error) {
           if (error != null && error.runtimeType == String) {
             debugPrint("response: " + error ?? "");
             //TODO REMOVE THIS LATTER
-            print("response: " + error ?? "");
+            debugPrint("response: " + error ?? "");
           }
-          print('error callback catch');
+          debugPrint('error callback catch');
           if (onCallDone == false) {
             onCallDone = true;
             callCompletion(null, false, completion);
@@ -155,13 +155,13 @@ class ServerManager {
           if (error != null && error.runtimeType == String) {
             debugPrint("response: error $error");
           }
-          print('error callback catch $error');
+          debugPrint('error callback catch $error');
           if (onCallDone == false) {
             onCallDone = true;
             callCompletion(null, false, completion);
           }
         }).whenComplete(() {
-          print("Api complete");
+          debugPrint("Api complete");
           // ignore: unnecessary_statements
           client.close;
         });
@@ -351,8 +351,8 @@ class ServerManager {
       "password": password,
       "name": name,
       "device": UserDataManager.getInstance().deviceType,
-      "lat": lat,
-      "long": long,
+      // "lat": lat,
+      // "long": long,
     };
     callPostApi(UrlConstants.registration, _defaultHeader(), json, completion,
         false, false);
@@ -367,8 +367,8 @@ class ServerManager {
       "provider_name": providerName,
       "fcm_token": UserDataManager.getInstance().fcmToken,
       "device": UserDataManager.getInstance().deviceType,
-      "lat": lat,
-      "long": long,
+      // "lat": lat,
+      // "long": long,
     };
     callPostApi(UrlConstants.socialLogin, _defaultHeader(), json, completion,
         true, false);
@@ -464,8 +464,8 @@ class ServerManager {
       "password": password,
       "fcm_token": UserDataManager.getInstance().fcmToken,
       "device": UserDataManager.getInstance().deviceType,
-      "lat": lat,
-      "long": long,
+      // "lat": lat,
+      // "long": long,
     };
     callPostApi(
         UrlConstants.login, _defaultHeader(), json, completion, false, false);

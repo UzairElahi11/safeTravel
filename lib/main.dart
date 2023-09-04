@@ -55,16 +55,16 @@ Future main() async {
   await initializeDependencies();
 
   await Firebase.initializeApp();
-  await Firebase.initializeApp().then((_) async {
-    FirebaseMessaging.instance.requestPermission().then((value) async {
-      FirebaseMessaging.onBackgroundMessage(
-          _firebaseMessagingBackgroundHandler);
-      await flutterLocalNotificationsPlugin
-          .resolvePlatformSpecificImplementation<
-              AndroidFlutterLocalNotificationsPlugin>()
-          ?.createNotificationChannel(channel);
-    });
-  });
+  // await Firebase.initializeApp().then((_) async {
+  //   FirebaseMessaging.instance.requestPermission().then((value) async {
+  //     FirebaseMessaging.onBackgroundMessage(
+  //         _firebaseMessagingBackgroundHandler);
+  //     await flutterLocalNotificationsPlugin
+  //         .resolvePlatformSpecificImplementation<
+  //             AndroidFlutterLocalNotificationsPlugin>()
+  //         ?.createNotificationChannel(channel);
+  //   });
+  // });
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -103,7 +103,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // pushNotifications();
+    pushNotifications();
     return Sizer(builder: ((context, orientation, deviceType) {
       return ScreenUtilInit(
           designSize: const Size(1920, 1080),

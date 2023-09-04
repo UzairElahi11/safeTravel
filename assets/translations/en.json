@@ -57,12 +57,14 @@
   "police": "Government police",
   "pharmacy": "Pharmacy",
   "medical": "Medical Health",
-  "addHealthReport": "Add Health Report",
+  "addHealthReport": "Upload Health Report",
   "upload": "Upload",
   "pharmacyList": "Pharmacy List",
   "profile": "Profile",
   "skip": "Skip",
   "noMoreImagesText" : "Can not select more than 3 pictures",
   "selectedDepartureDate": "Please select the departure date",
-  "discount":"Discount"
+  "discount":"Discount",
+  "pressFor" : "Press For : "
+
 }
