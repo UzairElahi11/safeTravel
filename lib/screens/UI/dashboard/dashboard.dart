@@ -193,7 +193,7 @@ class DashboardView extends StatelessWidget {
                       ),
                       servicesList(model, context),
                       SizedBox(
-                        height: 180.h,
+                        height: 230.h,
                       ),
                       Row(
                         children: [
@@ -486,7 +486,7 @@ class DashboardView extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 165, 190, 227),
+                    color: AppColors.containerBgColor,
                     borderRadius: BorderRadius.circular(12)),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -509,7 +509,7 @@ class DashboardView extends StatelessWidget {
                                   style: DefaultTextStyle.of(context).style,
                                   children: <TextSpan>[
                                 TextSpan(
-                                  text: LocaleKeys.pressFor.tr(),
+                                  text: "${LocaleKeys.pressFor.tr()} \n",
                                   style: const TextStyle(
                                       fontSize: 18,
                                       color: Colors.red,

@@ -43,21 +43,26 @@ class ProfileView extends StatelessWidget {
                       SizedBox(
                         height: 50.h,
                       ),
-                      Row(
-                        children: [
-                          SvgPicture.asset("assets/icons/edit.svg"),
-                          SizedBox(
-                            width: 20.w,
-                          ),
-                          Text(
-                            "Edit",
-                            style: GoogleFonts.inter(
-                                fontWeight: FontWeight.w500, fontSize: 20),
-                          ),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                        ],
+                      InkWell(
+                        onTap: () {
+                          model.updateProfile();
+                        },
+                        child: Row(
+                          children: [
+                            SvgPicture.asset("assets/icons/edit.svg"),
+                            SizedBox(
+                              width: 20.w,
+                            ),
+                            Text(
+                              "Edit",
+                              style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.w500, fontSize: 20),
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                          ],
+                        ),
                       ),
                       SizedBox(
                         height: 20.h,

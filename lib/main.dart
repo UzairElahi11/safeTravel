@@ -54,24 +54,20 @@ Future main() async {
 
   await initializeDependencies();
 
-  await Firebase.initializeApp();
+  // await Firebase.initializeApp();
   // await Firebase.initializeApp().then((_) async {
-  //   FirebaseMessaging.instance.requestPermission().then((value) async {
-  //     FirebaseMessaging.onBackgroundMessage(
-  //         _firebaseMessagingBackgroundHandler);
-  //     await flutterLocalNotificationsPlugin
-  //         .resolvePlatformSpecificImplementation<
-  //             AndroidFlutterLocalNotificationsPlugin>()
-  //         ?.createNotificationChannel(channel);
-  //   });
-  // });
-
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]).then(
-    (value) async {
-      final languageStored = await locator<LocalSecureStorage>()
+   await Firebase.initializeApp().then((_) async {
+    FirebaseMessaging.instance.requestPermission().then((value) async {
+      FirebaseMessaging.onBackgroundMessage(
+          _firebaseMessagingBackgroundHandler);
+      await flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()
+          ?.createNotificationChannel(channel);
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]).then((value)async {final languageStored = await locator<LocalSecureStorage>()
           .readSecureStorage(AppUtil.isEnglish);
       runApp(
         EasyLocalization(
@@ -81,9 +77,27 @@ Future main() async {
               languageStored == "English" ? L10n.all[0] : L10n.all[1],
           child: const MyApp(),
         ),
-      );
-    },
-  );
+      );});
+    });
+  });
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  //   DeviceOrientation.portraitDown,
+  // ]).then(
+  //   (value) async {
+  //     final languageStored = await locator<LocalSecureStorage>()
+  //         .readSecureStorage(AppUtil.isEnglish);
+  //     runApp(
+  //       EasyLocalization(
+  //         supportedLocales: L10n.all,
+  //         path: 'assets/translations',
+  //         fallbackLocale:
+  //             languageStored == "English" ? L10n.all[0] : L10n.all[1],
+  //         child: const MyApp(),
+  //       ),
+  //     );
+    // },
+  // );
 }
 
 class MyApp extends StatelessWidget {
@@ -147,7 +161,7 @@ Widget getErrorWidget(BuildContext context, FlutterErrorDetails error) {
 
 pushNotifications() async {
   final fcmToken = await FirebaseMessaging.instance.getToken();
-  debugPrint(fcmToken.toString());
+  // print("fcmm1231231" + fcmToken.toString());
   UserDataManager.getInstance().fcmToken = fcmToken.toString();
   var initializationSettingAndroid =
       const AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -173,6 +187,7 @@ pushNotifications() async {
               icon: 'launch_background',
             ),
           ));
+          
     }
   });
 }
