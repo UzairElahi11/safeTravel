@@ -31,6 +31,10 @@ class DashboardViewModel with ChangeNotifier, ApiCalling {
         name: LocaleKeys.pharmacy.translatedString(),
         imagePath: AppImages.pharmacy,
         icon: AppImages.warning));
+    services.add(ServicesHelperModel(
+        name: LocaleKeys.phoneService.translatedString(),
+        imagePath: AppImages.phoneService,
+        icon: AppImages.warning));
   }
 
   void showToasterPolice(BuildContext context) {
@@ -56,8 +60,7 @@ class DashboardViewModel with ChangeNotifier, ApiCalling {
       {required BuildContext context,
       required void Function(
         bool success,
-      )
-          completion}) {
+      ) completion}) {
     callPoliceApiCalling(
         lat: UserDataManager.getInstance().lat,
         long: UserDataManager.getInstance().long,
@@ -114,8 +117,7 @@ class DashboardViewModel with ChangeNotifier, ApiCalling {
       {required BuildContext context,
       required void Function(
         bool success,
-      )
-          completion}) {
+      ) completion}) {
     callHealthApiCalling(
         lat: UserDataManager.getInstance().lat,
         long: UserDataManager.getInstance().long,
@@ -172,8 +174,7 @@ class DashboardViewModel with ChangeNotifier, ApiCalling {
       {required BuildContext context,
       required void Function(
         bool success,
-      )
-          completion}) {
+      ) completion}) {
     logoutApiCaaling(
         context: context,
         onForeground: true,
@@ -228,8 +229,7 @@ class DashboardViewModel with ChangeNotifier, ApiCalling {
       {required BuildContext context,
       required void Function(
         bool success,
-      )
-          completion}) {
+      ) completion}) {
     getPharmacyApiCalling(
         lat: UserDataManager.getInstance().lat,
         long: UserDataManager.getInstance().long,

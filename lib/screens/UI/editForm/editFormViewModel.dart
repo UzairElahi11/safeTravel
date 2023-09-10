@@ -106,8 +106,7 @@ class ProfileViewModel with ChangeNotifier, ApiCalling, UpdateBooking {
       required Map<String, dynamic> body,
       required void Function(
         bool success,
-      )
-          completion}) {
+      ) completion}) {
     // log
     updateBooking(
         json: body,
@@ -156,8 +155,7 @@ class ProfileViewModel with ChangeNotifier, ApiCalling, UpdateBooking {
       {required BuildContext context,
       required void Function(
         bool success,
-      )
-          completion}) {
+      ) completion}) {
     getFormApiCalling(
         context: context,
         onForeground: true,

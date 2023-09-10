@@ -28,6 +28,8 @@ class AppImages {
   static String pharmacy = "${baseImagePath}pharmacy.png";
   static String health = "${baseImagePath}health.png";
   static String warning = "${baseSvgImagePath}warning.svg";
-    static String whatsApp = "${baseImagePath}whatsApp.png";
+  static String whatsApp = "${baseImagePath}whatsApp.png";
+  static String phoneService = "${baseImagePath}phoneService.png";
+
 
 }

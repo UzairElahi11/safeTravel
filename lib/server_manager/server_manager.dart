@@ -127,7 +127,7 @@ class ServerManager {
                 headers: bearerToken != null
                     ? isUpdateProfile
                         ? {
-                             
+                            HttpHeaders.contentTypeHeader:isUpdateProfile?  "application/json":"",
                             HttpHeaders.authorizationHeader:
                                 "Bearer $bearerToken"
                           }
