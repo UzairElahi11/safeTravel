@@ -327,100 +327,125 @@ class ProfileView extends StatelessWidget {
                                           .getEditProfileData['data'][0]
                                               ['health_reports']
                                           .isNotEmpty
-                                  ? Card(
-                                      elevation: 0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
+                                  ? ListView.separated(
+                                      itemCount: model
+                                          .getEditProfileData['data'][0]
+                                              ['health_reports']
+                                          .length,
+                                      separatorBuilder: (context, index) =>
+                                          const SizedBox(
+                                        height: 5,
                                       ),
-                                      color: AppColors.containerBgColor,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          SizedBox(
-                                            height: 20.h,
-                                          ),
-                                          model.getEditProfileData.isEmpty &&
-                                                  model
-                                                      .getEditProfileData[
-                                                          'data']
-                                                      .isEmpty &&
-                                                  model.getEditProfileData
-                                                      .isNotEmpty &&
-                                                  model.getEditProfileData[
-                                                              'data'][0]
-                                                          ['health_reports'] !=
-                                                      null &&
-                                                  model
-                                                      .getEditProfileData[
-                                                          'data'][0]
-                                                          ['health_reports']
-                                                      .isNotEmpty
-                                              ? Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: 50.w),
-                                                  child: const Text(
-                                                    "Health Reports",
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 16,
+                                      itemBuilder: (context, index) => Card(
+                                        elevation: 0,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        color: AppColors.containerBgColor,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              height: 20.h,
+                                            ),
+                                            model.getEditProfileData.isEmpty &&
+                                                    model
+                                                        .getEditProfileData[
+                                                            'data']
+                                                        .isEmpty &&
+                                                    model.getEditProfileData
+                                                        .isNotEmpty &&
+                                                    model.getEditProfileData[
+                                                                'data'][0][
+                                                            'health_reports'] !=
+                                                        null &&
+                                                    model
+                                                        .getEditProfileData[
+                                                            'data'][0]
+                                                            ['health_reports']
+                                                        .isNotEmpty
+                                                ? Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 50.w),
+                                                    child: const Text(
+                                                      "Health Reports",
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 16,
+                                                      ),
                                                     ),
-                                                  ),
-                                                )
-                                              : const SizedBox.shrink(),
-                                          SizedBox(
-                                            height: 10.h,
-                                          ),
-                                          model.getEditProfileData.isEmpty
-                                              ? const SizedBox.shrink()
-                                              : ListView.separated(
-                                                  shrinkWrap: true,
-                                                  itemCount: model
-                                                          .getEditProfileData
-                                                          .isEmpty
-                                                      ? 1
-                                                      : model
-                                                              .getEditProfileData[
-                                                                  'data']
-                                                              .isEmpty
-                                                          ? 0
-                                                          : model
-                                                              .getEditProfileData[
-                                                                  'data'][0][
-                                                                  'health_reports']
-                                                              .length,
-                                                  separatorBuilder:
-                                                      (context, index) =>
-                                                          SizedBox(
-                                                    height: 10.h,
-                                                  ),
-                                                  itemBuilder:
-                                                      (context, index) =>
-                                                          Center(
-                                                    child: Image.network(
-                                                      model.getEditProfileData[
-                                                                  'data'][0]
-                                                              ['health_reports']
-                                                          ['10'],
-                                                      errorBuilder: (context,
-                                                              exception,
-                                                              stacTrace) =>
-                                                          const Icon(
-                                                        Icons.error,
-                                                        color: Colors.red,
+                                                  )
+                                                : const SizedBox.shrink(),
+                                            SizedBox(
+                                              height: 10.h,
+                                            ),
+                                            model.getEditProfileData.isEmpty
+                                                ? const SizedBox.shrink()
+                                                : ListView.separated(
+                                                    shrinkWrap: true,
+                                                    itemCount: model
+                                                            .getEditProfileData
+                                                            .isEmpty
+                                                        ? 1
+                                                        : model
+                                                                .getEditProfileData[
+                                                                    'data']
+                                                                .isEmpty
+                                                            ? 0
+                                                            : model
+                                                                .getEditProfileData[
+                                                                    'data'][0][
+                                                                    'health_reports']
+                                                                .length,
+                                                    separatorBuilder:
+                                                        (context, index) =>
+                                                            SizedBox(
+                                                      height: 10.h,
+                                                    ),
+                                                    itemBuilder:
+                                                        (context, index) =>
+                                                            Center(
+                                                      child: Image.network(
+                                                        model.getEditProfileData[
+                                                                    'data'][0][
+                                                                'health_reports']
+                                                            ['10'],
+                                                        errorBuilder: (context,
+                                                                exception,
+                                                                stacTrace) =>
+                                                            const Icon(
+                                                          Icons.error,
+                                                          color: Colors.red,
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                          SizedBox(
-                                            height: 20.h,
-                                          ),
-                                        ],
+                                            SizedBox(
+                                              height: 20.h,
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     )
                                   : const SizedBox.shrink(),
+                      SizedBox(
+                        height: 30.h,
+                      ),
+                      GenericButton(
+                        height: 70.h,
+                        width: double.infinity,
+                        text: LocaleKeys.addHealthReport,
+                        leading: Icon(Icons.add, color: AppColors.whiteColor),
+                        textStyle: AppStyles.mediumBold16.copyWith(
+                          color: AppColors.whiteColor,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        onPressed: () {},
+                      ),
                       SizedBox(
                         height: 30.h,
                       ),
