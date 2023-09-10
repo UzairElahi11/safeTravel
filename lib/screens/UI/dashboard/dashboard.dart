@@ -193,7 +193,7 @@ class DashboardView extends StatelessWidget {
                       ),
                       servicesList(model, context),
                       SizedBox(
-                        height: 230.h,
+                        height: 90.h,
                       ),
                       Row(
                         children: [
@@ -251,8 +251,19 @@ class DashboardView extends StatelessWidget {
         return Column(
           children: [
             InkWell(
-              onTap: () {
-                if (model.skipvalue == "1") {
+              onTap: () async {
+                if (index == 3) {
+                  const url =
+                      'https://airalo.pxf.io/c/4800224/1804135/15608?p.code=STAYSAFE';
+                  if (await canLaunch(url)) {
+                    await launch(
+                      url,
+                      forceWebView: true,
+                    );
+                  } else {
+                    throw 'Could not launch $url';
+                  }
+                } else if (model.skipvalue == "1") {
                   showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
