@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,7 +24,7 @@ class UserDetailsView extends StatelessWidget {
           viewModel.getLabels(
               context: context,
               completion: (sucess) {
-                log("success is $sucess");
+                viewModel.base64Images.clear();
               });
         });
       },
