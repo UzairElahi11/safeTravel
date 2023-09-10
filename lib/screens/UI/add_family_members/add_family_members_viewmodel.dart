@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +19,8 @@ class AddFamilyMembersViewModel extends ChangeNotifier {
       builder: (BuildContext context) {
         return MyDialog(
           cancelCallBack: () {
+            UserDetailsViewModel.of(listen: false).base64Images.clear();
+
             AppUtil.pop(context: context);
           },
           proceedCallBack: () {

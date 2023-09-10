@@ -189,11 +189,10 @@ class UserDetailsViewModel extends ChangeNotifier
 
       maintingUserDetails.add(memberDetails);
 
+
       notifyListeners();
 
       resetFields();
-
-      log("data is $maintingUserDetails");
 
       AppUtil.pushRoute(
         context: context,
@@ -222,7 +221,6 @@ class UserDetailsViewModel extends ChangeNotifier
     image = null;
     reports.clear();
     base64Image = "";
-    base64Images.clear();
     firstnameError = null;
     lastNameLastError = null;
   }
@@ -262,8 +260,8 @@ class UserDetailsViewModel extends ChangeNotifier
     final pickedImage = await picker.pickImage(source: ImageSource.camera);
     image = File(pickedImage!.path);
     Uint8List bytes = image!.readAsBytesSync();
-    String base64Image = base64Encode(bytes);
-    debugPrint(base64Image);
+     base64Image = base64Encode(bytes);
+    // debugPrint(base64Image);
 
     notifyListeners();
   }
@@ -318,9 +316,9 @@ class UserDetailsViewModel extends ChangeNotifier
           return base64Image;
         }).toList();
 
-        //  reports.addAll(File(imagesList!.path))
+        log("base 64 images are $base64Images");
 
-        // image = File(imagee!.path);
+       
         notifyListeners();
       }
     } catch (e) {

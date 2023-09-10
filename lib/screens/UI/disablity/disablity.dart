@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,6 +15,7 @@ import 'package:safe/screens/UI/disablity/disability_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../widgets/disability_widgets/emergency_card.dart';
+import '../user_details/userDetail_viewModel.dart';
 
 class Disability extends StatelessWidget {
   static const id = "DISABILITY_SCREEN";
@@ -22,6 +25,10 @@ class Disability extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
+
+    log("updated one is $maintingUserDetails");
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => DisabilityViewModel(),
       builder: (context, model, _) {
