@@ -43,30 +43,64 @@ class ProfileView extends StatelessWidget {
                       SizedBox(
                         height: 50.h,
                       ),
-                      InkWell(
-                        onTap: () {
-                          model.updateProfile();
-                        },
-                        child: Row(
-                          children: [
-                            SvgPicture.asset("assets/icons/edit.svg"),
-                            SizedBox(
-                              width: 20.w,
-                            ),
-                            Text(
-                              "Edit",
-                              style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.w500, fontSize: 20),
-                            ),
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                          ],
-                        ),
+                      Row(
+                        children: [
+                          SvgPicture.asset("assets/icons/edit.svg"),
+                          SizedBox(
+                            width: 20.w,
+                          ),
+                          Text(
+                            "Edit",
+                            style: GoogleFonts.inter(
+                                fontWeight: FontWeight.w500, fontSize: 20),
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                        ],
                       ),
                       SizedBox(
                         height: 20.h,
                       ),
+                      model.getEditProfileData['data'] == null
+                          ? const SizedBox()
+                          : Center(
+                              child: Column(
+                                children: [
+                                  Stack(
+                                    clipBehavior: Clip.none,
+                                    children: [
+                                      model.imageFile == null
+                                          ? CircleAvatar(
+                                              radius: 40,
+                                              backgroundImage: NetworkImage(
+                                                model.getEditProfileData['data']
+                                                    [0]['picture'],
+                                              ))
+                                          : CircleAvatar(
+                                              radius: 40,
+                                              backgroundImage:
+                                                  FileImage(model.imageFile!),
+                                            ),
+                                      Positioned(
+                                        top: 0,
+                                        right: 0,
+                                        child: InkWell(
+                                          onTap: model.selectImage,
+                                          child: CircleAvatar(
+                                            radius: 12,
+                                            child: Icon(
+                                                Icons.camera_alt_outlined,
+                                                color: AppColors.color232323,
+                                                size: 15),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
                       ListView.builder(
                         physics: const ClampingScrollPhysics(),
                         shrinkWrap: true,
@@ -75,16 +109,18 @@ class ProfileView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              height: 30.h,
+                              height: 10.h,
                             ),
-                            GenericText(
-                              model.getEditProfileData.isNotEmpty
-                                  ? "Member Name: ${model.getEditProfileData['data'][0]['first_name']} ${model.getEditProfileData['data'][0]['last_name']}"
-                                  : "",
-                              style: const TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 18),
+                            Center(
+                              child: GenericText(
+                                model.getEditProfileData.isNotEmpty
+                                    ? "${model.getEditProfileData['data'][0]['first_name']} ${model.getEditProfileData['data'][0]['last_name']}"
+                                    : "",
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 18),
+                              ),
                             ),
                             SizedBox(
                               height: 20.h,
