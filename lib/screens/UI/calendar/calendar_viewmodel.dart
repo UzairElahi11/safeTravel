@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -63,6 +65,7 @@ class CalendarViewModel extends ChangeNotifier implements TickerProvider {
   }
 
   createBooking(Map<String, dynamic> body) async {
+    log("This is the stay safe body $maintingUserDetails");
     isloading = true;
     notifyListeners();
     Map<String, dynamic> bodyToBePosted = {
@@ -129,6 +132,8 @@ class CalendarViewModel extends ChangeNotifier implements TickerProvider {
                 builder: (context) => const PaymentView(),
               ),
             );
+
+            maintingUserDetails.clear();
           }
         } else {
           // Request failed

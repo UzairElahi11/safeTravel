@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'dart:typed_data';
 import 'dart:io' as io;
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/screens/UI/user_details/user_data_manager.dart';
 import 'package:safe/server_manager/server_manager.dart';
@@ -10,6 +12,7 @@ import 'package:safe/server_manager/server_manager.dart';
 import '../../../constants/keys.dart';
 
 class ProfileViewModel with ChangeNotifier, ApiCalling, UpdateBooking {
+  File? imageFile;
   List<List<bool>> checkboxStates = [];
   List<dynamic> savingTheListsDataFromDataObject = [];
 
@@ -58,7 +61,7 @@ class ProfileViewModel with ChangeNotifier, ApiCalling, UpdateBooking {
           "last_name": getEditProfileData['data'][0]['last_name'],
           "dob": getEditProfileData['data'][0]['dob'],
           "delete_old_picture": false,
-          "picture": getEditProfileData['data'][0]['picture'],
+          "picture": base64Image,
           "health_conditions": updatedHealthConditionsList,
           "medical_allergies": [],
           "food_allergies": updatedFoodConditionsList,
@@ -278,6 +281,22 @@ class ProfileViewModel with ChangeNotifier, ApiCalling, UpdateBooking {
   //convert the base64 image to string
   String base64String(Uint8List data) {
     return base64Encode(data);
+  }
+
+  String base64Image = "";
+
+  Future<void> selectImage() async {
+    try {
+      final ImagePicker picker = ImagePicker();
+      final XFile? imagee = await picker.pickImage(source: ImageSource.gallery);
+      imageFile = File(imagee!.path);
+      Uint8List bytes = imageFile!.readAsBytesSync();
+      base64Image = base64Encode(bytes);
+
+      notifyListeners();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 }
 
