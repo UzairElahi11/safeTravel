@@ -18,6 +18,8 @@ import '../user_details/userDetail_viewModel.dart';
 class CalendarViewModel extends ChangeNotifier implements TickerProvider {
   DateTime arrivalfocusDay = DateTime.now();
   DateTime? departureFocusDay;
+  bool isGovernemnt = true;
+  bool isPrivate = false;
 
   bool isloading = false;
 
@@ -74,6 +76,7 @@ class CalendarViewModel extends ChangeNotifier implements TickerProvider {
         "notes": notesController.text.trim()
       },
       "booking": {
+        "isGovernment" : isGovernemnt?true:false,
         "arrival": DateFormat('yyyy/MM/dd').format(arrivalfocusDay),
         "departure": DateFormat('yyyy/MM/dd').format(
           departureFocusDay ??
