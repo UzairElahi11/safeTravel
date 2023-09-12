@@ -47,6 +47,8 @@ abstract class LocaleKeys {
   static const lastName = "lastName";
   static const hintFirstName = "hintFirstName";
   static const hintLastName = "hintLastName";
+  static const hintPhoneNumber = "hintPhoneNumber";
+
   static const dateOfBirth = "dateOfBirth";
   static const dateOfBirthHint = "dateOfBirthHint";
   static const sendLocationInEmergency = "sendLocationInEmergency";
@@ -68,4 +70,5 @@ abstract class LocaleKeys {
   static const discount = "discount";
   static const pressFor = "pressFor";
   static const phoneService = "phoneService";
+  static const hintEmail = "hintEmail";
 }

@@ -58,6 +58,8 @@ class UserDetailsViewModel extends ChangeNotifier
   TextEditingController lastNameController = TextEditingController();
   TextEditingController dateOfBirthController = TextEditingController();
   TextEditingController addItemsController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController numberControlller = TextEditingController();
 
   //dateofbirthSelection
   void seletedDate(DateTime? date) {
@@ -82,6 +84,8 @@ class UserDetailsViewModel extends ChangeNotifier
   String? firstnameError;
   String? lastNameLastError;
   String? dateofBirthError;
+  String? emailError;
+  String? numberError;
 
   //validate the fields, should not empty while submitting the form
   bool validate() {
@@ -123,8 +127,35 @@ class UserDetailsViewModel extends ChangeNotifier
       dateofBirthError = errorText;
     });
 
+    bool emailControllerError = locator<TextFieldValidator>().validateTextField(
+        emailController, mapErrorMessageUsingConditions: (text) {
+      if (text.isEmpty) {
+        return TextFieldValidatorModel(
+          isError: true,
+          errorMessage: LocaleKeys.notEmpty.translatedString(),
+        );
+      }
+      return TextFieldValidatorModel(isError: false);
+    }, onError: (errorText) {
+      emailError = errorText;
+    });
+    bool phoneControllerError = locator<TextFieldValidator>().validateTextField(
+        numberControlller, mapErrorMessageUsingConditions: (text) {
+      if (text.isEmpty) {
+        return TextFieldValidatorModel(
+          isError: true,
+          errorMessage: LocaleKeys.notEmpty.translatedString(),
+        );
+      }
+      return TextFieldValidatorModel(isError: false);
+    }, onError: (errorText) {
+      numberError = errorText;
+    });
+
     notifyListeners();
-    return firstNameValidator & lastNaneValidator & dateOfBirthValidator;
+    return firstNameValidator & lastNaneValidator & dateOfBirthValidator &&
+        emailControllerError &&
+        phoneControllerError;
   }
 
   navigate(BuildContext context, bool isFromLogin) async {
@@ -178,6 +209,8 @@ class UserDetailsViewModel extends ChangeNotifier
       Map<String, dynamic> memberDetails = {
         "first_name": firstNameController.text.trim(),
         "last_name": lastNameController.text.trim(),
+        "email": emailController.text.trim(),
+        "phone": numberControlller.text.trim(),
         "dob": formattedDate,
         "picture": base64Image,
         "health_conditions": selectedHealthIssueList,
@@ -188,7 +221,6 @@ class UserDetailsViewModel extends ChangeNotifier
       };
 
       maintingUserDetails.add(memberDetails);
-
 
       notifyListeners();
 
@@ -208,6 +240,8 @@ class UserDetailsViewModel extends ChangeNotifier
   void resetFields() {
     firstNameController.clear();
     lastNameController.clear();
+    emailController.clear();
+    numberControlller.clear();
     dateOfBirthController.clear();
 
     healthCheckList = List<bool>.generate(
@@ -223,6 +257,8 @@ class UserDetailsViewModel extends ChangeNotifier
     base64Image = "";
     firstnameError = null;
     lastNameLastError = null;
+    emailError = null;
+    numberError = null;
   }
 
   fillTheListWhereSelected() async {
@@ -260,7 +296,7 @@ class UserDetailsViewModel extends ChangeNotifier
     final pickedImage = await picker.pickImage(source: ImageSource.camera);
     image = File(pickedImage!.path);
     Uint8List bytes = image!.readAsBytesSync();
-     base64Image = base64Encode(bytes);
+    base64Image = base64Encode(bytes);
     // debugPrint(base64Image);
 
     notifyListeners();
@@ -318,7 +354,6 @@ class UserDetailsViewModel extends ChangeNotifier
 
         log("base 64 images are $base64Images");
 
-       
         notifyListeners();
       }
     } catch (e) {

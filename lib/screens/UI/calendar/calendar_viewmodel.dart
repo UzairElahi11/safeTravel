@@ -65,13 +65,6 @@ class CalendarViewModel extends ChangeNotifier implements TickerProvider {
   }
 
   createBooking(Map<String, dynamic> body) async {
-        final ads = UserDetailsViewModel.of(listen: false).base64Images;
-
-
-     log("message $ads");
-    log("This is the stay safe body $maintingUserDetails");
-
-   
     isloading = true;
     notifyListeners();
     Map<String, dynamic> bodyToBePosted = {
@@ -98,6 +91,8 @@ class CalendarViewModel extends ChangeNotifier implements TickerProvider {
       "lat": UserDataManager.getInstance().lat,
       "long": UserDataManager.getInstance().long,
     };
+
+    log("bsads $bodyToBePosted");
 
     const String valueUrl = "http://staysafema.com/api/create-booking";
 

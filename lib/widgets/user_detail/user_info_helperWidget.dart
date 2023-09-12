@@ -74,6 +74,58 @@ class UserInformationDtails extends StatelessWidget {
             height: 12.h,
           ),
           GenericText(
+            LocaleKeys.phoneNumber,
+            style: AppStyles.medium14.copyWith(color: AppColors.blackColor),
+          ),
+          SizedBox(
+            height: 12.h,
+          ),
+          GenericTextField(
+            contentPadding: EdgeInsets.symmetric(vertical: 20.h),
+            hintStyle: AppStyles.small12.copyWith(
+              color: AppColors.editTextColor,
+              fontWeight: FontWeight.w400,
+            ),
+            prefixPadding: EdgeInsets.symmetric(horizontal: 20.w),
+            fillColor: AppColors.containerBgColor,
+            controller: model.numberControlller,
+            borderRadius: 12.h,
+            textColor: AppColors.editTextColor,
+            filled: true,
+            textInputType: TextInputType.phone,
+            errorText: model.numberError,
+            hintText: LocaleKeys.hintPhoneNumber.translatedString(),
+          ),
+          SizedBox(
+            height: 12.h,
+          ),
+          GenericText(
+            LocaleKeys.email,
+            style: AppStyles.medium14.copyWith(color: AppColors.blackColor),
+          ),
+          SizedBox(
+            height: 12.h,
+          ),
+          GenericTextField(
+            contentPadding: EdgeInsets.symmetric(vertical: 20.h),
+            hintStyle: AppStyles.small12.copyWith(
+              color: AppColors.editTextColor,
+              fontWeight: FontWeight.w400,
+            ),
+            prefixPadding: EdgeInsets.symmetric(horizontal: 20.w),
+            fillColor: AppColors.containerBgColor,
+            controller: model.emailController,
+            borderRadius: 12.h,
+            textColor: AppColors.editTextColor,
+            filled: true,
+            textInputType: TextInputType.emailAddress,
+            errorText: model.emailError,
+            hintText: LocaleKeys.hintEmail.translatedString(),
+          ),
+          SizedBox(
+            height: 12.h,
+          ),
+          GenericText(
             LocaleKeys.dateOfBirth,
             style: AppStyles.medium14.copyWith(color: AppColors.blackColor),
           ),
@@ -119,6 +171,7 @@ class UserInformationDtails extends StatelessWidget {
                 height: 75.h,
                 width: 75.h,
                 decoration: BoxDecoration(
+                
                     borderRadius: BorderRadius.circular(5),
                     border: Border.all(color: Colors.black12)),
                 child: Center(
@@ -128,6 +181,7 @@ class UserInformationDtails extends StatelessWidget {
                           model.image!,
                           width: 200,
                           height: 200,
+                          fit: BoxFit.cover,
                         ),
                 ),
               ),

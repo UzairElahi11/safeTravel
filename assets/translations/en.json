@@ -62,10 +62,11 @@
   "pharmacyList": "Pharmacy List",
   "profile": "Profile",
   "skip": "Skip",
-  "noMoreImagesText" : "Can not select more than 3 pictures",
+  "noMoreImagesText": "Can not select more than 3 pictures",
   "selectedDepartureDate": "Please select the departure date",
-  "discount":"Discount",
-  "pressFor" : "Press For",
-  "phoneService":"Phone Service"
-
+  "discount": "Discount",
+  "pressFor": "Press For",
+  "phoneService": "Phone Service",
+  "hintPhoneNumber": "Enter phone number",
+  "hintEmail": "Enter Email"
 }

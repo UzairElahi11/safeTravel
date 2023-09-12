@@ -44,6 +44,9 @@ class UserDetailsView extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
+
+
+                
                 UserInformationDtails(model: model),
                 SizedBox(
                   height: 20.h,
