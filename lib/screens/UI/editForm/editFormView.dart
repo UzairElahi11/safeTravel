@@ -71,31 +71,52 @@ class ProfileView extends StatelessWidget {
                                     clipBehavior: Clip.none,
                                     children: [
                                       model.imageFile == null
-                                          ? CircleAvatar(
-                                              radius: 40,
-                                              backgroundImage: NetworkImage(
-                                                model.getEditProfileData['data']
-                                                    [0]['picture'],
-                                              ))
+                                          ? model.getEditProfileData['data'][0]
+                                                      ['picture'] !=
+                                                  null
+                                              ? CircleAvatar(
+                                                  radius: 40,
+                                                  backgroundImage: NetworkImage(
+                                                    model.getEditProfileData[
+                                                                'data'][0]
+                                                            ['picture'] ??
+                                                        const Icon(
+                                                            Icons.person),
+                                                  ))
+                                              : GestureDetector(
+                                                onTap: model.selectImage,
+                                                child: CircleAvatar(
+                                                    radius: 40,
+                                                    backgroundColor:
+                                                        Colors.grey[300]!,
+                                                    child: const Icon(Icons
+                                                        .camera_alt_outlined),
+                                                  ),
+                                              )
                                           : CircleAvatar(
                                               radius: 40,
                                               backgroundImage:
                                                   FileImage(model.imageFile!),
                                             ),
-                                      Positioned(
-                                        top: 0,
-                                        right: 0,
-                                        child: InkWell(
-                                          onTap: model.selectImage,
-                                          child: CircleAvatar(
-                                            radius: 12,
-                                            child: Icon(
-                                                Icons.camera_alt_outlined,
-                                                color: AppColors.color232323,
-                                                size: 15),
-                                          ),
-                                        ),
-                                      ),
+                                      model.getEditProfileData['data'][0]
+                                                  ['picture'] !=
+                                              null
+                                          ? Positioned(
+                                              top: 0,
+                                              right: 0,
+                                              child: InkWell(
+                                                onTap: model.selectImage,
+                                                child: CircleAvatar(
+                                                  radius: 12,
+                                                  child: Icon(
+                                                      Icons.camera_alt_outlined,
+                                                      color:
+                                                          AppColors.color232323,
+                                                      size: 15),
+                                                ),
+                                              ),
+                                            )
+                                          : const SizedBox()
                                     ],
                                   ),
                                 ],
@@ -120,6 +141,26 @@ class ProfileView extends StatelessWidget {
                                     color: Colors.black,
                                     fontWeight: FontWeight.w500,
                                     fontSize: 18),
+                              ),
+                            ),
+                            Center(
+                              child: GenericText(
+                                model.getEditProfileData['data'][0]['email'] ??
+                                    "",
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 5),
+                              ),
+                            ),
+                            Center(
+                              child: GenericText(
+                                model.getEditProfileData['data'][0]['phone'] ??
+                                    "",
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 15),
                               ),
                             ),
                             SizedBox(
@@ -306,132 +347,100 @@ class ProfileView extends StatelessWidget {
                       SizedBox(
                         height: 30.h,
                       ),
-                      model.getEditProfileData.isEmpty
+                      model.getEditProfileData['data'][0]['health_reports'] ==
+                                  null ||
+                              model.getEditProfileData['data'][0]
+                                      ['health_reports'] ==
+                                  []
+                          ? Padding(
+                              padding: EdgeInsets.only(left: 50.w),
+                              child: const Text(
+                                "Health Reports",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            )
+                          : const SizedBox(),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      model.getEditProfileData['data'][0]['health_reports'] ==
+                              null
                           ? const SizedBox()
-                          : model.getEditProfileData['data'].isEmpty
-                              ? const Text(
-                                  "Nothing to show",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
+                          : ListView.separated(
+                              physics: const NeverScrollableScrollPhysics(),
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(
+                                    height: 20,
                                   ),
-                                )
-                              : model.getEditProfileData.isEmpty &&
-                                      model
-                                          .getEditProfileData['data'].isEmpty &&
-                                      model.getEditProfileData.isNotEmpty &&
-                                      model.getEditProfileData['data'][0]
-                                              ['health_reports'] !=
-                                          null &&
-                                      model
-                                          .getEditProfileData['data'][0]
-                                              ['health_reports']
-                                          .isNotEmpty
-                                  ? ListView.separated(
-                                      itemCount: model
-                                          .getEditProfileData['data'][0]
-                                              ['health_reports']
-                                          .length,
-                                      separatorBuilder: (context, index) =>
-                                          const SizedBox(
-                                        height: 5,
-                                      ),
-                                      itemBuilder: (context, index) => Card(
-                                        elevation: 0,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        color: AppColors.containerBgColor,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            SizedBox(
-                                              height: 20.h,
-                                            ),
-                                            model.getEditProfileData.isEmpty &&
-                                                    model
-                                                        .getEditProfileData[
-                                                            'data']
-                                                        .isEmpty &&
-                                                    model.getEditProfileData
-                                                        .isNotEmpty &&
-                                                    model.getEditProfileData[
-                                                                'data'][0][
-                                                            'health_reports'] !=
-                                                        null &&
-                                                    model
-                                                        .getEditProfileData[
-                                                            'data'][0]
-                                                            ['health_reports']
-                                                        .isNotEmpty
-                                                ? Padding(
-                                                    padding: EdgeInsets.only(
-                                                        left: 50.w),
-                                                    child: const Text(
-                                                      "Health Reports",
-                                                      style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontSize: 16,
-                                                      ),
-                                                    ),
-                                                  )
-                                                : const SizedBox.shrink(),
-                                            SizedBox(
-                                              height: 10.h,
-                                            ),
-                                            model.getEditProfileData.isEmpty
-                                                ? const SizedBox.shrink()
-                                                : ListView.separated(
-                                                    shrinkWrap: true,
-                                                    itemCount: model
-                                                            .getEditProfileData
-                                                            .isEmpty
-                                                        ? 1
-                                                        : model
-                                                                .getEditProfileData[
-                                                                    'data']
-                                                                .isEmpty
-                                                            ? 0
-                                                            : model
-                                                                .getEditProfileData[
-                                                                    'data'][0][
-                                                                    'health_reports']
-                                                                .length,
-                                                    separatorBuilder:
-                                                        (context, index) =>
-                                                            SizedBox(
-                                                      height: 10.h,
-                                                    ),
-                                                    itemBuilder:
-                                                        (context, index) =>
-                                                            Center(
-                                                      child: Image.network(
-                                                        model.getEditProfileData[
-                                                                    'data'][0][
-                                                                'health_reports']
-                                                            ['10'],
-                                                        errorBuilder: (context,
-                                                                exception,
-                                                                stacTrace) =>
-                                                            const Icon(
-                                                          Icons.error,
-                                                          color: Colors.red,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                            SizedBox(
-                                              height: 20.h,
-                                            ),
-                                          ],
-                                        ),
+                              shrinkWrap: true,
+                              itemCount: model
+                                  .getEditProfileData['data'][0]
+                                      ['health_reports']
+                                  .length,
+                              itemBuilder: (context, index) {
+                                final reportNumber =
+                                    model.imagesList.keys.elementAt(index);
+                                final reportUrl =
+                                    model.imagesList[reportNumber];
+                                return Stack(
+                                  alignment: Alignment.topRight,
+                                  children: [
+                                    ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Image.network(
+                                          reportUrl,
+                                        )),
+                                    IconButton(
+                                      onPressed: () {
+                                        model.removeData(reportNumber);
+                                      },
+                                      icon: const Icon(
+                                        Icons.delete,
+                                        color: Colors.red,
                                       ),
                                     )
-                                  : const SizedBox.shrink(),
+                                  ],
+                                );
+                              }),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      model.reports.isNotEmpty
+                          ? ListView.separated(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                return Stack(
+                                  alignment: Alignment.topRight,
+                                  children: [
+                                    ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Image.file(
+                                          model.reports[index]!,
+                                        )),
+                                    IconButton(
+                                      onPressed: () {
+                                        model.removeLocalImages(index);
+                                      },
+                                      icon: const Icon(
+                                        Icons.delete,
+                                        color: Colors.red,
+                                      ),
+                                    )
+                                  ],
+                                );
+                              },
+                              separatorBuilder: (index, context) =>
+                                  const SizedBox(
+                                height: 20,
+                              ),
+                              itemCount: model.reports.length,
+                            )
+                          : const SizedBox(),
                       SizedBox(
                         height: 30.h,
                       ),
@@ -444,7 +453,7 @@ class ProfileView extends StatelessWidget {
                           color: AppColors.whiteColor,
                           fontWeight: FontWeight.w400,
                         ),
-                        onPressed: () {},
+                        onPressed: () => model.selectImageReport(),
                       ),
                       SizedBox(
                         height: 30.h,

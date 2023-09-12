@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lottie/lottie.dart';
 import 'package:safe/Utils/app_colors.dart';
 import 'package:safe/Utils/app_images_path.dart';
 import 'package:safe/Utils/app_text_styles.dart';
@@ -57,7 +56,7 @@ class DashboardView extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w500),
                         ),
-                        trailing: Icon(Icons.arrow_forward_ios_sharp),
+                        trailing: const Icon(Icons.arrow_forward_ios_sharp),
                         onTap: () async {
                           {
                             const url =
@@ -90,7 +89,7 @@ class DashboardView extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w500),
                         ),
-                        trailing: Icon(Icons.arrow_forward_ios_sharp),
+                        trailing: const Icon(Icons.arrow_forward_ios_sharp),
                         onTap: () async {
                           {
                             const url =
@@ -124,7 +123,7 @@ class DashboardView extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               color: Colors.red),
                         ),
-                        trailing: Icon(Icons.arrow_forward_ios_sharp),
+                        trailing: const Icon(Icons.arrow_forward_ios_sharp),
                         onTap: () {
                           showDialog(
                               context: context,
@@ -183,57 +182,62 @@ class DashboardView extends StatelessWidget {
               ),
               body: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 100.w),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      SizedBox(
-                        height: 100.h,
-                      ),
-                      servicesList(model, context),
-                      SizedBox(
-                        height: 90.h,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: GenericButton(
-                              height: 70.h,
-                              onPressed: () {
-                                AppUtil.pushRoute(
-                                    context: context,
-                                    route: const CrispScreen());
-                              },
-                              text: "Chat",
-                              textStyle: AppStyles.mediumBold16.copyWith(
-                                color: AppColors.whiteColor,
-                                fontWeight: FontWeight.w600,
+                child: SingleChildScrollView(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        SizedBox(
+                          height: 100.h,
+                        ),
+                        servicesList(model, context),
+                        SizedBox(
+                          height: 90.h,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: GenericButton(
+                                height: 70.h,
+                                onPressed: () {
+                                  AppUtil.pushRoute(
+                                      context: context,
+                                      route: const CrispScreen());
+                                },
+                                text: "Chat",
+                                textStyle: AppStyles.mediumBold16.copyWith(
+                                  color: AppColors.whiteColor,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          InkWell(
-                            onTap: () async {
-                              try {
-                                String phoneNumberCode =
-                                    countryCode.replaceAll('+', '');
-                                //launchUrlString is method of url_launcher package and //phoneNoController.text is the number from phone number textfield
-                                await launchUrlString(
-                                    'whatsapp://send?phone=${phoneNumberCode + helplineNumber}&text=${Uri.encodeFull("Stay Safe")}');
-                              } catch (e) {
-                                debugPrint('Error Launching WhatsApp');
-                              }
-                            },
-                            child: SizedBox(
-                                height: 70.h,
-                                child: Image.asset(AppImages.whatsApp)),
-                          )
-                        ],
-                      )
-                    ]),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            InkWell(
+                              onTap: () async {
+                                try {
+                                  String phoneNumberCode =
+                                      countryCode.replaceAll('+', '');
+                                  //launchUrlString is method of url_launcher package and //phoneNoController.text is the number from phone number textfield
+                                  await launchUrlString(
+                                      'whatsapp://send?phone=${phoneNumberCode + helplineNumber}&text=${Uri.encodeFull("Stay Safe")}');
+                                } catch (e) {
+                                  debugPrint('Error Launching WhatsApp');
+                                }
+                              },
+                              child: SizedBox(
+                                  height: 70.h,
+                                  child: Image.asset(AppImages.whatsApp)),
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        )
+                      ]),
+                ),
               ),
             );
           },
@@ -552,7 +556,7 @@ class DashboardView extends StatelessWidget {
                 ),
               ),
             ),
-            const Padding(padding: EdgeInsets.only(top: 20))
+            const Padding(padding: EdgeInsets.only(top: 20)),
           ],
         );
       },

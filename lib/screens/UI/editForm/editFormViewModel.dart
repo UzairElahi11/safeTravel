@@ -9,12 +9,24 @@ import 'package:safe/Utils/app_util.dart';
 import 'package:safe/screens/UI/user_details/user_data_manager.dart';
 import 'package:safe/server_manager/server_manager.dart';
 
+import '../../../Utils/generics/generic_text.dart';
 import '../../../constants/keys.dart';
 
 class ProfileViewModel with ChangeNotifier, ApiCalling, UpdateBooking {
   File? imageFile;
   List<List<bool>> checkboxStates = [];
   List<dynamic> savingTheListsDataFromDataObject = [];
+
+  Map<String, dynamic> imagesList = {};
+
+  List listRemoveItemsList = [];
+
+  removeData(String key) {
+    imagesList.remove(key);
+
+    listRemoveItemsList.add(key);
+    notifyListeners();
+  }
 
   List<dynamic> listOfKeys = [];
 
@@ -50,6 +62,46 @@ class ProfileViewModel with ChangeNotifier, ApiCalling, UpdateBooking {
     }
   }
 
+  List<File?> reports = <File?>[];
+
+  List<String> base64Images = [];
+
+  removeLocalImages(int index) {
+    reports.removeAt(index);
+    base64Images.removeAt(index);
+
+    notifyListeners();
+  }
+
+  Future<void> selectImageReport() async {
+    try {
+      if (reports.length >= 3) {
+        ScaffoldMessenger.maybeOf(Keys.mainNavigatorKey.currentState!.context)!
+            .showSnackBar(
+          const SnackBar(
+            content: GenericText("Can not select more than 3 pictures"),
+          ),
+        );
+      } else {
+        final ImagePicker picker = ImagePicker();
+        final List<XFile> imagesList = await picker.pickMultiImage();
+        for (var element in imagesList) {
+          reports.add(File(element.path));
+        }
+
+        base64Images = reports.map((file) {
+          List<int> bytes = file!.readAsBytesSync();
+          String base64Image = base64Encode(bytes);
+          return base64Image;
+        }).toList();
+
+        notifyListeners();
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
   updateProfile() async {
     await updateTheCheckList();
 
@@ -60,19 +112,22 @@ class ProfileViewModel with ChangeNotifier, ApiCalling, UpdateBooking {
           "first_name": getEditProfileData['data'][0]['first_name'],
           "last_name": getEditProfileData['data'][0]['last_name'],
           "dob": getEditProfileData['data'][0]['dob'],
-          "delete_old_picture": false,
+          "email": getEditProfileData['data'][0]['email'],
+          "phone": getEditProfileData['data'][0]['phone'],
+          "delete_old_picture": base64Image == "" ? false : true,
           "picture": base64Image,
           "health_conditions": updatedHealthConditionsList,
           "medical_allergies": [],
           "food_allergies": updatedFoodConditionsList,
           "disabilities": updatedDisabilityList,
-          "old_health_reports": [],
-          "health_reports": []
+          "old_health_reports": listRemoveItemsList,
+          "health_reports": base64Images
         },
       ],
       "lat": UserDataManager.getInstance().lat,
       "long": UserDataManager.getInstance().long,
     };
+    log("my updated data is $json");
 
     updateBookingFunc(
       body: json,
@@ -94,7 +149,11 @@ class ProfileViewModel with ChangeNotifier, ApiCalling, UpdateBooking {
 
   init(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      getProfileForm(context: context, completion: (success) {});
+      getProfileForm(
+          context: context,
+          completion: (success) {
+            imagesList.addAll(getEditProfileData['data'][0]['health_reports']);
+          });
     });
   }
 
@@ -109,7 +168,8 @@ class ProfileViewModel with ChangeNotifier, ApiCalling, UpdateBooking {
       required Map<String, dynamic> body,
       required void Function(
         bool success,
-      ) completion}) {
+      )
+          completion}) {
     // log
     updateBooking(
         json: body,
@@ -158,7 +218,8 @@ class ProfileViewModel with ChangeNotifier, ApiCalling, UpdateBooking {
       {required BuildContext context,
       required void Function(
         bool success,
-      ) completion}) {
+      )
+          completion}) {
     getFormApiCalling(
         context: context,
         onForeground: true,
@@ -292,6 +353,8 @@ class ProfileViewModel with ChangeNotifier, ApiCalling, UpdateBooking {
       imageFile = File(imagee!.path);
       Uint8List bytes = imageFile!.readAsBytesSync();
       base64Image = base64Encode(bytes);
+
+      log("base 64 imaege is $base64Image");
 
       notifyListeners();
     } catch (e) {

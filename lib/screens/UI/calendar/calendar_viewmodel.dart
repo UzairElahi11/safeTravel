@@ -84,6 +84,7 @@ class CalendarViewModel extends ChangeNotifier implements TickerProvider {
                 const Duration(days: 1),
               ),
         ),
+        "isGovernment": false,
       },
       "family_members": {
         "adults": familyMembersList[0]['numberOfMembers'],
@@ -96,6 +97,10 @@ class CalendarViewModel extends ChangeNotifier implements TickerProvider {
     };
 
     log("bsads $bodyToBePosted");
+
+    final val = await UserDefaults.getToken();
+
+    debugPrint("token is $val");
 
     const String valueUrl = "http://staysafema.com/api/create-booking";
 
