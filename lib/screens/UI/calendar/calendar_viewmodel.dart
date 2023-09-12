@@ -76,7 +76,7 @@ class CalendarViewModel extends ChangeNotifier implements TickerProvider {
         "notes": notesController.text.trim()
       },
       "booking": {
-        "isGovernment" : isGovernemnt?true:false,
+        "isGovernment": isGovernemnt ? true : false,
         "arrival": DateFormat('yyyy/MM/dd').format(arrivalfocusDay),
         "departure": DateFormat('yyyy/MM/dd').format(
           departureFocusDay ??
