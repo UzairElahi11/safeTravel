@@ -68,5 +68,7 @@
   "pressFor": "Press For",
   "phoneService": "Phone Service",
   "hintPhoneNumber": "Enter phone number",
-  "hintEmail": "Enter Email"
+  "hintEmail": "Enter Email",
+  "applyReferal":"Apply Referral Code",
+  "enterCode":"Enter Code"
 }

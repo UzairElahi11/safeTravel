@@ -71,4 +71,6 @@ abstract class LocaleKeys {
   static const pressFor = "pressFor";
   static const phoneService = "phoneService";
   static const hintEmail = "hintEmail";
+  static const applyReferal = "applyReferal";
+    static const enterCode = "enterCode";
 }

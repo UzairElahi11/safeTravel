@@ -169,7 +169,60 @@ class PaymentView extends StatelessWidget {
                           // textAlign: TextAlign.left,
                         ),
                         SizedBox(
-                          height: 20.h,
+                          height: 10.h,
+                        ),
+                        const GenericText(
+                          LocaleKeys.applyReferal,
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                          // textAlign: TextAlign.left,
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 330.h,
+                              child: GenericTextField(
+                                controller: model.referalCodeController,
+                                fillColor: AppColors.containerBgColor,
+                                filled: true,
+                                errorText: model.cardNumberValidator,
+                                hintText:
+                                    LocaleKeys.enterCode.translatedString(),
+                                textAlign: TextAlign.center,
+                                isNumberField: false,
+                                inputFormatters: [
+                                  // FilteringTextInputFormatter.digitsOnly,
+                                  LengthLimitingTextInputFormatter(50),
+                                  // CardNumberInputFormatter()
+                                ],
+                                // contentPadding: EdgeInsets.symmetric(vertical: 20.h),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 5.h,
+                            ),
+                            Expanded(
+                                child: GenericButton(
+                              padding: const EdgeInsets.all(10),
+                              onPressed: () {
+                                model.couponValidate(
+                                  codee: model.referalCodeController.text,
+                                  context: context,
+                                  completion: (success) {},
+                                );
+                              },
+                              text: "Apply",
+                              textStyle: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500),
+                            ))
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10.h,
                         ),
                         GenericText(
                           LocaleKeys.cardNumber,
@@ -298,6 +351,9 @@ class PaymentView extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
+                        const SizedBox(
+                          height: 10,
+                        )
                       ]),
                 ),
               );

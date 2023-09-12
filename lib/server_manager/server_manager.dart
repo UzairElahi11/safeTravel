@@ -438,6 +438,14 @@ class ServerManager {
     callPostApi(UrlConstants.callPolice, _defaultHeader(), json, completion,
         false, false);
   }
+  static void couponValidate(
+      String? code, ResponseCompletion completion) {
+    Map<String, dynamic> json = {
+     "coupon_code":code??""
+    };
+    callPostApi(UrlConstants.couponValidate, _defaultHeader(), json, completion,
+        false, false);
+  }
 
   static void callHealth(
       String lat, String long, ResponseCompletion completion) {

@@ -68,7 +68,11 @@
   "pressFor" : "Presione para",
   "phoneService":"Phone Service",
   "hintPhoneNumber": "Ingresa número telefónico",
-  "hintEmail": "Ingrese correo electrónico"
+  "hintEmail": "Ingrese correo electrónico",
+  "applyReferal":"Aplicar código de referencia",
+  "enterCode":"Introduzca el código"
+
+
 
 
 
