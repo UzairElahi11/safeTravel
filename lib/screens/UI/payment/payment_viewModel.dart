@@ -27,6 +27,7 @@ class PaymentViewModel with ChangeNotifier, paymentApiCallingClass {
   String tax = "";
   String priceAfterText = "";
   String discount = "";
+  String? coupon;
 
   validator(BuildContext context) async {
     expValidator = CardUtils.validateDate(expController.text);
@@ -78,13 +79,15 @@ class PaymentViewModel with ChangeNotifier, paymentApiCallingClass {
       {required BuildContext context,
       required void Function(
         bool success,
-      ) completion}) {
+      )
+          completion}) {
     paymentApiCalling(
         lat: UserDataManager.getInstance().lat,
         long: UserDataManager.getInstance().long,
         cardNumber: cardNumberController.text,
         cvv: cvvController.text,
         expDate: expController.text,
+        couponCode: coupon ?? "",
         context: context,
         onForeground: true,
         callBack: (success, json) async {
@@ -139,7 +142,8 @@ class PaymentViewModel with ChangeNotifier, paymentApiCallingClass {
       required BuildContext context,
       required void Function(
         bool success,
-      ) completion}) {
+      )
+          completion}) {
     couponValidateApiCalling(
         code: codee,
         context: context,
@@ -165,7 +169,7 @@ class PaymentViewModel with ChangeNotifier, paymentApiCallingClass {
               );
             } else {
               ReferalModel referal = ReferalModel.fromJson(json);
-              if (referal != null && referal.data != null) {
+              if (referal.data != null) {
                 price = referal.data?.price?.toString() ?? "";
                 tax = referal.data?.tax ?? "";
                 priceAfterText = referal.data?.priceAfterTax.toString() ?? "";
@@ -200,7 +204,8 @@ class PaymentViewModel with ChangeNotifier, paymentApiCallingClass {
       {required BuildContext context,
       required void Function(
         bool success,
-      ) completion}) {
+      )
+          completion}) {
     priceApiCalling(
         context: context,
         onForeground: true,
@@ -285,6 +290,7 @@ mixin paymentApiCallingClass {
       required String expDate,
       required String lat,
       required String long,
+      required String couponCode,
       required BuildContext context,
       bool onForeground = false,
       required void Function(bool success, Map? json) callBack}) async {
@@ -292,7 +298,7 @@ mixin paymentApiCallingClass {
     apiCallingProgress = true;
     if (onForeground) {
       AppUtil.showLoader(context: context);
-      ServerManager.payment(cardNumber, cvv, expDate, lat, long,
+      ServerManager.payment(cardNumber, cvv, expDate, lat, long, couponCode,
           (responseBody, success) {
         apiCallingProgress = false;
         if (onForeground) {

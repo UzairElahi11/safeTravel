@@ -127,12 +127,13 @@ class ServerManager {
                 headers: bearerToken != null
                     ? isUpdateProfile
                         ? {
-                            HttpHeaders.contentTypeHeader:isUpdateProfile?  "application/json":"",
+                            HttpHeaders.contentTypeHeader:
+                                isUpdateProfile ? "application/json" : "",
                             HttpHeaders.authorizationHeader:
                                 "Bearer $bearerToken"
                           }
                         : {
-                           // HttpHeaders.contentTypeHeader:isUpdateProfile?  "application/json":"",
+                            // HttpHeaders.contentTypeHeader:isUpdateProfile?  "application/json":"",
                             HttpHeaders.authorizationHeader:
                                 "Bearer $bearerToken"
                           }
@@ -417,13 +418,14 @@ class ServerManager {
 
   //payment api
   static void payment(String cardNumber, String cvv, String expDate, String lat,
-      String long, ResponseCompletion completion) {
+      String long, String couponCode, ResponseCompletion completion) {
     Map<String, dynamic> json = {
       "card_number": cardNumber.replaceAll("  ", ""),
       "cvv": cvv,
       "expiry": expDate,
       "lat": lat,
       "long": long,
+      "coupon_code": couponCode
     };
     callPostApi(UrlConstants.paymentApi, _defaultHeader(), json, completion,
         false, false);
@@ -438,11 +440,9 @@ class ServerManager {
     callPostApi(UrlConstants.callPolice, _defaultHeader(), json, completion,
         false, false);
   }
-  static void couponValidate(
-      String? code, ResponseCompletion completion) {
-    Map<String, dynamic> json = {
-     "coupon_code":code??""
-    };
+
+  static void couponValidate(String? code, ResponseCompletion completion) {
+    Map<String, dynamic> json = {"coupon_code": code ?? ""};
     callPostApi(UrlConstants.couponValidate, _defaultHeader(), json, completion,
         false, false);
   }

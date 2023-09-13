@@ -56,7 +56,7 @@ Future main() async {
 
   // await Firebase.initializeApp();
   // await Firebase.initializeApp().then((_) async {
-   await Firebase.initializeApp().then((_) async {
+  await Firebase.initializeApp().then((_) async {
     FirebaseMessaging.instance.requestPermission().then((value) async {
       FirebaseMessaging.onBackgroundMessage(
           _firebaseMessagingBackgroundHandler);
@@ -67,17 +67,19 @@ Future main() async {
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.portraitUp,
         DeviceOrientation.portraitDown,
-      ]).then((value)async {final languageStored = await locator<LocalSecureStorage>()
-          .readSecureStorage(AppUtil.isEnglish);
-      runApp(
-        EasyLocalization(
-          supportedLocales: L10n.all,
-          path: 'assets/translations',
-          fallbackLocale:
-              languageStored == "English" ? L10n.all[0] : L10n.all[1],
-          child: const MyApp(),
-        ),
-      );});
+      ]).then((value) async {
+        final languageStored = await locator<LocalSecureStorage>()
+            .readSecureStorage(AppUtil.isEnglish);
+        runApp(
+          EasyLocalization(
+            supportedLocales: L10n.all,
+            path: 'assets/translations',
+            fallbackLocale:
+                languageStored == "English" ? L10n.all[0] : L10n.all[1],
+            child: const MyApp(),
+          ),
+        );
+      });
     });
   });
   // SystemChrome.setPreferredOrientations([
@@ -96,7 +98,7 @@ Future main() async {
   //         child: const MyApp(),
   //       ),
   //     );
-    // },
+  // },
   // );
 }
 
@@ -187,7 +189,6 @@ pushNotifications() async {
               icon: 'launch_background',
             ),
           ));
-          
     }
   });
 }

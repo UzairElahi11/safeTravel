@@ -33,6 +33,24 @@ class CalendarViewModel extends ChangeNotifier implements TickerProvider {
     _tabController = TabController(length: length, vsync: this);
   }
 
+  checkBoxGoverment() {
+    if (isGovernemnt == true) {
+    } else {
+      isGovernemnt = false;
+    }
+
+    notifyListeners();
+  }
+
+  privateHospital() {
+    if (isPrivate == true) {
+    } else {
+      isPrivate = false;
+    }
+
+    notifyListeners();
+  }
+
   @override
   void dispose() {
     _tabController.dispose();
@@ -84,7 +102,6 @@ class CalendarViewModel extends ChangeNotifier implements TickerProvider {
                 const Duration(days: 1),
               ),
         ),
-        "isGovernment": false,
       },
       "family_members": {
         "adults": familyMembersList[0]['numberOfMembers'],

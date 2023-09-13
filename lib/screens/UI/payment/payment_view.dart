@@ -163,15 +163,6 @@ class PaymentView extends StatelessWidget {
                           height: 20.h,
                         ),
                         const GenericText(
-                          LocaleKeys.paymentDescription,
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                          // textAlign: TextAlign.left,
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        const GenericText(
                           LocaleKeys.applyReferal,
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
@@ -182,23 +173,19 @@ class PaymentView extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            SizedBox(
-                              width: 330.h,
+                            Expanded(
+                              flex: 3,
                               child: GenericTextField(
                                 controller: model.referalCodeController,
                                 fillColor: AppColors.containerBgColor,
                                 filled: true,
-                                errorText: model.cardNumberValidator,
                                 hintText:
                                     LocaleKeys.enterCode.translatedString(),
                                 textAlign: TextAlign.center,
                                 isNumberField: false,
                                 inputFormatters: [
-                                  // FilteringTextInputFormatter.digitsOnly,
-                                  LengthLimitingTextInputFormatter(50),
-                                  // CardNumberInputFormatter()
+                                  LengthLimitingTextInputFormatter(10),
                                 ],
-                                // contentPadding: EdgeInsets.symmetric(vertical: 20.h),
                               ),
                             ),
                             SizedBox(
@@ -211,7 +198,10 @@ class PaymentView extends StatelessWidget {
                                 model.couponValidate(
                                   codee: model.referalCodeController.text,
                                   context: context,
-                                  completion: (success) {},
+                                  completion: (success) {
+                                    model.coupon =
+                                        model.referalCodeController.text.trim();
+                                  },
                                 );
                               },
                               text: "Apply",

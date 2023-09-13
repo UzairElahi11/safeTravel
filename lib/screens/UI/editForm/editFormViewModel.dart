@@ -152,7 +152,12 @@ class ProfileViewModel with ChangeNotifier, ApiCalling, UpdateBooking {
       getProfileForm(
           context: context,
           completion: (success) {
-            imagesList.addAll(getEditProfileData['data'][0]['health_reports']);
+            if (getEditProfileData['data'][0]['health_reports'] == null ||
+                getEditProfileData['data'][0]['health_reports'].isEmpty) {
+            } else {
+              imagesList
+                  .addAll(getEditProfileData['data'][0]['health_reports']);
+            }
           });
     });
   }

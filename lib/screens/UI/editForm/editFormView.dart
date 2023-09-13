@@ -84,15 +84,15 @@ class ProfileView extends StatelessWidget {
                                                             Icons.person),
                                                   ))
                                               : GestureDetector(
-                                                onTap: model.selectImage,
-                                                child: CircleAvatar(
+                                                  onTap: model.selectImage,
+                                                  child: CircleAvatar(
                                                     radius: 40,
                                                     backgroundColor:
                                                         Colors.grey[300]!,
                                                     child: const Icon(Icons
                                                         .camera_alt_outlined),
                                                   ),
-                                              )
+                                                )
                                           : CircleAvatar(
                                               radius: 40,
                                               backgroundImage:
@@ -132,37 +132,45 @@ class ProfileView extends StatelessWidget {
                             SizedBox(
                               height: 10.h,
                             ),
-                            Center(
-                              child: GenericText(
-                                model.getEditProfileData.isNotEmpty
-                                    ? "${model.getEditProfileData['data'][0]['first_name']} ${model.getEditProfileData['data'][0]['last_name']}"
-                                    : "",
-                                style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18),
-                              ),
-                            ),
-                            Center(
-                              child: GenericText(
-                                model.getEditProfileData['data'][0]['email'] ??
-                                    "",
-                                style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 5),
-                              ),
-                            ),
-                            Center(
-                              child: GenericText(
-                                model.getEditProfileData['data'][0]['phone'] ??
-                                    "",
-                                style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 15),
-                              ),
-                            ),
+                            model.getEditProfileData['data'] == null
+                                ? const SizedBox()
+                                : Center(
+                                    child: GenericText(
+                                      model.getEditProfileData.isNotEmpty
+                                          ? "${model.getEditProfileData['data'][0]['first_name']} ${model.getEditProfileData['data'][0]['last_name']}"
+                                          : "",
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 18),
+                                    ),
+                                  ),
+                            model.getEditProfileData['data'] == null
+                                ? const SizedBox()
+                                : Center(
+                                    child: GenericText(
+                                      model.getEditProfileData['data'][0]
+                                              ['email'] ??
+                                          "",
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 15),
+                                    ),
+                                  ),
+                            model.getEditProfileData['data'] == null
+                                ? const SizedBox()
+                                : Center(
+                                    child: GenericText(
+                                      model.getEditProfileData['data'][0]
+                                              ['phone'] ??
+                                          "",
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 15),
+                                    ),
+                                  ),
                             SizedBox(
                               height: 20.h,
                             ),
@@ -347,28 +355,30 @@ class ProfileView extends StatelessWidget {
                       SizedBox(
                         height: 30.h,
                       ),
-                      model.getEditProfileData['data'][0]['health_reports'] ==
-                                  null ||
-                              model.getEditProfileData['data'][0]
-                                      ['health_reports'] ==
-                                  []
-                          ? Padding(
-                              padding: EdgeInsets.only(left: 50.w),
-                              child: const Text(
-                                "Health Reports",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            )
-                          : const SizedBox(),
+                      model.getEditProfileData['data'] == null
+                          ? const SizedBox()
+                          : model.getEditProfileData['data'][0]
+                                          ['health_reports'] ==
+                                      null ||
+                                  model.getEditProfileData['data'][0]
+                                          ['health_reports'] ==
+                                      []
+                              ? Padding(
+                                  padding: EdgeInsets.only(left: 50.w),
+                                  child: const Text(
+                                    "Health Reports",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                )
+                              : const SizedBox(),
                       SizedBox(
                         height: 10.h,
                       ),
-                      model.getEditProfileData['data'][0]['health_reports'] ==
-                              null
+                      model.getEditProfileData['data'] == null
                           ? const SizedBox()
                           : ListView.separated(
                               physics: const NeverScrollableScrollPhysics(),

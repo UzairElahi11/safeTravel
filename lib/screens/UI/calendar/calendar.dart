@@ -1,6 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:safe/Utils/app_colors.dart';
 import 'package:safe/Utils/app_images_path.dart';
 import 'package:safe/Utils/app_text_styles.dart';
@@ -106,13 +108,13 @@ class Calendar extends StatelessWidget {
                                         ),
                                       ),
                                     )
-                                  : await model.createBooking(body);
-                              // : showDialog(
-                              //     context: context,
-                              //     builder: (BuildContext context) {
-                              //       return myDialog(model);
-                              //     },
-                              //   );
+                                  // : await model.createBooking(body);
+                                  : showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return myDialog();
+                                      },
+                                    );
                             },
                             text: LocaleKeys.next,
                             textStyle: AppStyles.mediumBold16.copyWith(
@@ -131,106 +133,103 @@ class Calendar extends StatelessWidget {
     );
   }
 
-  Widget myDialog(CalendarViewModel model) {
+  Widget myDialog() {
     return StatefulBuilder(
       builder: (context, setState) {
-        bool check = true;
-        bool check1 = false;
-        return AlertDialog(
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text("Please Choose"),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  GenericCheckBox(
-                    borderSide: BorderSide(width: 0.4),
-                    visualDensity: VisualDensity.compact,
-                    value: check,
-                    fillColor: MaterialStateProperty.all<Color>(Colors.blue),
-                    onChanged: (value) {
-                      print(value);
-                      setState() => check = value ?? true;
-
-                      model.isPrivate = false;
-                      model.isGovernemnt = true;
-                      // model.notifyListeners();
-                    },
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text("Government Hospital"),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  GenericCheckBox(
-                    visualDensity: VisualDensity.compact,
-                    value: check1,
-                    borderSide: BorderSide(width: 0.4),
-                    // fillColor: MaterialStateProperty.all<Color>(Colors.blue),
-                    // focusColor: Colors.blue,
-                    // activeColor: Colors.blue,
-                    onChanged: (value) {
-                      setState() {
-                        check1 = value ?? false;
-                      }
-
-                      model.isPrivate = true;
-                      model.isGovernemnt = false;
-                    },
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text("Private Hospital"),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.only(start: 10, end: 10),
-                child: Row(
+        return Consumer<CalendarViewModel>(builder: (context, model, _) {
+          return AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text("Please Choose"),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
                   children: [
-                    Expanded(
-                        child: GenericButton(
-                            padding: EdgeInsets.all(10),
-                            text: "Cancel",
-                            // textColor: Colors.white,
-                            textStyle: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500),
-                            onPressed: () {
-                              AppUtil.pop(context: context);
-                            })),
-                    SizedBox(
-                      width: 5,
+                    GenericCheckBox(
+                      borderSide: const BorderSide(width: 0.4),
+                      visualDensity: VisualDensity.compact,
+                      value: model.isGovernemnt,
+                      onChanged: (value) {
+                        setState(() {
+                          model.checkBoxGoverment();
+                        });
+
+                        model.isPrivate = false;
+                        model.isGovernemnt = true;
+                        // model.notifyListeners();
+                      },
                     ),
-                    Expanded(
-                        child: GenericButton(
-                            padding: EdgeInsets.all(10),
-                            text: "Proceed",
-                            textStyle: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500),
-                            // textColor: Colors.white,
-                            onPressed: ()async {
-                               await model.createBooking(body);
-                            })),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    const Text("Government Hospital"),
                   ],
                 ),
-              )
-            ],
-          ),
-        );
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    GenericCheckBox(
+                      visualDensity: VisualDensity.compact,
+                      value: model.isPrivate,
+                      borderSide: const BorderSide(width: 0.4),
+                      onChanged: (value) {
+                        setState(() {
+                          model.privateHospital();
+                        });
+
+                        model.isPrivate = true;
+                        model.isGovernemnt = false;
+                      },
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    const Text("Private Hospital"),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 10, end: 10),
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: GenericButton(
+                              padding: const EdgeInsets.all(10),
+                              text: "Cancel",
+                              // textColor: Colors.white,
+                              textStyle: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500),
+                              onPressed: () {
+                                AppUtil.pop(context: context);
+                              })),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                          child: GenericButton(
+                              padding: const EdgeInsets.all(10),
+                              text: "Proceed",
+                              textStyle: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500),
+                              // textColor: Colors.white,
+                              onPressed: () async {
+                                await model.createBooking(body);
+                              })),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          );
+        });
       },
     );
   }
