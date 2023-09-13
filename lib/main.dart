@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/local_storage.dart';
@@ -17,6 +18,7 @@ import 'package:safe/observers/navigation_observer.dart';
 import 'package:safe/screens/UI/splash/splash.dart';
 import 'package:safe/screens/UI/user_details/user_data_manager.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   debugPrint('Handling a background message ${message.messageId}');
@@ -161,6 +163,21 @@ Widget getErrorWidget(BuildContext context, FlutterErrorDetails error) {
   );
 }
 
+LatLng? extractCoordinatesFromNotification(String notificationText) {
+  final RegExp regex = RegExp(r'Lat: ([\d.-]+), Lng: ([\d.-]+)');
+  final match = regex.firstMatch(notificationText);
+
+  if (match != null) {
+    final latitude = double.tryParse(match.group(1)!);
+    final longitude = double.tryParse(match.group(2)!);
+    if (latitude != null && longitude != null) {
+      return LatLng(latitude, longitude);
+    }
+  }
+
+  return null;
+}
+
 pushNotifications() async {
   final fcmToken = await FirebaseMessaging.instance.getToken();
   // print("fcmm1231231" + fcmToken.toString());
@@ -172,7 +189,26 @@ pushNotifications() async {
       android: initializationSettingAndroid,
       iOS: initializationSettingsIOS,
       macOS: null);
-  flutterLocalNotificationsPlugin.initialize(intializationSetting);
+  flutterLocalNotificationsPlugin.initialize(intializationSetting,
+      onDidReceiveNotificationResponse: (details) async {
+    if (details.payload != null) {
+      final LatLng? coordinates =
+          extractCoordinatesFromNotification(details.payload ?? "");
+      if (coordinates != null) {
+        // Open Google Maps with the specified coordinates
+        final url =
+            'https://www.google.com/maps/search/?api=1&query=${coordinates.latitude},${coordinates.longitude}';
+        if (await canLaunchUrl(
+          Uri.parse(url),
+        )) {
+          await launchUrl(
+            Uri.parse(url),
+          );
+        }
+      }
+    }
+  });
+
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     RemoteNotification? notification = message.notification;
     AndroidNotification? android = message.notification?.android;
