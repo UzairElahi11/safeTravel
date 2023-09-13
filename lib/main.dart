@@ -1,3 +1,4 @@
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -178,9 +179,11 @@ LatLng? extractCoordinatesFromNotification(String notificationText) {
   return null;
 }
 
+String notificationMessage = "";
+
 pushNotifications() async {
   final fcmToken = await FirebaseMessaging.instance.getToken();
-  // print("fcmm1231231" + fcmToken.toString());
+  debugPrint("fcmm1231231$fcmToken");
   UserDataManager.getInstance().fcmToken = fcmToken.toString();
   var initializationSettingAndroid =
       const AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -189,9 +192,11 @@ pushNotifications() async {
       android: initializationSettingAndroid,
       iOS: initializationSettingsIOS,
       macOS: null);
+
   flutterLocalNotificationsPlugin.initialize(intializationSetting,
       onDidReceiveNotificationResponse: (details) async {
     if (details.payload != null) {
+      notificationMessage = details.payload ?? "";
       final LatLng? coordinates =
           extractCoordinatesFromNotification(details.payload ?? "");
       if (coordinates != null) {
@@ -208,6 +213,26 @@ pushNotifications() async {
       }
     }
   });
+
+  // Create and schedule a sample notification
+  const AndroidNotificationDetails androidPlatformChannelSpecifics =
+      AndroidNotificationDetails(
+    'your_channel_id',
+    'your_channel_name',
+    importance: Importance.max,
+    priority: Priority.high,
+  );
+
+  const NotificationDetails platformChannelSpecifics =
+      NotificationDetails(android: androidPlatformChannelSpecifics);
+
+  flutterLocalNotificationsPlugin.show(
+    0,
+    'Emergency Alert',
+    'We received police emergency alert at Lat: 37.4219971, Lng: -122.0839996',
+    platformChannelSpecifics,
+    payload: 'Lat: 37.4219971, Lng: -122.0839996',
+  );
 
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     RemoteNotification? notification = message.notification;
