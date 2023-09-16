@@ -1,3 +1,4 @@
+import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -165,8 +166,8 @@ Widget getErrorWidget(BuildContext context, FlutterErrorDetails error) {
 }
 
 LatLng? extractCoordinatesFromNotification(String notificationText) {
-  final RegExp regex = RegExp(r'Lat: ([\d.-]+), Lng: ([\d.-]+)');
-  final match = regex.firstMatch(notificationText);
+  RegExp latLngRegExp = RegExp(r'Lat:\s*([\d.]+),\s*Lng:\s*([\d.]+)');
+  Match? match = latLngRegExp.firstMatch(notificationText);
 
   if (match != null) {
     final latitude = double.tryParse(match.group(1)!);
@@ -183,7 +184,6 @@ String notificationMessage = "";
 
 pushNotifications() async {
   final fcmToken = await FirebaseMessaging.instance.getToken();
-  debugPrint("fcmm1231231$fcmToken");
   UserDataManager.getInstance().fcmToken = fcmToken.toString();
   var initializationSettingAndroid =
       const AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -195,12 +195,13 @@ pushNotifications() async {
 
   flutterLocalNotificationsPlugin.initialize(intializationSetting,
       onDidReceiveNotificationResponse: (details) async {
+    log("details are :::: ${details.payload}");
     if (details.payload != null) {
       notificationMessage = details.payload ?? "";
       final LatLng? coordinates =
           extractCoordinatesFromNotification(details.payload ?? "");
+
       if (coordinates != null) {
-        // Open Google Maps with the specified coordinates
         final url =
             'https://www.google.com/maps/search/?api=1&query=${coordinates.latitude},${coordinates.longitude}';
         if (await canLaunchUrl(
@@ -213,26 +214,6 @@ pushNotifications() async {
       }
     }
   });
-
-  // Create and schedule a sample notification
-  const AndroidNotificationDetails androidPlatformChannelSpecifics =
-      AndroidNotificationDetails(
-    'your_channel_id',
-    'your_channel_name',
-    importance: Importance.max,
-    priority: Priority.high,
-  );
-
-  const NotificationDetails platformChannelSpecifics =
-      NotificationDetails(android: androidPlatformChannelSpecifics);
-
-  flutterLocalNotificationsPlugin.show(
-    0,
-    'Emergency Alert',
-    'We received police emergency alert at Lat: 37.4219971, Lng: -122.0839996',
-    platformChannelSpecifics,
-    payload: 'Lat: 37.4219971, Lng: -122.0839996',
-  );
 
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     RemoteNotification? notification = message.notification;
