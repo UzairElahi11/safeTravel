@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -184,6 +185,7 @@ String notificationMessage = "";
 
 pushNotifications() async {
   final fcmToken = await FirebaseMessaging.instance.getToken();
+  print("fcm" + fcmToken.toString());
   UserDataManager.getInstance().fcmToken = fcmToken.toString();
   var initializationSettingAndroid =
       const AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -192,28 +194,29 @@ pushNotifications() async {
       android: initializationSettingAndroid,
       iOS: initializationSettingsIOS,
       macOS: null);
+  flutterLocalNotificationsPlugin.initialize(intializationSetting);
 
-  flutterLocalNotificationsPlugin.initialize(intializationSetting,
-      onDidReceiveNotificationResponse: (details) async {
-    log("details are :::: ${details.payload}");
-    if (details.payload != null) {
-      notificationMessage = details.payload ?? "";
-      final LatLng? coordinates =
-          extractCoordinatesFromNotification(details.payload ?? "");
+  // flutterLocalNotificationsPlugin.initialize(intializationSetting,
+  //     onDidReceiveNotificationResponse: (details) async {
+  //   log("details are :::: ${details.payload}");
+  //   if (details.payload != null) {
+  //     notificationMessage = details.payload ?? "";
+  //     final LatLng? coordinates =
+  //         extractCoordinatesFromNotification(details.payload ?? "");
 
-      if (coordinates != null) {
-        final url =
-            'https://www.google.com/maps/search/?api=1&query=${coordinates.latitude},${coordinates.longitude}';
-        if (await canLaunchUrl(
-          Uri.parse(url),
-        )) {
-          await launchUrl(
-            Uri.parse(url),
-          );
-        }
-      }
-    }
-  });
+  //     if (coordinates != null) {
+  //       final url =
+  //           'https://www.google.com/maps/search/?api=1&query=${coordinates.latitude},${coordinates.longitude}';
+  //       if (await canLaunchUrl(
+  //         Uri.parse(url),
+  //       )) {
+  //         await launchUrl(
+  //           Uri.parse(url),
+  //         );
+  //       }
+  //     }
+  //   }
+  // });
 
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     RemoteNotification? notification = message.notification;
@@ -233,4 +236,100 @@ pushNotifications() async {
           ));
     }
   });
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
+    RemoteNotification? notification = message.notification;
+    AndroidNotification? android = message.notification?.android;
+    if (notification != null && android != null) {
+      flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              channel.id,
+              channel.name,
+              channelDescription: channel.description,
+              icon: 'launch_background',
+            ),
+          ));
+      final LatLng? coordinates =
+          extractCoordinatesFromNotification(notification.body ?? "");
+
+      if (coordinates != null) {
+        final url =
+            'https://www.google.com/maps/search/?api=1&query=${coordinates.latitude},${coordinates.longitude}';
+        if (await canLaunchUrl(
+          Uri.parse(url),
+        )) {
+          await launchUrl(
+            Uri.parse(url),
+          );
+        }
+      }
+    }
+  });
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+    RemoteNotification? notification = message.notification;
+    AndroidNotification? android = message.notification?.android;
+    if (notification != null && android != null) {
+      flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              channel.id,
+              channel.name,
+              channelDescription: channel.description,
+              icon: 'launch_background',
+            ),
+          ));
+      final LatLng? coordinates =
+          extractCoordinatesFromNotification(notification.body ?? "");
+
+      if (coordinates != null) {
+        final url =
+            'https://www.google.com/maps/search/?api=1&query=${coordinates.latitude},${coordinates.longitude}';
+        if (await canLaunchUrl(
+          Uri.parse(url),
+        )) {
+          await launchUrl(
+            Uri.parse(url),
+          );
+        }
+      }
+    }
+  });
+  FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage message) async {
+    RemoteNotification? notification = message.notification;
+    AndroidNotification? android = message.notification?.android;
+    if (notification != null && android != null) {
+      flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              channel.id,
+              channel.name,
+              channelDescription: channel.description,
+              icon: 'launch_background',
+            ),
+          ));
+      final LatLng? coordinates =
+          extractCoordinatesFromNotification(notification.body ?? "");
+
+      if (coordinates != null) {
+        final url =
+            'https://www.google.com/maps/search/?api=1&query=${coordinates.latitude},${coordinates.longitude}';
+        if (await canLaunchUrl(
+          Uri.parse(url),
+        )) {
+          await launchUrl(
+            Uri.parse(url),
+          );
+        }
+      }
+    }
+  } as FutureOr Function(RemoteMessage? value));
 }
