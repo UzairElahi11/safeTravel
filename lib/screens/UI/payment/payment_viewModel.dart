@@ -28,6 +28,7 @@ class PaymentViewModel with ChangeNotifier, paymentApiCallingClass {
   String priceAfterText = "";
   String discount = "";
   String? coupon;
+  String? url;
 
   validator(BuildContext context) async {
     expValidator = CardUtils.validateDate(expController.text);
@@ -241,6 +242,7 @@ class PaymentViewModel with ChangeNotifier, paymentApiCallingClass {
                 discount =
                     priceCalculationModel?.data?.discountedPrice?.toString() ??
                         "";
+                        url =  priceCalculationModel?.data?.payNow??"";
               }
               notifyListeners();
               // loginModel = LoginModel.fromJson(json);

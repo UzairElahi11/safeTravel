@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safe/Utils/app_colors.dart';
 import 'package:safe/Utils/app_text_styles.dart';
+import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/extensions/string.extension.dart';
 import 'package:safe/Utils/generics/generic_button.dart';
 import 'package:safe/Utils/generics/generic_text.dart';
@@ -10,6 +12,7 @@ import 'package:safe/Utils/generics/generic_text_field.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
 import 'package:safe/screens/UI/payment/cardFormatter/monthFormatter.dart';
 import 'package:safe/screens/UI/payment/payment_viewModel.dart';
+import 'package:safe/screens/UI/payment/payment_webView.dart';
 import 'package:stacked/stacked.dart';
 
 import 'cardFormatter/cardNumberFormatter.dart';
@@ -211,119 +214,19 @@ class PaymentView extends StatelessWidget {
                             ))
                           ],
                         ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        GenericText(
-                          LocaleKeys.cardNumber,
-                          style: TextStyle(
-                              color: AppColors.color232323,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        GenericTextField(
-                          controller: model.cardNumberController,
-                          fillColor: AppColors.containerBgColor,
-                          filled: true,
-                          errorText: model.cardNumberValidator,
-                          hintText: LocaleKeys.cardNumber.translatedString(),
-                          textAlign: TextAlign.center,
-                          isNumberField: true,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(16),
-                            CardNumberInputFormatter()
-                          ],
-                          // contentPadding: EdgeInsets.symmetric(vertical: 20.h),
-                        ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  GenericText(
-                                    "CVV",
-                                    style: TextStyle(
-                                        color: AppColors.color232323,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  SizedBox(
-                                    height: 20.h,
-                                  ),
-                                  GenericTextField(
-                                    controller: model.cvvController,
-                                    fillColor: AppColors.containerBgColor,
-                                    filled: true,
-                                    isNumberField: true,
-                                    hintText: "123",
-                                    errorText: model.cvvValidator,
-                                    textAlign: TextAlign.center,
-                                    inputFormatters: [
-                                      FilteringTextInputFormatter.digitsOnly,
-                                      // Limit the input
-                                      LengthLimitingTextInputFormatter(3),
-                                    ],
-                                    // contentPadding: EdgeInsets.symmetric(vertical: 20.h),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              width: 150.w,
-                            ),
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  GenericText(
-                                    "Expiry Date",
-                                    style: TextStyle(
-                                        color: AppColors.color232323,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  SizedBox(
-                                    height: 20.h,
-                                  ),
-                                  GenericTextField(
-                                    controller: model.expController,
-                                    fillColor: AppColors.containerBgColor,
-                                    filled: true,
-                                    isNumberField: true,
-                                    errorText: model.expValidator,
-                                    hintText: "12/23",
-                                    textAlign: TextAlign.center,
-                                    inputFormatters: [
-                                      FilteringTextInputFormatter.digitsOnly,
-                                      LengthLimitingTextInputFormatter(4),
-                                      CardMonthInputFormatter(),
-                                    ],
-                                    // contentPadding: EdgeInsets.symmetric(vertical: 20.h),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                       
                         SizedBox(
                           height: 100.h,
                         ),
                         GenericButton(
                           height: 70.h,
                           onPressed: () {
-                            model.validator(context);
+                            // model.validator(context);
+                             AppUtil.pushRoute(context: context,route: PaymentWebview(url: model.url??""));
+                           
+
                           },
-                          text: LocaleKeys.next,
+                          text: "Pay Now",
                           textStyle: AppStyles.mediumBold16.copyWith(
                             color: AppColors.whiteColor,
                             fontWeight: FontWeight.w600,

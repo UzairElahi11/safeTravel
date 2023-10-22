@@ -27,6 +27,7 @@ class Data {
   String? tax;
   int? priceAfterTax;
   int? discountedPrice;
+  String? payNow;
 
   Data({this.price, this.tax, this.priceAfterTax, this.discountedPrice});
 
@@ -35,6 +36,7 @@ class Data {
     tax = json['tax'];
     priceAfterTax = json['price_after_tax'];
     discountedPrice = json['discounted_price'];
+    payNow = json['pay_now'];
   }
 
   Map<String, dynamic> toJson() {
@@ -43,6 +45,8 @@ class Data {
     data['tax'] = this.tax;
     data['price_after_tax'] = this.priceAfterTax;
     data['discounted_price'] = this.discountedPrice;
+    data['pay_now'] = this.payNow;
+
     return data;
   }
 }
