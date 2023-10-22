@@ -459,7 +459,7 @@ class ServerManager {
 
   static void getPharmacy(
       String lat, String long, ResponseCompletion completion) {
-    Map<String, dynamic> json = {"lat": lat, "long": long, "radius": "5"};
+    Map<String, dynamic> json = {"lat": lat, "long": long, "radius": "6"};
     callPostApi(UrlConstants.getPharmacy, _defaultHeader(), json, completion,
         false, false);
   }

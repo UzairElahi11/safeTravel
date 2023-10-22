@@ -113,29 +113,29 @@ class PaymentView extends StatelessWidget {
                               SizedBox(
                                 height: 20.h,
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  GenericText(
-                                    LocaleKeys.familyRate,
-                                    style: TextStyle(
-                                        color: AppColors.color232323,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  GenericText(
-                                    "\$${model.priceAfterText}",
-                                    style: TextStyle(
-                                        color: AppColors.color5E5D5D,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 20.h,
-                              ),
+                              // Row(
+                              //   mainAxisAlignment:
+                              //       MainAxisAlignment.spaceBetween,
+                              //   children: [
+                              //     GenericText(
+                              //       LocaleKeys.familyRate,
+                              //       style: TextStyle(
+                              //           color: AppColors.color232323,
+                              //           fontSize: 16,
+                              //           fontWeight: FontWeight.w500),
+                              //     ),
+                              //     GenericText(
+                              //       "\$${model.priceAfterText}",
+                              //       style: TextStyle(
+                              //           color: AppColors.color5E5D5D,
+                              //           fontSize: 16,
+                              //           fontWeight: FontWeight.w400),
+                              //     ),
+                              //   ],
+                              // ),
+                              // SizedBox(
+                              //   height: 20.h,
+                              // ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
