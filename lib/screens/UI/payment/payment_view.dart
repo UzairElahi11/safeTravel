@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safe/Utils/app_colors.dart';
 import 'package:safe/Utils/app_text_styles.dart';
@@ -10,12 +9,9 @@ import 'package:safe/Utils/generics/generic_button.dart';
 import 'package:safe/Utils/generics/generic_text.dart';
 import 'package:safe/Utils/generics/generic_text_field.dart';
 import 'package:safe/l10n/locale_keys.g.dart';
-import 'package:safe/screens/UI/payment/cardFormatter/monthFormatter.dart';
 import 'package:safe/screens/UI/payment/payment_viewModel.dart';
 import 'package:safe/screens/UI/payment/payment_webView.dart';
 import 'package:stacked/stacked.dart';
-
-import 'cardFormatter/cardNumberFormatter.dart';
 
 class PaymentView extends StatelessWidget {
   const PaymentView({super.key});
