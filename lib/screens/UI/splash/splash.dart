@@ -2,18 +2,16 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geolocator/geolocator.dart' as locatorr;
+import 'package:permission_handler/permission_handler.dart';
 import 'package:safe/Utils/app_util.dart';
 import 'package:safe/Utils/local_storage.dart';
-import 'package:safe/Utils/permission_handler_helper_model.dart';
 import 'package:safe/Utils/user_defaults.dart';
 import 'package:safe/locator.dart';
 import 'package:safe/screens/UI/Welcome/welcome.dart';
 import 'package:safe/screens/UI/dashboard/dashboard.dart';
-import 'package:safe/screens/UI/login/login.dart';
 import 'package:safe/screens/UI/payment/payment_view.dart';
 import 'package:safe/screens/UI/user_details/user_data_manager.dart';
 
@@ -59,9 +57,10 @@ class _SplashState extends State<Splash> {
     );
   }
 
-  moveTopNextPage(BuildContext context) {
-    AppUtil.checkIfLocationPermissionAlreadyGranted().then((value) {
-      if (value.permissionsResult == PermissionsResult.granted) {
+  moveTopNextPage(BuildContext context) async {
+    await Geolocator.requestPermission().then((value) {
+      log("name of permision is $value");
+      if (value == LocationPermission.whileInUse) {
         Future.delayed(
           const Duration(milliseconds: 100),
           () async {
@@ -138,51 +137,44 @@ class _SplashState extends State<Splash> {
             }
           },
         );
-      } else if (value.permissionsResult == PermissionsResult.denied) {
-        AppUtil.checkIfLocationPermissionAlreadyGranted().then((value) {
-          if (value.permissionsResult == PermissionsResult.granted) {
-            SchedulerBinding.instance.addPostFrameCallback(
-              (_) async {
-                try {
-                  currentLocation =
-                      await locatorr.Geolocator.getCurrentPosition(
-                          desiredAccuracy: locatorr.LocationAccuracy.high);
-                } on Exception {
-                  currentLocation = null;
-                }
-                UserDataManager.getInstance().lat = currentLocation != null
-                    ? currentLocation!.latitude.toString()
-                    : "";
-                UserDataManager.getInstance().long = currentLocation != null
-                    ? currentLocation!.latitude.toString()
-                    : "";
-                await locator<LocalSecureStorage>()
-                    .readSecureStorage(AppUtil.isTermsAndConditionsAccepted);
-
-                if (mounted) {
-                  await locator<LocalSecureStorage>().readSecureStorage(
-                              AppUtil.isTermsAndConditionsAccepted) ==
-                          "1"
-                      ? AppUtil.pushRoute(
-                          pushReplacement: true,
-                          context: context,
-                          route: const Login(),
-                        )
-                      : AppUtil.pushRoute(
-                          pushReplacement: true,
-                          context: context,
-                          route: const Welcome(),
-                        );
-                }
-              },
-            );
-          } else {
-            showDialog(
-              context: context,
-              builder: (context) => settingWidget(),
-            );
-          }
-        });
+      } else if (value == LocationPermission.denied) {
+        moveTopNextPage(context);
+      } else if (value == LocationPermission.deniedForever) {
+        log("permission permanentlyDenied");
+        showDialog(
+            context: context,
+            builder: (context) {
+              return Dialog(
+                child: Container(
+                  height: 150.h,
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(vertical: 20.h),
+                  child: Column(
+                    children: [
+                      const Text(
+                        "Location permission required",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          openAppSettings().then(
+                            (value) => Navigator.of(context).pop(),
+                          );
+                        },
+                        child: const Text("Open setting"),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            });
       }
     });
   }

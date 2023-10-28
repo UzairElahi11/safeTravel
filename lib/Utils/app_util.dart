@@ -4,12 +4,12 @@ import 'dart:developer';
 // import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:lottie/lottie.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:safe/Utils/permission_handler_helper_model.dart';
-import 'package:url_launcher/url_launcher.dart';
-
 import 'package:safe/dynamic_size.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AppUtil {
   AppUtil._();
@@ -123,31 +123,32 @@ class AppUtil {
         });
   }
 
-  ///check for location permission
   static Future<PermissionHandlerHelperModel>
       checkIfLocationPermissionAlreadyGranted() async {
     PermissionHandlerHelperModel permissionHandlerHelperModel =
         PermissionHandlerHelperModel(
             permissionsResult: PermissionsResult.denied, permissionName: "");
-    Map<Permission, PermissionStatus> statuses =
-        await [Permission.location].request();
 
-    ///location, ask for location for Android as well as iOS
-   
-    if (statuses[Permission.location]!.isGranted) {
+    // Request location permission
+
+   final statuss =  await Geolocator.requestPermission();
+
+
+    var status = await Permission.location.request();
+
+    if (status.isGranted) {
       permissionHandlerHelperModel = PermissionHandlerHelperModel(
           permissionsResult: PermissionsResult.granted,
           permissionName: "Permission.location");
-    } else if (statuses[Permission.location]!.isDenied) {
+    } else if (status.isDenied) {
       permissionHandlerHelperModel = PermissionHandlerHelperModel(
           permissionsResult: PermissionsResult.denied,
           permissionName: "Permission.location");
-    } else if (statuses[Permission.location]!.isPermanentlyDenied) {
+    } else if (status.isPermanentlyDenied) {
       permissionHandlerHelperModel = PermissionHandlerHelperModel(
           permissionsResult: PermissionsResult.permanentlyDenied,
           permissionName: "Permission.location");
     }
-      
 
     return permissionHandlerHelperModel;
   }
