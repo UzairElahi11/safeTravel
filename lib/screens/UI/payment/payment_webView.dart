@@ -55,9 +55,9 @@ class PaymentWebview extends StatelessWidget {
                 log("url going to finised is $url");
               },
               navigationDelegate: (NavigationRequest request) {
-                if (request.url.contains("")) {
-                  Navigator.of(context).pop(true);
-                }
+                // if (request.url.contains("")) {
+                //   Navigator.of(context).pop(true);
+                // }
 
                 return NavigationDecision.navigate;
               },

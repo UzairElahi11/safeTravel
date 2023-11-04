@@ -31,17 +31,20 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-
-	<key>NSLocationWhenInUseUsageDescription</key>
-<string>We need your current location permission</string>
-<key>NSLocationAlwaysUsageDescription</key>
-<string>We need your current location permission</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Upload image from camera for screen background</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We need your current location permission</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need your current location permission</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Upload images for screen background</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

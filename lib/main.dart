@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -184,7 +185,20 @@ LatLng? extractCoordinatesFromNotification(String notificationText) {
 String notificationMessage = "";
 
 pushNotifications() async {
-  final fcmToken = await FirebaseMessaging.instance.getToken();
+   var fcmToken;
+   if (Platform.isIOS) {
+      await FirebaseMessaging.instance.getAPNSToken().then((token) {
+        fcmToken = token ?? "";
+      });
+     log("Fcm token is ${fcmToken.toString()}");
+    } else {
+      await FirebaseMessaging.instance.getToken().then((token) {
+       fcmToken = token ?? "";
+
+         log("Fcm token is ${fcmToken.toString()}");
+      });
+     
+    }
   print("fcm" + fcmToken.toString());
   UserDataManager.getInstance().fcmToken = fcmToken.toString();
   var initializationSettingAndroid =
@@ -217,7 +231,7 @@ pushNotifications() async {
   //     }
   //   }
   // });
-
+  
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     RemoteNotification? notification = message.notification;
     AndroidNotification? android = message.notification?.android;
